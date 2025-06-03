@@ -3,11 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout - CameraHub</title>
+    <title>Checkout - Berkamera.</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
     <style>
-        /* Checkout Page Styles */
+        :root {
+            --primary-color: #e74c3c;
+            --primary-dark: #c0392b;
+            --secondary-color: #f8f9fa;
+            --text-color: #2c3e50;
+            --light-text: #7f8c8d;
+            --border-color: #dee2e6;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #fff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Top Banner */
+        .top-banner {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        .top-banner .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .banner-button {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .banner-button:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Header */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--text-color);
+        }
+
+        .logo span {
+            color: var(--primary-color);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-menu a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-icons {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .icon-link {
+            position: relative;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .icon-link:hover {
+            color: var(--primary-color);
+        }
+
+        .cart-count, .wishlist-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .quiz-button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .quiz-button:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background-color: var(--text-color);
+            margin: 3px 0;
+            transition: var(--transition);
+        }
+
+        /* Checkout Styles */
         .checkout-header {
             padding: 3rem 0 2rem;
             text-align: center;
@@ -434,6 +601,83 @@
             font-size: 0.9rem;
             line-height: 1.5;
         }
+
+        /* Footer */
+        footer {
+            background-color: var(--text-color);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .footer-section h3 span {
+            color: var(--primary-color);
+        }
+
+        .footer-section p {
+            margin-bottom: 1rem;
+            color: #bdc3c7;
+            line-height: 1.6;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-icon:hover {
+            background-color: var(--primary-color);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #34495e;
+            color: #bdc3c7;
+        }
         
         @media (max-width: 992px) {
             .checkout-container {
@@ -465,6 +709,14 @@
                 align-items: flex-start;
                 gap: 0.5rem;
             }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
         }
     </style>
 </head>
@@ -480,7 +732,7 @@
     <header>
         <div class="container">
             <div class="logo">
-                <h1>Camera<span>Hub</span></h1>
+                <h1>Ber<span>kamera.</span></h1>
             </div>
             <nav>
                 <div class="menu-toggle" id="mobile-menu">
@@ -716,27 +968,8 @@
                         <div class="order-summary">
                             <h3 class="summary-title">Ringkasan Pesanan</h3>
                             
-                            <div class="order-items">
-                                <div class="order-item">
-                                    <div class="item-image">
-                                        <img src="https://images.unsplash.com/photo-1581591524425-c7e0978865fc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Sony Alpha a7 III">
-                                    </div>
-                                    <div class="item-details">
-                                        <div class="item-name">Sony Alpha a7 III</div>
-                                        <div class="item-quantity">Qty: 1</div>
-                                        <div class="item-price">Rp 28.499.000</div>
-                                    </div>
-                                </div>
-                                <div class="order-item">
-                                    <div class="item-image">
-                                        <img src="https://images.unsplash.com/photo-1616423640778-28d1b53229bd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Sony 24-70mm f/2.8 GM Lens">
-                                    </div>
-                                    <div class="item-details">
-                                        <div class="item-name">Sony 24-70mm f/2.8 GM Lens</div>
-                                        <div class="item-quantity">Qty: 1</div>
-                                        <div class="item-price">Rp 22.999.000</div>
-                                    </div>
-                                </div>
+                            <div class="order-items" id="order-items">
+                                <!-- Items will be populated by JavaScript -->
                             </div>
 
                             <div class="promo-code">
@@ -749,7 +982,7 @@
                             <div class="order-totals">
                                 <div class="total-row">
                                     <span>Subtotal</span>
-                                    <span>Rp 51.498.000</span>
+                                    <span id="subtotal">Rp 0</span>
                                 </div>
                                 <div class="total-row">
                                     <span>Pengiriman</span>
@@ -757,7 +990,7 @@
                                 </div>
                                 <div class="total-row">
                                     <span>Pajak (10%)</span>
-                                    <span>Rp 5.149.800</span>
+                                    <span id="tax">Rp 0</span>
                                 </div>
                                 <div class="total-row">
                                     <span>Diskon</span>
@@ -765,7 +998,7 @@
                                 </div>
                                 <div class="total-row final">
                                     <span>Total</span>
-                                    <span id="final-total">Rp 56.647.800</span>
+                                    <span id="final-total">Rp 0</span>
                                 </div>
                             </div>
 
@@ -794,7 +1027,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>Camera<span>Hub</span></h3>
+                    <h3>Ber<span>kamera.</span></h3>
                     <p>Kamera dan aksesoris premium untuk profesional dan penggemar fotografi.</p>
                     <div class="social-icons">
                         <a href="#" class="social-icon">
@@ -804,7 +1037,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
                         </a>
                         <a href="#" class="social-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 23 3z"></path></svg>
                         </a>
                     </div>
                 </div>
@@ -831,179 +1064,479 @@
                 <div class="footer-section">
                     <h3>Hubungi Kami</h3>
                     <p>Jl. Kamera 123<br>Surabaya Timur, Indonesia</p>
-                    <p>Email: info@camerahub.com</p>
+                    <p>Email: info@berkamera.com</p>
                     <p>Telepon: +62 123 456 7890</p>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2023 CameraHub. All rights reserved.</p>
+                <p>&copy; 2025 Berkamera. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <script src="script.js"></script>
     <script>
+        // Embedded Cart Manager
+        class CartManager {
+            constructor() {
+                this.cart = this.loadCart()
+                this.init()
+            }
+
+            init() {
+                this.updateCartDisplay()
+            }
+
+            loadCart() {
+                const savedCart = localStorage.getItem("cart")
+                return savedCart ? JSON.parse(savedCart) : this.getSampleData()
+            }
+
+            getSampleData() {
+                return [
+                    {
+                        id: 'sample-1',
+                        name: 'Sony Alpha a7 III',
+                        price: 28499000,
+                        quantity: 1,
+                        image: 'https://images.unsplash.com/photo-1581591524425-c7e0978865fc?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+                        category: 'Camera'
+                    },
+                    {
+                        id: 'sample-2', 
+                        name: 'Sony 24-70mm f/2.8 GM Lens',
+                        price: 22999000,
+                        quantity: 1,
+                        image: 'https://images.unsplash.com/photo-1616423640778-28d1b53229bd?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+                        category: 'Lens'
+                    }
+                ]
+            }
+
+            getTotal() {
+                return this.cart.reduce((total, item) => total + item.price * item.quantity, 0)
+            }
+
+            getItemCount() {
+                return this.cart.reduce((count, item) => count + item.quantity, 0)
+            }
+
+            updateCartDisplay() {
+                const cartCount = document.querySelector(".cart-count")
+                if (cartCount) {
+                    cartCount.textContent = this.getItemCount()
+                }
+            }
+
+            getCartData() {
+                const subtotal = this.getTotal()
+                const tax = Math.round(subtotal * 0.1)
+                
+                return {
+                    items: this.cart,
+                    subtotal: subtotal,
+                    tax: tax,
+                    total: subtotal + tax
+                }
+            }
+
+            clearCart() {
+                this.cart = []
+                localStorage.setItem("cart", JSON.stringify(this.cart))
+                this.updateCartDisplay()
+            }
+        }
+
+        // Embedded Order Manager
+        class OrderManager {
+            constructor() {
+                this.orders = this.loadOrders()
+            }
+
+            loadOrders() {
+                const savedOrders = localStorage.getItem('orders')
+                return savedOrders ? JSON.parse(savedOrders) : []
+            }
+
+            saveOrders() {
+                localStorage.setItem('orders', JSON.stringify(this.orders))
+            }
+
+            createOrder(orderData) {
+                const order = {
+                    id: 'ORD-' + Date.now(),
+                    ...orderData,
+                    status: 'pending',
+                    createdAt: new Date().toISOString(),
+                    updatedAt: new Date().toISOString(),
+                    trackingNumber: this.generateTrackingNumber()
+                }
+
+                this.orders.push(order)
+                this.saveOrders()
+                
+                return order
+            }
+
+            generateTrackingNumber() {
+                return 'TRK' + Date.now().toString().slice(-8)
+            }
+        }
+
+        // Embedded Payment System
+        class PaymentSystem {
+            constructor() {
+                this.paymentMethods = {
+                    "credit-card": {
+                        name: "Kartu Kredit/Debit",
+                        icon: "credit-card",
+                        processingTime: "2-3 menit",
+                        fee: 0.029,
+                    },
+                    "bank-transfer": {
+                        name: "Transfer Bank",
+                        icon: "bank",
+                        processingTime: "1-24 jam",
+                        fee: 0,
+                    },
+                    "e-wallet": {
+                        name: "E-Wallet",
+                        icon: "wallet",
+                        processingTime: "1-5 menit",
+                        fee: 0.015,
+                    },
+                    cod: {
+                        name: "Bayar di Tempat",
+                        icon: "cash",
+                        processingTime: "Saat pengiriman",
+                        fee: 0.01,
+                    },
+                }
+            }
+
+            async processPayment(paymentData) {
+                try {
+                    // Show loading
+                    this.showPaymentLoading()
+
+                    // Simulate payment processing
+                    const result = await this.simulatePaymentProcessing(paymentData)
+
+                    // Hide loading
+                    this.hidePaymentLoading()
+
+                    if (result.success) {
+                        // Clear cart
+                        if (window.cartManager) {
+                            window.cartManager.clearCart()
+                        }
+
+                        // Show success message
+                        alert('Pembayaran berhasil! Anda akan diarahkan ke halaman konfirmasi.')
+                        
+                        // Redirect to confirmation
+                        window.location.href = `order-confirmation.html?order=${result.orderId}&payment=${result.paymentId}`
+                    } else {
+                        throw new Error(result.message)
+                    }
+                } catch (error) {
+                    this.hidePaymentLoading()
+                    alert('Error: ' + error.message)
+                }
+            }
+
+            async simulatePaymentProcessing(paymentData) {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        const isSuccess = Math.random() > 0.05
+
+                        if (isSuccess) {
+                            const orderId = "ORD-" + Date.now()
+                            const paymentId = "PAY-" + Date.now()
+
+                            resolve({
+                                success: true,
+                                orderId: orderId,
+                                paymentId: paymentId,
+                                status: paymentData.paymentMethod === "bank-transfer" ? "pending" : "completed",
+                                message: "Pembayaran berhasil diproses",
+                            })
+                        } else {
+                            resolve({
+                                success: false,
+                                message: "Pembayaran gagal. Silakan coba lagi.",
+                            })
+                        }
+                    }, 2000)
+                })
+            }
+
+            showPaymentLoading() {
+                const loading = document.createElement("div")
+                loading.id = "payment-loading"
+                loading.innerHTML = `
+                    <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 10000;">
+                        <div style="background: white; padding: 2rem; border-radius: 15px; text-align: center; max-width: 400px;">
+                            <div style="width: 50px; height: 50px; border: 4px solid #f3f3f3; border-top: 4px solid #e74c3c; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem;"></div>
+                            <h3>Memproses Pembayaran...</h3>
+                            <p>Mohon tunggu, jangan tutup halaman ini</p>
+                        </div>
+                    </div>
+                `
+
+                // Add animation
+                if (!document.querySelector("#loading-styles")) {
+                    const styles = document.createElement("style")
+                    styles.id = "loading-styles"
+                    styles.textContent = `
+                        @keyframes spin {
+                            0% { transform: rotate(0deg); }
+                            100% { transform: rotate(360deg); }
+                        }
+                    `
+                    document.head.appendChild(styles)
+                }
+
+                document.body.appendChild(loading)
+            }
+
+            hidePaymentLoading() {
+                const loading = document.getElementById("payment-loading")
+                if (loading) {
+                    loading.remove()
+                }
+            }
+        }
+
+        // Initialize everything when DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
-    // Load cart data
-    if (window.cartManager) {
-        const cartData = cartManager.getCartData()
-        updateOrderSummary(cartData)
-    }
-    
-    // Shipping options
-    const shippingOptions = document.querySelectorAll('.shipping-option')
-    const shippingCost = document.getElementById('shipping-cost')
-    const finalTotal = document.getElementById('final-total')
-    
-    shippingOptions.forEach(option => {
-        option.addEventListener('click', function() {
-            shippingOptions.forEach(opt => opt.classList.remove('selected'))
-            this.classList.add('selected')
+            // Initialize managers
+            window.cartManager = new CartManager()
+            window.orderManager = new OrderManager()
+            window.paymentSystem = new PaymentSystem()
             
-            const radio = this.querySelector('input[type="radio"]')
-            radio.checked = true
+            // Load cart data and update order summary
+            updateOrderSummaryFromCart()
             
-            const price = this.querySelector('.shipping-price').textContent
-            shippingCost.textContent = price
+            // Shipping options
+            const shippingOptions = document.querySelectorAll('.shipping-option')
             
-            updateTotal()
-        })
-    })
-    
-    // Payment methods
-    const paymentMethods = document.querySelectorAll('.payment-method')
-    const cardDetails = document.getElementById('card-details')
-    
-    paymentMethods.forEach(method => {
-        method.addEventListener('click', function() {
-            paymentMethods.forEach(m => m.classList.remove('selected'))
-            this.classList.add('selected')
+            shippingOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    shippingOptions.forEach(opt => opt.classList.remove('selected'))
+                    this.classList.add('selected')
+                    
+                    const radio = this.querySelector('input[type="radio"]')
+                    radio.checked = true
+                    
+                    updateShippingCost()
+                })
+            })
             
-            const radio = this.querySelector('input[type="radio"]')
-            radio.checked = true
+            // Payment methods
+            const paymentMethods = document.querySelectorAll('.payment-method')
+            const cardDetails = document.getElementById('card-details')
             
-            if (radio.value === 'credit-card') {
-                cardDetails.classList.add('show')
-            } else {
-                cardDetails.classList.remove('show')
+            paymentMethods.forEach(method => {
+                method.addEventListener('click', function() {
+                    paymentMethods.forEach(m => m.classList.remove('selected'))
+                    this.classList.add('selected')
+                    
+                    const radio = this.querySelector('input[type="radio"]')
+                    radio.checked = true
+                    
+                    if (radio.value === 'credit-card') {
+                        cardDetails.classList.add('show')
+                    } else {
+                        cardDetails.classList.remove('show')
+                    }
+                })
+            })
+            
+            // Form submission
+            const checkoutForm = document.getElementById('checkout-form')
+            
+            checkoutForm.addEventListener('submit', function(e) {
+                e.preventDefault()
+                
+                if (validateForm()) {
+                    processCheckout()
+                }
+            })
+            
+            function validateForm() {
+                const requiredFields = checkoutForm.querySelectorAll('[required]')
+                let isValid = true
+                
+                requiredFields.forEach(field => {
+                    if (!field.value.trim()) {
+                        field.style.borderColor = '#d32f2f'
+                        isValid = false
+                    } else {
+                        field.style.borderColor = ''
+                    }
+                })
+                
+                if (!isValid) {
+                    alert('Mohon lengkapi semua field yang wajib diisi.')
+                }
+                
+                return isValid
             }
-        })
-    })
-    
-    // Form submission
-    const checkoutForm = document.getElementById('checkout-form')
-    
-    checkoutForm.addEventListener('submit', function(e) {
-        e.preventDefault()
-        
-        if (validateForm()) {
-            processCheckout()
-        }
-    })
-    
-    function validateForm() {
-        const requiredFields = checkoutForm.querySelectorAll('[required]')
-        let isValid = true
-        
-        requiredFields.forEach(field => {
-            if (!field.value.trim()) {
-                field.style.borderColor = '#d32f2f'
-                isValid = false
-            } else {
-                field.style.borderColor = ''
+            
+            function processCheckout() {
+                const formData = new FormData(checkoutForm)
+                const cartData = window.cartManager.getCartData()
+                
+                // Create order data
+                const orderData = {
+                    customerInfo: {
+                        name: `${formData.get('firstName')} ${formData.get('lastName')}`,
+                        email: formData.get('email'),
+                        phone: formData.get('phone')
+                    },
+                    shippingAddress: {
+                        address: formData.get('address'),
+                        city: formData.get('city'),
+                        province: formData.get('province'),
+                        postalCode: formData.get('postalCode'),
+                        country: formData.get('country')
+                    },
+                    items: cartData.items,
+                    subtotal: cartData.subtotal,
+                    tax: cartData.tax,
+                    shipping: getShippingCost(),
+                    total: cartData.total + getShippingCost(),
+                    paymentMethod: formData.get('payment'),
+                    shippingMethod: formData.get('shipping'),
+                    notes: formData.get('orderNotes')
+                }
+                
+                // Create order
+                const order = window.orderManager.createOrder(orderData)
+                
+                // Process payment
+                const paymentData = {
+                    orderId: order.id,
+                    paymentMethod: formData.get('payment'),
+                    customerInfo: orderData.customerInfo,
+                    orderData: orderData
+                }
+                
+                // Add card details if credit card
+                if (formData.get('payment') === 'credit-card') {
+                    paymentData.cardDetails = {
+                        number: document.getElementById('cardNumber').value,
+                        expiry: document.getElementById('expiryDate').value,
+                        cvv: document.getElementById('cvv').value,
+                        name: document.getElementById('cardName').value
+                    }
+                }
+                
+                // Process payment
+                window.paymentSystem.processPayment(paymentData)
             }
-        })
-        
-        if (!isValid) {
-            alert('Mohon lengkapi semua field yang wajib diisi.')
+            
+            function getShippingCost() {
+                const selectedShipping = document.querySelector('input[name="shipping"]:checked')
+                if (!selectedShipping) return 0
+                
+                switch(selectedShipping.value) {
+                    case 'express': return 50000
+                    case 'same-day': return 100000
+                    default: return 0
+                }
+            }
+            
+            function updateShippingCost() {
+                const cost = getShippingCost()
+                const shippingCostElement = document.getElementById('shipping-cost')
+                const finalTotalElement = document.getElementById('final-total')
+                
+                if (cost === 0) {
+                    shippingCostElement.textContent = 'Gratis'
+                } else {
+                    shippingCostElement.textContent = `Rp ${cost.toLocaleString('id-ID')}`
+                }
+                
+                const cartData = window.cartManager.getCartData()
+                const total = cartData.total + cost
+                finalTotalElement.textContent = `Rp ${total.toLocaleString('id-ID')}`
+            }
+            
+function updateOrderSummaryFromCart() {
+    // Try to get data from checkout preparation first
+    let cartData = null
+    
+    try {
+        const checkoutData = localStorage.getItem('checkoutData')
+        if (checkoutData) {
+            const parsed = JSON.parse(checkoutData)
+            // Check if data is not too old (1 hour)
+            if (Date.now() - parsed.timestamp < 3600000) {
+                cartData = parsed
+            }
         }
-        
-        return isValid
+    } catch (e) {
+        console.log('No checkout data found, using cart manager')
     }
     
-    function processCheckout() {
-        const formData = new FormData(checkoutForm)
-        const cartData = cartManager.getCartData()
-        
-        // Create order
-        const orderData = {
-            customerInfo: {
-                name: `${formData.get('firstName')} ${formData.get('lastName')}`,
-                email: formData.get('email'),
-                phone: formData.get('phone')
-            },
-            shippingAddress: {
-                address: formData.get('address'),
-                city: formData.get('city'),
-                province: formData.get('province'),
-                postalCode: formData.get('postalCode'),
-                country: formData.get('country')
-            },
-            items: cartData.items,
-            subtotal: cartData.subtotal,
-            tax: cartData.tax,
-            shipping: getShippingCost(),
-            total: cartData.total + getShippingCost(),
-            paymentMethod: formData.get('payment'),
-            shippingMethod: formData.get('shipping'),
-            notes: formData.get('orderNotes')
+    // Fallback to cart manager
+    if (!cartData && window.cartManager) {
+        cartData = window.cartManager.getCartData()
+    }
+    
+    // Final fallback to sample data
+    if (!cartData || !cartData.items || cartData.items.length === 0) {
+        cartData = {
+            items: [
+                {
+                    id: 'sample-1',
+                    name: 'Sony Alpha a7 III',
+                    price: 28499000,
+                    quantity: 1,
+                    image: 'https://images.unsplash.com/photo-1581591524425-c7e0978865fc?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'
+                },
+                {
+                    id: 'sample-2', 
+                    name: 'Sony 24-70mm f/2.8 GM Lens',
+                    price: 22999000,
+                    quantity: 1,
+                    image: 'https://images.unsplash.com/photo-1616423640778-28d1b53229bd?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'
+                }
+            ],
+            subtotal: 51498000,
+            tax: 5149800,
+            total: 56647800
         }
-        
-        const order = orderManager.createOrder(orderData)
-        
-        // Redirect to payment gateway
-        window.location.href = `payment-gateway.html?order=${order.id}&amount=${order.total}`
     }
     
-    function getShippingCost() {
-        const selectedShipping = document.querySelector('input[name="shipping"]:checked')
-        if (!selectedShipping) return 0
-        
-        const shippingText = selectedShipping.closest('.shipping-option').querySelector('.shipping-price').textContent
-        
-        if (shippingText.includes('50.000')) return 50000
-        if (shippingText.includes('100.000')) return 100000
-        return 0
-    }
+    const itemsList = document.getElementById('order-items')
     
-    function updateOrderSummary(cartData) {
-        const itemsList = document.querySelector('.order-items')
-        if (itemsList && cartData.items) {
-            itemsList.innerHTML = cartData.items.map(item => `
-                <div class="order-item">
-                    <div class="item-image">
-                        <img src="${item.image}" alt="${item.name}">
-                    </div>
-                    <div class="item-details">
-                        <div class="item-name">${item.name}</div>
-                        <div class="item-quantity">Qty: ${item.quantity}</div>
-                        <div class="item-price">Rp ${item.price.toLocaleString('id-ID')}</div>
-                    </div>
+    if (itemsList && cartData.items) {
+        itemsList.innerHTML = cartData.items.map(item => `
+            <div class="order-item">
+                <div class="item-image">
+                    <img src="${item.image}" alt="${item.name}">
                 </div>
-            `).join('')
-        }
-        
-        // Update totals
-        const subtotalElement = document.querySelector('.total-row:first-child span:last-child')
-        const taxElement = document.querySelector('.total-row:nth-child(3) span:last-child')
-        
-        if (subtotalElement) subtotalElement.textContent = `Rp ${cartData.subtotal.toLocaleString('id-ID')}`
-        if (taxElement) taxElement.textContent = `Rp ${cartData.tax.toLocaleString('id-ID')}`
-        
-        updateTotal()
+                <div class="item-details">
+                    <div class="item-name">${item.name}</div>
+                    <div class="item-quantity">Qty: ${item.quantity}</div>
+                    <div class="item-price">Rp ${(item.price * item.quantity).toLocaleString('id-ID')}</div>
+                </div>
+            </div>
+        `).join('')
     }
     
-    function updateTotal() {
-        const cartData = cartManager.getCartData()
-        const shipping = getShippingCost()
-        const total = cartData.subtotal + cartData.tax + shipping
-        
-        const finalTotalElement = document.getElementById('final-total')
-        if (finalTotalElement) {
-            finalTotalElement.textContent = `Rp ${total.toLocaleString('id-ID')}`
-        }
-    }
-})
+    // Update totals
+    const subtotalElement = document.getElementById('subtotal')
+    const taxElement = document.getElementById('tax')
+    const finalTotalElement = document.getElementById('final-total')
+    
+    if (subtotalElement) subtotalElement.textContent = `Rp ${cartData.subtotal.toLocaleString('id-ID')}`
+    if (taxElement) taxElement.textContent = `Rp ${cartData.tax.toLocaleString('id-ID')}`
+    if (finalTotalElement) finalTotalElement.textContent = `Rp ${cartData.total.toLocaleString('id-ID')}`
+}
+        })
     </script>
 </body>
 </html>

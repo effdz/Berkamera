@@ -294,6 +294,50 @@ class CartManager {
       itemCount: this.getItemCount(),
     }
   }
+
+  // Prepare cart data for checkout
+  prepareCheckoutData() {
+    const cartData = this.getCartData()
+
+    // Save current cart state to localStorage for checkout
+    localStorage.setItem(
+      "checkoutData",
+      JSON.stringify({
+        items: cartData.items,
+        subtotal: cartData.subtotal,
+        tax: cartData.tax,
+        total: cartData.total,
+        itemCount: cartData.itemCount,
+        timestamp: Date.now(),
+      }),
+    )
+
+    return cartData
+  }
+
+  // Validate cart before checkout
+  validateCartForCheckout() {
+    if (this.cart.length === 0) {
+      return {
+        valid: false,
+        message: "Keranjang belanja Anda kosong. Silakan tambahkan produk terlebih dahulu.",
+      }
+    }
+
+    // Check for invalid quantities
+    const invalidItems = this.cart.filter((item) => item.quantity <= 0 || !item.price)
+    if (invalidItems.length > 0) {
+      return {
+        valid: false,
+        message: "Ada item dengan quantity atau harga yang tidak valid di keranjang Anda.",
+      }
+    }
+
+    return {
+      valid: true,
+      message: "Cart is valid for checkout",
+    }
+  }
 }
 
 // Initialize cart manager

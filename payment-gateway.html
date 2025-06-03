@@ -3,141 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Gateway - CameraHub</title>
+    <title>Payment Gateway - Berkamera.</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
     <style>
         .payment-gateway {
             min-height: 100vh;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2rem 0;
+            padding: 2rem;
         }
         
         .payment-container {
             background: white;
             border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            width: 100%;
+            padding: 2rem;
             max-width: 500px;
-            margin: 0 1rem;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         }
         
         .payment-header {
-            background: var(--primary-color);
-            color: white;
-            padding: 2rem;
             text-align: center;
+            margin-bottom: 2rem;
         }
         
         .payment-title {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
         }
         
-        .payment-amount {
-            font-size: 2rem;
-            font-weight: 800;
+        .payment-subtitle {
+            color: #666;
+            font-size: 0.9rem;
         }
         
-        .payment-body {
-            padding: 2rem;
-        }
-        
-        .payment-method-selection {
+        .order-info {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 1.5rem;
             margin-bottom: 2rem;
         }
         
-        .method-title {
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--text-color);
-        }
-        
-        .payment-methods {
+        .order-row {
             display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
         }
         
-        .payment-method {
+        .order-row:last-child {
+            margin-bottom: 0;
+            padding-top: 0.5rem;
+            border-top: 1px solid #dee2e6;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .payment-methods-gateway {
+            margin-bottom: 2rem;
+        }
+        
+        .payment-method-gateway {
             display: flex;
             align-items: center;
             padding: 1rem;
-            border: 2px solid var(--border-color);
-            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            margin-bottom: 1rem;
             cursor: pointer;
-            transition: var(--transition);
+            transition: all 0.3s ease;
         }
         
-        .payment-method:hover {
+        .payment-method-gateway:hover {
             border-color: var(--primary-color);
         }
         
-        .payment-method.selected {
+        .payment-method-gateway.selected {
             border-color: var(--primary-color);
-            background-color: rgba(231, 76, 60, 0.05);
+            background: rgba(231, 76, 60, 0.05);
         }
         
-        .payment-method input[type="radio"] {
-            margin-right: 1rem;
-        }
-        
-        .method-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            background-color: var(--secondary-color);
+        .payment-icon-gateway {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            background: var(--secondary-color);
             display: flex;
             align-items: center;
             justify-content: center;
             margin-right: 1rem;
         }
         
-        .method-info {
+        .payment-details {
             flex: 1;
         }
         
-        .method-name {
+        .payment-name-gateway {
             font-weight: 600;
-            margin-bottom: 0.2rem;
+            margin-bottom: 0.3rem;
         }
         
-        .method-desc {
-            color: var(--light-text);
-            font-size: 0.9rem;
+        .payment-desc-gateway {
+            color: #666;
+            font-size: 0.85rem;
         }
         
-        .method-fee {
+        .payment-fee {
             font-weight: 600;
             color: var(--primary-color);
-            font-size: 0.9rem;
-        }
-        
-        .payment-details {
-            display: none;
-            margin-top: 1.5rem;
-            padding: 1.5rem;
-            background-color: var(--secondary-color);
-            border-radius: 10px;
-        }
-        
-        .payment-details.show {
-            display: block;
         }
         
         .payment-instructions {
-            margin-bottom: 1.5rem;
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            display: none;
+        }
+        
+        .payment-instructions.show {
+            display: block;
         }
         
         .instructions-title {
             font-weight: 700;
             margin-bottom: 1rem;
-            color: var(--text-color);
+            color: #856404;
         }
         
         .instructions-list {
@@ -146,387 +141,347 @@
         }
         
         .instructions-list li {
-            padding: 0.5rem 0;
-            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
         }
         
-        .instructions-list li:last-child {
-            border-bottom: none;
-        }
-        
-        .bank-options, .ewallet-options {
-            display: grid;
-            gap: 1rem;
-            margin: 1rem 0;
-        }
-        
-        .bank-option, .ewallet-option {
-            padding: 1rem;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            background: white;
-        }
-        
-        .bank-name, .ewallet-name {
-            font-weight: 600;
-            margin-bottom: 0.3rem;
-        }
-        
-        .bank-account, .ewallet-number {
-            color: var(--light-text);
-            font-family: monospace;
+        .instructions-list li:before {
+            content: "•";
+            color: var(--primary-color);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
         }
         
         .payment-timer {
-            background: #fff3e0;
-            border: 1px solid #ffb74d;
-            border-radius: 8px;
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 12px;
             padding: 1rem;
-            margin: 1rem 0;
             text-align: center;
+            margin-bottom: 2rem;
+            display: none;
         }
         
-        .timer-label {
-            font-size: 0.9rem;
-            color: var(--light-text);
+        .payment-timer.show {
+            display: block;
+        }
+        
+        .timer-text {
+            font-weight: 600;
+            color: #0c5460;
             margin-bottom: 0.5rem;
         }
         
-        .timer-value {
+        .timer-countdown {
             font-size: 1.5rem;
             font-weight: 700;
-            color: #f57c00;
+            color: var(--primary-color);
         }
         
         .payment-actions {
             display: flex;
             gap: 1rem;
-            margin-top: 2rem;
-        }
-        
-        .btn {
-            flex: 1;
-            padding: 1rem;
-            border: none;
-            border-radius: 8px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            background-color: var(--primary-dark);
         }
         
         .btn-secondary {
-            background-color: var(--secondary-color);
-            color: var(--text-color);
-            border: 2px solid var(--border-color);
+            flex: 1;
+            padding: 1rem;
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
         
         .btn-secondary:hover {
-            background-color: #e0e0e0;
+            background: #5a6268;
         }
         
-        .upload-proof {
-            margin-top: 1.5rem;
-            padding: 1.5rem;
-            border: 2px dashed var(--border-color);
-            border-radius: 10px;
+        .btn-primary {
+            flex: 2;
+            padding: 1rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+        
+        .upload-section {
+            margin-top: 1rem;
+            padding: 1rem;
+            border: 2px dashed #dee2e6;
+            border-radius: 12px;
             text-align: center;
+            display: none;
         }
         
-        .upload-icon {
-            width: 50px;
-            height: 50px;
-            margin: 0 auto 1rem;
-            color: var(--light-text);
+        .upload-section.show {
+            display: block;
         }
         
         .upload-text {
-            color: var(--light-text);
+            color: #666;
             margin-bottom: 1rem;
         }
         
-        .upload-button {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 0.8rem 1.5rem;
+        .upload-btn {
+            background: var(--secondary-color);
             border: none;
+            padding: 0.8rem 1.5rem;
             border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
         }
-        
-        @media (max-width: 768px) {
-            .payment-container {
-                margin: 1rem;
-            }
-            
-            .payment-actions {
-                flex-direction: column;
-            }
-        }
     </style>
 </head>
 <body>
-    <main class="payment-gateway">
+    <div class="payment-gateway">
         <div class="payment-container">
             <div class="payment-header">
                 <h1 class="payment-title">Pembayaran</h1>
-                <div class="payment-amount" id="payment-amount">Rp 28.499.000</div>
-                <div class="order-id" id="order-id">Order #ORD-123456</div>
+                <p class="payment-subtitle">Pilih metode pembayaran yang Anda inginkan</p>
             </div>
             
-            <div class="payment-body">
-                <div class="payment-method-selection">
-                    <h3 class="method-title">Pilih Metode Pembayaran</h3>
-                    <div class="payment-methods" id="payment-methods">
-                        <!-- Payment methods will be populated here -->
-                    </div>
+            <div class="order-info">
+                <div class="order-row">
+                    <span>Order ID:</span>
+                    <span id="order-id">Loading...</span>
                 </div>
-                
-                <div class="payment-details" id="payment-details">
-                    <!-- Payment details will be shown here -->
+                <div class="order-row">
+                    <span>Subtotal:</span>
+                    <span id="order-subtotal">Rp 0</span>
                 </div>
-                
-                <div class="payment-actions">
-                    <button class="btn btn-secondary" onclick="window.history.back()">Kembali</button>
-                    <button class="btn btn-primary" id="confirm-payment">Konfirmasi Pembayaran</button>
+                <div class="order-row">
+                    <span>Pajak:</span>
+                    <span id="order-tax">Rp 0</span>
+                </div>
+                <div class="order-row">
+                    <span>Pengiriman:</span>
+                    <span id="order-shipping">Rp 0</span>
+                </div>
+                <div class="order-row">
+                    <span>Total Pembayaran:</span>
+                    <span id="order-total">Rp 0</span>
                 </div>
             </div>
+            
+            <div class="payment-methods-gateway" id="payment-methods">
+                <!-- Payment methods will be populated by JavaScript -->
+            </div>
+            
+            <div class="payment-timer" id="payment-timer">
+                <div class="timer-text">Selesaikan pembayaran dalam:</div>
+                <div class="timer-countdown" id="countdown">15:00</div>
+            </div>
+            
+            <div class="payment-instructions" id="payment-instructions">
+                <div class="instructions-title">Instruksi Pembayaran</div>
+                <ul class="instructions-list" id="instructions-list">
+                    <!-- Instructions will be populated by JavaScript -->
+                </ul>
+            </div>
+            
+            <div class="upload-section" id="upload-section">
+                <div class="upload-text">Upload bukti pembayaran (opsional)</div>
+                <input type="file" id="payment-proof" accept="image/*" style="display: none;">
+                <button class="upload-btn" onclick="document.getElementById('payment-proof').click()">
+                    Pilih File
+                </button>
+            </div>
+            
+            <div class="payment-actions">
+                <button class="btn-secondary" onclick="window.history.back()">Kembali</button>
+                <button class="btn-primary" id="confirm-payment">Konfirmasi Pembayaran</button>
+            </div>
         </div>
-    </main>
-
-    <script src="cart-manager.js"></script>
+    </div>
+    
     <script src="payment-system.js"></script>
     <script src="order-manager.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Get order data from URL or localStorage
+            // Initialize managers
+            if (!window.paymentSystem) {
+                window.paymentSystem = new PaymentSystem()
+            }
+            if (!window.orderManager) {
+                window.orderManager = new OrderManager()
+            }
+            
+            // Get URL parameters
             const urlParams = new URLSearchParams(window.location.search)
             const orderId = urlParams.get('order')
-            const amount = parseInt(urlParams.get('amount')) || 28499000
+            const amount = parseInt(urlParams.get('amount')) || 0
             
-            // Update display
-            document.getElementById('payment-amount').textContent = `Rp ${amount.toLocaleString('id-ID')}`
-            document.getElementById('order-id').textContent = `Order #${orderId || 'ORD-123456'}`
+            // Load order data
+            loadOrderData(orderId, amount)
             
             // Load payment methods
             loadPaymentMethods(amount)
             
             // Bind events
-            bindPaymentEvents()
+            bindEvents()
         })
         
+        function loadOrderData(orderId, amount) {
+            document.getElementById('order-id').textContent = orderId || 'ORD-' + Date.now()
+            
+            // Calculate breakdown
+            const subtotal = Math.round(amount / 1.1)
+            const tax = amount - subtotal
+            
+            document.getElementById('order-subtotal').textContent = `Rp ${subtotal.toLocaleString('id-ID')}`
+            document.getElementById('order-tax').textContent = `Rp ${tax.toLocaleString('id-ID')}`
+            document.getElementById('order-shipping').textContent = 'Gratis'
+            document.getElementById('order-total').textContent = `Rp ${amount.toLocaleString('id-ID')}`
+        }
+        
         function loadPaymentMethods(amount) {
-            const methods = paymentSystem.getPaymentMethodsWithFees(amount)
+            const methods = window.paymentSystem.getPaymentMethodsWithFees(amount)
             const container = document.getElementById('payment-methods')
             
-            container.innerHTML = methods.map(method => `
-                <div class="payment-method" data-method="${method.key}">
-                    <input type="radio" name="payment-method" value="${method.key}">
-                    <div class="method-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            ${getMethodIcon(method.key)}
-                        </svg>
+            container.innerHTML = methods.map((method, index) => `
+                <div class="payment-method-gateway ${index === 0 ? 'selected' : ''}" data-method="${method.key}">
+                    <div class="payment-icon-gateway">
+                        ${getPaymentIcon(method.key)}
                     </div>
-                    <div class="method-info">
-                        <div class="method-name">${method.name}</div>
-                        <div class="method-desc">${method.processingTime}</div>
+                    <div class="payment-details">
+                        <div class="payment-name-gateway">${method.name}</div>
+                        <div class="payment-desc-gateway">${method.processingTime}</div>
                     </div>
-                    <div class="method-fee">
+                    <div class="payment-fee">
                         ${method.feeAmount > 0 ? `+Rp ${method.feeAmount.toLocaleString('id-ID')}` : 'Gratis'}
                     </div>
                 </div>
             `).join('')
+            
+            // Show instructions for first method
+            if (methods.length > 0) {
+                showPaymentInstructions(methods[0].key, amount)
+            }
         }
         
-        function getMethodIcon(method) {
+        function getPaymentIcon(method) {
             const icons = {
-                'credit-card': '<rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line>',
-                'bank-transfer': '<path d="M3 3v18h18V3"></path><path d="M8 12h8"></path><path d="M8 8h8"></path><path d="M8 16h8"></path>',
-                'e-wallet': '<path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"></path><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"></path><line x1="18" y1="12" x2="18" y2="12"></line>',
-                'cod': '<path d="M12 2v20m8-10H4"></path>'
+                'credit-card': '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>',
+                'bank-transfer': '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18V3"></path><path d="M8 12h8"></path></svg>',
+                'e-wallet': '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"></path><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"></path></svg>',
+                'cod': '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20m8-10H4"></path></svg>'
             }
             return icons[method] || icons['credit-card']
         }
         
-        function bindPaymentEvents() {
+        function bindEvents() {
             // Payment method selection
-            document.querySelectorAll('.payment-method').forEach(method => {
-                method.addEventListener('click', function() {
-                    // Remove previous selection
-                    document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'))
+            document.addEventListener('click', function(e) {
+                const method = e.target.closest('.payment-method-gateway')
+                if (method) {
+                    document.querySelectorAll('.payment-method-gateway').forEach(m => m.classList.remove('selected'))
+                    method.classList.add('selected')
                     
-                    // Select current method
-                    this.classList.add('selected')
-                    this.querySelector('input[type="radio"]').checked = true
-                    
-                    // Show payment details
-                    showPaymentDetails(this.dataset.method)
-                })
+                    const methodKey = method.dataset.method
+                    const amount = parseInt(document.getElementById('order-total').textContent.replace(/\D/g, ''))
+                    showPaymentInstructions(methodKey, amount)
+                }
             })
             
-            // Confirm payment button
+            // Confirm payment
             document.getElementById('confirm-payment').addEventListener('click', function() {
-                const selectedMethod = document.querySelector('input[name="payment-method"]:checked')
-                
-                if (!selectedMethod) {
-                    alert('Pilih metode pembayaran terlebih dahulu')
-                    return
+                const selectedMethod = document.querySelector('.payment-method-gateway.selected')
+                if (selectedMethod) {
+                    processPayment(selectedMethod.dataset.method)
                 }
-                
-                processPayment(selectedMethod.value)
+            })
+            
+            // File upload
+            document.getElementById('payment-proof').addEventListener('change', function(e) {
+                if (e.target.files.length > 0) {
+                    const fileName = e.target.files[0].name
+                    document.querySelector('.upload-text').textContent = `File dipilih: ${fileName}`
+                }
             })
         }
         
-        function showPaymentDetails(method) {
-            const detailsContainer = document.getElementById('payment-details')
-            const amount = parseInt(document.getElementById('payment-amount').textContent.replace(/\D/g, ''))
-            const orderId = document.getElementById('order-id').textContent.replace('Order #', '')
-            
-            const instructions = paymentSystem.generatePaymentInstructions(method, amount, orderId)
+        function showPaymentInstructions(method, amount) {
+            const instructions = window.paymentSystem.generatePaymentInstructions(method, amount, document.getElementById('order-id').textContent)
+            const instructionsContainer = document.getElementById('payment-instructions')
+            const instructionsList = document.getElementById('instructions-list')
+            const timer = document.getElementById('payment-timer')
+            const uploadSection = document.getElementById('upload-section')
             
             if (instructions) {
-                detailsContainer.innerHTML = `
-                    <div class="payment-instructions">
-                        <h4 class="instructions-title">${instructions.title}</h4>
-                        <ul class="instructions-list">
-                            ${instructions.steps.map(step => `<li>${step}</li>`).join('')}
-                        </ul>
-                    </div>
-                    
-                    ${method === 'bank-transfer' ? generateBankOptions() : ''}
-                    ${method === 'e-wallet' ? generateEWalletOptions() : ''}
-                    
-                    ${instructions.expiry ? `
-                        <div class="payment-timer">
-                            <div class="timer-label">Batas Waktu Pembayaran</div>
-                            <div class="timer-value" id="payment-timer">${formatTimeRemaining(instructions.expiry)}</div>
-                        </div>
-                    ` : ''}
-                    
-                    ${method !== 'credit-card' && method !== 'cod' ? `
-                        <div class="upload-proof">
-                            <div class="upload-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                                    <polyline points="7,10 12,15 17,10"></polyline>
-                                    <line x1="12" y1="15" x2="12" y2="3"></line>
-                                </svg>
-                            </div>
-                            <div class="upload-text">Upload bukti pembayaran</div>
-                            <button class="upload-button" onclick="uploadProof()">Pilih File</button>
-                        </div>
-                    ` : ''}
-                `
+                instructionsList.innerHTML = instructions.steps.map(step => `<li>${step}</li>`).join('')
+                instructionsContainer.classList.add('show')
                 
-                detailsContainer.classList.add('show')
-                
-                // Start timer if needed
-                if (instructions.expiry) {
-                    startPaymentTimer(instructions.expiry)
+                // Show timer for time-sensitive payments
+                if (method === 'bank-transfer' || method === 'e-wallet') {
+                    timer.classList.add('show')
+                    startCountdown(method === 'bank-transfer' ? 24 * 60 : 2 * 60) // 24 hours or 2 hours
+                    uploadSection.classList.add('show')
+                } else {
+                    timer.classList.remove('show')
+                    uploadSection.classList.remove('show')
                 }
+            } else {
+                instructionsContainer.classList.remove('show')
+                timer.classList.remove('show')
+                uploadSection.classList.remove('show')
             }
         }
         
-        function generateBankOptions() {
-            const banks = paymentSystem.banks
-            return `
-                <div class="bank-options">
-                    ${banks.map(bank => `
-                        <div class="bank-option">
-                            <div class="bank-name">${bank.name}</div>
-                            <div class="bank-account">No. Rekening: ${bank.account}</div>
-                            <div class="bank-account">Atas Nama: CameraHub Indonesia</div>
-                        </div>
-                    `).join('')}
-                </div>
-            `
-        }
-        
-        function generateEWalletOptions() {
-            const eWallets = paymentSystem.eWallets
-            return `
-                <div class="ewallet-options">
-                    ${eWallets.map(wallet => `
-                        <div class="ewallet-option">
-                            <div class="ewallet-name">${wallet.name}</div>
-                            <div class="ewallet-number">${wallet.number}</div>
-                        </div>
-                    `).join('')}
-                </div>
-            `
-        }
-        
-        function formatTimeRemaining(expiry) {
-            const now = new Date()
-            const expiryDate = new Date(expiry)
-            const diff = expiryDate - now
+        function startCountdown(minutes) {
+            let timeLeft = minutes * 60
+            const countdownElement = document.getElementById('countdown')
             
-            if (diff <= 0) return '00:00:00'
-            
-            const hours = Math.floor(diff / (1000 * 60 * 60))
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000)
-            
-            return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
-        }
-        
-        function startPaymentTimer(expiry) {
-            const timer = setInterval(() => {
-                const timerElement = document.getElementById('payment-timer')
-                if (timerElement) {
-                    const timeRemaining = formatTimeRemaining(expiry)
-                    timerElement.textContent = timeRemaining
-                    
-                    if (timeRemaining === '00:00:00') {
-                        clearInterval(timer)
-                        alert('Waktu pembayaran telah habis. Silakan buat pesanan baru.')
-                        window.location.href = 'cart.html'
-                    }
+            const timer = setInterval(function() {
+                const hours = Math.floor(timeLeft / 3600)
+                const mins = Math.floor((timeLeft % 3600) / 60)
+                const secs = timeLeft % 60
+                
+                if (hours > 0) {
+                    countdownElement.textContent = `${hours}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
+                } else {
+                    countdownElement.textContent = `${mins}:${secs.toString().padStart(2, '0')}`
                 }
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timer)
+                    countdownElement.textContent = 'Waktu Habis'
+                    countdownElement.style.color = '#dc3545'
+                }
+                
+                timeLeft--
             }, 1000)
         }
         
-        function uploadProof() {
-            const input = document.createElement('input')
-            input.type = 'file'
-            input.accept = 'image/*'
-            input.onchange = function(e) {
-                const file = e.target.files[0]
-                if (file) {
-                    // Simulate upload
-                    alert('Bukti pembayaran berhasil diupload. Pembayaran akan dikonfirmasi dalam 1-24 jam.')
-                }
-            }
-            input.click()
-        }
-        
         function processPayment(method) {
-            const amount = parseInt(document.getElementById('payment-amount').textContent.replace(/\D/g, ''))
-            const orderId = document.getElementById('order-id').textContent.replace('Order #', '')
+            // Show loading
+            const btn = document.getElementById('confirm-payment')
+            const originalText = btn.textContent
+            btn.textContent = 'Memproses...'
+            btn.disabled = true
             
-            const paymentData = {
-                paymentMethod: method,
-                orderData: {
-                    items: cartManager.cart,
-                    total: amount
-                },
-                customerInfo: {
-                    email: 'customer@example.com',
-                    name: 'Customer Name'
-                },
-                orderId: orderId
-            }
-            
-            paymentSystem.processPayment(paymentData)
+            // Simulate payment processing
+            setTimeout(function() {
+                if (method === 'credit-card') {
+                    // Redirect to success page immediately for credit card
+                    window.location.href = 'order-confirmation.html?status=success'
+                } else {
+                    // For other methods, show pending status
+                    window.location.href = 'order-confirmation.html?status=pending'
+                }
+            }, 2000)
         }
     </script>
 </body>

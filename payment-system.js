@@ -183,7 +183,7 @@ class PaymentSystem {
       title: "Instruksi Transfer Bank",
       steps: [
         "Pilih salah satu bank di bawah ini:",
-        ...this.banks.map((bank) => `${bank.name}\nNo. Rekening: ${bank.account}\nAtas Nama: CameraHub Indonesia`),
+        ...this.banks.map((bank) => `${bank.name}\nNo. Rekening: ${bank.account}\nAtas Nama: Berkamera Indonesia`),
         `Transfer sejumlah: Rp ${amount.toLocaleString("id-ID")}`,
         `Kode Unik: ${orderId}`,
         "Upload bukti transfer melalui WhatsApp: +62 123 456 7890",
@@ -216,7 +216,7 @@ class PaymentSystem {
       steps: [
         "Pembayaran akan diproses secara otomatis",
         "Pastikan data kartu yang dimasukkan benar",
-        'Transaksi akan muncul di rekening koran dengan nama "CAMERAHUB"',
+        'Transaksi akan muncul di rekening koran dengan nama "BERKAMERA"',
         "Simpan email konfirmasi sebagai bukti pembayaran",
       ],
     }

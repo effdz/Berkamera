@@ -373,7 +373,7 @@
             <div class="container">
                 <div class="cart-container">
                     <div class="cart-items">
-                        <div class="cart-item">
+                        <div class="cart-item" data-product-id="canon-eos-5d-mark-iv" data-product-name="Canon EOS 5D Mark IV" data-product-price="35999000" data-product-category="DSLR Camera" data-product-image="https://images.unsplash.com/photo-1502920917128-1aa500764cbd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80">
                             <div class="cart-item-image">
                                 <img src="https://images.unsplash.com/photo-1502920917128-1aa500764cbd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Canon EOS 5D Mark IV">
                             </div>
@@ -395,7 +395,7 @@
                             </div>
                         </div>
                         
-                        <div class="cart-item">
+                        <div class="cart-item" data-product-id="nikon-z-24-70mm" data-product-name="Nikon Z 24-70mm f/2.8" data-product-price="25699000" data-product-category="Camera Lens" data-product-image="https://images.unsplash.com/photo-1616423640778-28d1b53229bd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80">
                             <div class="cart-item-image">
                                 <img src="https://images.unsplash.com/photo-1616423640778-28d1b53229bd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Nikon Z 24-70mm f/2.8">
                             </div>
@@ -417,7 +417,7 @@
                             </div>
                         </div>
                         
-                        <div class="cart-item">
+                        <div class="cart-item" data-product-id="dji-ronin-s" data-product-name="DJI Ronin-S Gimbal" data-product-price="9999000" data-product-category="Camera Accessory" data-product-image="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80">
                             <div class="cart-item-image">
                                 <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="DJI Ronin-S Gimbal">
                             </div>
@@ -477,7 +477,7 @@
                             <div class="summary-value">Rp 78.866.700</div>
                         </div>
                         
-                        <button class="btn btn-primary checkout-btn">Lanjut ke Pembayaran</button>
+                        <button class="btn btn-primary checkout-btn" onclick="window.location.href='checkout.html'">Lanjut ke Pembayaran</button>
                     </div>
                 </div>
                 
@@ -546,6 +546,9 @@
     </footer>
 
     <script src="script.js"></script>
+    <script src="cart-manager.js"></script>
+    <script src="payment-system.js"></script>
+    <script src="order-manager.js"></script>
     <script>
         // Cart Page Scripts
         document.addEventListener('DOMContentLoaded', function() {

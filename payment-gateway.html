@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Gateway - CameraHub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
+    <style>
+        .payment-gateway {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 0;
+        }
+        
+        .payment-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 100%;
+            max-width: 500px;
+            margin: 0 1rem;
+        }
+        
+        .payment-header {
+            background: var(--primary-color);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .payment-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .payment-amount {
+            font-size: 2rem;
+            font-weight: 800;
+        }
+        
+        .payment-body {
+            padding: 2rem;
+        }
+        
+        .payment-method-selection {
+            margin-bottom: 2rem;
+        }
+        
+        .method-title {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+        
+        .payment-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .payment-method {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .payment-method:hover {
+            border-color: var(--primary-color);
+        }
+        
+        .payment-method.selected {
+            border-color: var(--primary-color);
+            background-color: rgba(231, 76, 60, 0.05);
+        }
+        
+        .payment-method input[type="radio"] {
+            margin-right: 1rem;
+        }
+        
+        .method-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background-color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+        }
+        
+        .method-info {
+            flex: 1;
+        }
+        
+        .method-name {
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+        
+        .method-desc {
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+        
+        .method-fee {
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+        }
+        
+        .payment-details {
+            display: none;
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background-color: var(--secondary-color);
+            border-radius: 10px;
+        }
+        
+        .payment-details.show {
+            display: block;
+        }
+        
+        .payment-instructions {
+            margin-bottom: 1.5rem;
+        }
+        
+        .instructions-title {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+        
+        .instructions-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .instructions-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .instructions-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .bank-options, .ewallet-options {
+            display: grid;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .bank-option, .ewallet-option {
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: white;
+        }
+        
+        .bank-name, .ewallet-name {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+        
+        .bank-account, .ewallet-number {
+            color: var(--light-text);
+            font-family: monospace;
+        }
+        
+        .payment-timer {
+            background: #fff3e0;
+            border: 1px solid #ffb74d;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+        }
+        
+        .timer-label {
+            font-size: 0.9rem;
+            color: var(--light-text);
+            margin-bottom: 0.5rem;
+        }
+        
+        .timer-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #f57c00;
+        }
+        
+        .payment-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            border: 2px solid var(--border-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .upload-proof {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            border: 2px dashed var(--border-color);
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .upload-icon {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 1rem;
+            color: var(--light-text);
+        }
+        
+        .upload-text {
+            color: var(--light-text);
+            margin-bottom: 1rem;
+        }
+        
+        .upload-button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .payment-container {
+                margin: 1rem;
+            }
+            
+            .payment-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="payment-gateway">
+        <div class="payment-container">
+            <div class="payment-header">
+                <h1 class="payment-title">Pembayaran</h1>
+                <div class="payment-amount" id="payment-amount">Rp 28.499.000</div>
+                <div class="order-id" id="order-id">Order #ORD-123456</div>
+            </div>
+            
+            <div class="payment-body">
+                <div class="payment-method-selection">
+                    <h3 class="method-title">Pilih Metode Pembayaran</h3>
+                    <div class="payment-methods" id="payment-methods">
+                        <!-- Payment methods will be populated here -->
+                    </div>
+                </div>
+                
+                <div class="payment-details" id="payment-details">
+                    <!-- Payment details will be shown here -->
+                </div>
+                
+                <div class="payment-actions">
+                    <button class="btn btn-secondary" onclick="window.history.back()">Kembali</button>
+                    <button class="btn btn-primary" id="confirm-payment">Konfirmasi Pembayaran</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="cart-manager.js"></script>
+    <script src="payment-system.js"></script>
+    <script src="order-manager.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get order data from URL or localStorage
+            const urlParams = new URLSearchParams(window.location.search)
+            const orderId = urlParams.get('order')
+            const amount = parseInt(urlParams.get('amount')) || 28499000
+            
+            // Update display
+            document.getElementById('payment-amount').textContent = `Rp ${amount.toLocaleString('id-ID')}`
+            document.getElementById('order-id').textContent = `Order #${orderId || 'ORD-123456'}`
+            
+            // Load payment methods
+            loadPaymentMethods(amount)
+            
+            // Bind events
+            bindPaymentEvents()
+        })
+        
+        function loadPaymentMethods(amount) {
+            const methods = paymentSystem.getPaymentMethodsWithFees(amount)
+            const container = document.getElementById('payment-methods')
+            
+            container.innerHTML = methods.map(method => `
+                <div class="payment-method" data-method="${method.key}">
+                    <input type="radio" name="payment-method" value="${method.key}">
+                    <div class="method-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            ${getMethodIcon(method.key)}
+                        </svg>
+                    </div>
+                    <div class="method-info">
+                        <div class="method-name">${method.name}</div>
+                        <div class="method-desc">${method.processingTime}</div>
+                    </div>
+                    <div class="method-fee">
+                        ${method.feeAmount > 0 ? `+Rp ${method.feeAmount.toLocaleString('id-ID')}` : 'Gratis'}
+                    </div>
+                </div>
+            `).join('')
+        }
+        
+        function getMethodIcon(method) {
+            const icons = {
+                'credit-card': '<rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line>',
+                'bank-transfer': '<path d="M3 3v18h18V3"></path><path d="M8 12h8"></path><path d="M8 8h8"></path><path d="M8 16h8"></path>',
+                'e-wallet': '<path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"></path><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"></path><line x1="18" y1="12" x2="18" y2="12"></line>',
+                'cod': '<path d="M12 2v20m8-10H4"></path>'
+            }
+            return icons[method] || icons['credit-card']
+        }
+        
+        function bindPaymentEvents() {
+            // Payment method selection
+            document.querySelectorAll('.payment-method').forEach(method => {
+                method.addEventListener('click', function() {
+                    // Remove previous selection
+                    document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'))
+                    
+                    // Select current method
+                    this.classList.add('selected')
+                    this.querySelector('input[type="radio"]').checked = true
+                    
+                    // Show payment details
+                    showPaymentDetails(this.dataset.method)
+                })
+            })
+            
+            // Confirm payment button
+            document.getElementById('confirm-payment').addEventListener('click', function() {
+                const selectedMethod = document.querySelector('input[name="payment-method"]:checked')
+                
+                if (!selectedMethod) {
+                    alert('Pilih metode pembayaran terlebih dahulu')
+                    return
+                }
+                
+                processPayment(selectedMethod.value)
+            })
+        }
+        
+        function showPaymentDetails(method) {
+            const detailsContainer = document.getElementById('payment-details')
+            const amount = parseInt(document.getElementById('payment-amount').textContent.replace(/\D/g, ''))
+            const orderId = document.getElementById('order-id').textContent.replace('Order #', '')
+            
+            const instructions = paymentSystem.generatePaymentInstructions(method, amount, orderId)
+            
+            if (instructions) {
+                detailsContainer.innerHTML = `
+                    <div class="payment-instructions">
+                        <h4 class="instructions-title">${instructions.title}</h4>
+                        <ul class="instructions-list">
+                            ${instructions.steps.map(step => `<li>${step}</li>`).join('')}
+                        </ul>
+                    </div>
+                    
+                    ${method === 'bank-transfer' ? generateBankOptions() : ''}
+                    ${method === 'e-wallet' ? generateEWalletOptions() : ''}
+                    
+                    ${instructions.expiry ? `
+                        <div class="payment-timer">
+                            <div class="timer-label">Batas Waktu Pembayaran</div>
+                            <div class="timer-value" id="payment-timer">${formatTimeRemaining(instructions.expiry)}</div>
+                        </div>
+                    ` : ''}
+                    
+                    ${method !== 'credit-card' && method !== 'cod' ? `
+                        <div class="upload-proof">
+                            <div class="upload-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="7,10 12,15 17,10"></polyline>
+                                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                                </svg>
+                            </div>
+                            <div class="upload-text">Upload bukti pembayaran</div>
+                            <button class="upload-button" onclick="uploadProof()">Pilih File</button>
+                        </div>
+                    ` : ''}
+                `
+                
+                detailsContainer.classList.add('show')
+                
+                // Start timer if needed
+                if (instructions.expiry) {
+                    startPaymentTimer(instructions.expiry)
+                }
+            }
+        }
+        
+        function generateBankOptions() {
+            const banks = paymentSystem.banks
+            return `
+                <div class="bank-options">
+                    ${banks.map(bank => `
+                        <div class="bank-option">
+                            <div class="bank-name">${bank.name}</div>
+                            <div class="bank-account">No. Rekening: ${bank.account}</div>
+                            <div class="bank-account">Atas Nama: CameraHub Indonesia</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `
+        }
+        
+        function generateEWalletOptions() {
+            const eWallets = paymentSystem.eWallets
+            return `
+                <div class="ewallet-options">
+                    ${eWallets.map(wallet => `
+                        <div class="ewallet-option">
+                            <div class="ewallet-name">${wallet.name}</div>
+                            <div class="ewallet-number">${wallet.number}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `
+        }
+        
+        function formatTimeRemaining(expiry) {
+            const now = new Date()
+            const expiryDate = new Date(expiry)
+            const diff = expiryDate - now
+            
+            if (diff <= 0) return '00:00:00'
+            
+            const hours = Math.floor(diff / (1000 * 60 * 60))
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000)
+            
+            return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
+        }
+        
+        function startPaymentTimer(expiry) {
+            const timer = setInterval(() => {
+                const timerElement = document.getElementById('payment-timer')
+                if (timerElement) {
+                    const timeRemaining = formatTimeRemaining(expiry)
+                    timerElement.textContent = timeRemaining
+                    
+                    if (timeRemaining === '00:00:00') {
+                        clearInterval(timer)
+                        alert('Waktu pembayaran telah habis. Silakan buat pesanan baru.')
+                        window.location.href = 'cart.html'
+                    }
+                }
+            }, 1000)
+        }
+        
+        function uploadProof() {
+            const input = document.createElement('input')
+            input.type = 'file'
+            input.accept = 'image/*'
+            input.onchange = function(e) {
+                const file = e.target.files[0]
+                if (file) {
+                    // Simulate upload
+                    alert('Bukti pembayaran berhasil diupload. Pembayaran akan dikonfirmasi dalam 1-24 jam.')
+                }
+            }
+            input.click()
+        }
+        
+        function processPayment(method) {
+            const amount = parseInt(document.getElementById('payment-amount').textContent.replace(/\D/g, ''))
+            const orderId = document.getElementById('order-id').textContent.replace('Order #', '')
+            
+            const paymentData = {
+                paymentMethod: method,
+                orderData: {
+                    items: cartManager.cart,
+                    total: amount
+                },
+                customerInfo: {
+                    email: 'customer@example.com',
+                    name: 'Customer Name'
+                },
+                orderId: orderId
+            }
+            
+            paymentSystem.processPayment(paymentData)
+        }
+    </script>
+</body>
+</html>

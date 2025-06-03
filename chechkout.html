@@ -545,33 +545,33 @@
                                 <div class="form-row">
                                     <div class="form-group">
                                         <label for="firstName" class="form-label">Nama Depan *</label>
-                                        <input type="text" id="firstName" class="form-input" required>
+                                        <input type="text" id="firstName" name="firstName" class="form-input" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="lastName" class="form-label">Nama Belakang *</label>
-                                        <input type="text" id="lastName" class="form-input" required>
+                                        <input type="text" id="lastName" name="lastName" class="form-input" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="email" class="form-label">Email *</label>
-                                    <input type="email" id="email" class="form-input" required>
+                                    <input type="email" id="email" name="email" class="form-input" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="phone" class="form-label">Nomor Telepon *</label>
-                                    <input type="tel" id="phone" class="form-input" required>
+                                    <input type="tel" id="phone" name="phone" class="form-input" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="address" class="form-label">Alamat Lengkap *</label>
-                                    <input type="text" id="address" class="form-input" required>
+                                    <input type="text" id="address" name="address" class="form-input" required>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group">
                                         <label for="city" class="form-label">Kota *</label>
-                                        <input type="text" id="city" class="form-input" required>
+                                        <input type="text" id="city" name="city" class="form-input" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="province" class="form-label">Provinsi *</label>
-                                        <select id="province" class="form-select" required>
+                                        <select id="province" name="province" class="form-select" required>
                                             <option value="">Pilih Provinsi</option>
                                             <option value="jakarta">DKI Jakarta</option>
                                             <option value="jabar">Jawa Barat</option>
@@ -584,11 +584,11 @@
                                 <div class="form-row">
                                     <div class="form-group">
                                         <label for="postalCode" class="form-label">Kode Pos *</label>
-                                        <input type="text" id="postalCode" class="form-input" required>
+                                        <input type="text" id="postalCode" name="postalCode" class="form-input" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="country" class="form-label">Negara *</label>
-                                        <select id="country" class="form-select" required>
+                                        <select id="country" name="country" class="form-select" required>
                                             <option value="indonesia">Indonesia</option>
                                         </select>
                                     </div>
@@ -704,7 +704,7 @@
                                 <h2 class="form-section-title">Catatan Pesanan (Opsional)</h2>
                                 <div class="form-group">
                                     <label for="orderNotes" class="form-label">Catatan untuk penjual</label>
-                                    <textarea id="orderNotes" class="form-input" rows="4" placeholder="Catatan khusus untuk pesanan Anda..."></textarea>
+                                    <textarea id="orderNotes" name="orderNotes" class="form-input" rows="4" placeholder="Catatan khusus untuk pesanan Anda..."></textarea>
                                 </div>
                             </div>
                         </form>
@@ -844,136 +844,166 @@
     <script src="script.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Shipping options
-            const shippingOptions = document.querySelectorAll('.shipping-option');
-            const shippingCost = document.getElementById('shipping-cost');
-            const finalTotal = document.getElementById('final-total');
+    // Load cart data
+    if (window.cartManager) {
+        const cartData = cartManager.getCartData()
+        updateOrderSummary(cartData)
+    }
+    
+    // Shipping options
+    const shippingOptions = document.querySelectorAll('.shipping-option')
+    const shippingCost = document.getElementById('shipping-cost')
+    const finalTotal = document.getElementById('final-total')
+    
+    shippingOptions.forEach(option => {
+        option.addEventListener('click', function() {
+            shippingOptions.forEach(opt => opt.classList.remove('selected'))
+            this.classList.add('selected')
             
-            shippingOptions.forEach(option => {
-                option.addEventListener('click', function() {
-                    shippingOptions.forEach(opt => opt.classList.remove('selected'));
-                    this.classList.add('selected');
-                    
-                    const radio = this.querySelector('input[type="radio"]');
-                    radio.checked = true;
-                    
-                    const price = this.querySelector('.shipping-price').textContent;
-                    shippingCost.textContent = price;
-                    
-                    // Update total
-                    updateTotal();
-                });
-            });
+            const radio = this.querySelector('input[type="radio"]')
+            radio.checked = true
             
-            // Payment methods
-            const paymentMethods = document.querySelectorAll('.payment-method');
-            const cardDetails = document.getElementById('card-details');
+            const price = this.querySelector('.shipping-price').textContent
+            shippingCost.textContent = price
             
-            paymentMethods.forEach(method => {
-                method.addEventListener('click', function() {
-                    paymentMethods.forEach(m => m.classList.remove('selected'));
-                    this.classList.add('selected');
-                    
-                    const radio = this.querySelector('input[type="radio"]');
-                    radio.checked = true;
-                    
-                    // Show/hide card details
-                    if (radio.value === 'credit-card') {
-                        cardDetails.classList.add('show');
-                    } else {
-                        cardDetails.classList.remove('show');
-                    }
-                });
-            });
+            updateTotal()
+        })
+    })
+    
+    // Payment methods
+    const paymentMethods = document.querySelectorAll('.payment-method')
+    const cardDetails = document.getElementById('card-details')
+    
+    paymentMethods.forEach(method => {
+        method.addEventListener('click', function() {
+            paymentMethods.forEach(m => m.classList.remove('selected'))
+            this.classList.add('selected')
             
-            // Form validation
-            const checkoutForm = document.getElementById('checkout-form');
+            const radio = this.querySelector('input[type="radio"]')
+            radio.checked = true
             
-            checkoutForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // Basic validation
-                const requiredFields = this.querySelectorAll('[required]');
-                let isValid = true;
-                
-                requiredFields.forEach(field => {
-                    if (!field.value.trim()) {
-                        field.style.borderColor = '#d32f2f';
-                        isValid = false;
-                    } else {
-                        field.style.borderColor = '';
-                    }
-                });
-                
-                if (isValid) {
-                    // Show success message and redirect
-                    alert('Pesanan berhasil dibuat! Anda akan diarahkan ke halaman konfirmasi.');
-                    window.location.href = 'order-confirmation.html';
-                } else {
-                    alert('Mohon lengkapi semua field yang wajib diisi.');
-                }
-            });
-            
-            // Promo code
-            const promoBtn = document.querySelector('.promo-btn');
-            
-            promoBtn.addEventListener('click', function() {
-                const promoInput = document.querySelector('.promo-input input');
-                const promoCode = promoInput.value.trim().toLowerCase();
-                
-                if (promoCode === 'welcome10') {
-                    alert('Kode promo berhasil diterapkan! Diskon 10%');
-                    updateTotal(0.1); // 10% discount
-                } else if (promoCode) {
-                    alert('Kode promo tidak valid.');
-                } else {
-                    alert('Masukkan kode promo terlebih dahulu.');
-                }
-            });
-            
-            function updateTotal(discount = 0) {
-                const subtotal = 51498000;
-                const tax = subtotal * 0.1;
-                const shippingText = shippingCost.textContent;
-                let shipping = 0;
-                
-                if (shippingText.includes('50.000')) {
-                    shipping = 50000;
-                } else if (shippingText.includes('100.000')) {
-                    shipping = 100000;
-                }
-                
-                const discountAmount = subtotal * discount;
-                const total = subtotal + tax + shipping - discountAmount;
-                
-                finalTotal.textContent = `Rp ${total.toLocaleString('id-ID')}`;
-                
-                // Update discount display
-                const discountRow = document.querySelector('.total-row:nth-child(4) span:last-child');
-                discountRow.textContent = `-Rp ${discountAmount.toLocaleString('id-ID')}`;
+            if (radio.value === 'credit-card') {
+                cardDetails.classList.add('show')
+            } else {
+                cardDetails.classList.remove('show')
             }
-            
-            // Card number formatting
-            const cardNumberInput = document.getElementById('cardNumber');
-            
-            cardNumberInput.addEventListener('input', function() {
-                let value = this.value.replace(/\s/g, '').replace(/[^0-9]/gi, '');
-                let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
-                
-                this.value = formattedValue;
-            });
-            
-            // Expiry date formatting
-            const expiryInput = document.getElementById('expiryDate');
-            
-            expiryInput.addEventListener('input', function() {
-                let value = this.value.replace(/\D/g, '');
-                if (value.length >= 2) {
-                    value = value.substring(0, 2) + '/' + value.substring(2, 4);
-                }
-                this.value = value;
-            });
-        });
+        })
+    })
+    
+    // Form submission
+    const checkoutForm = document.getElementById('checkout-form')
+    
+    checkoutForm.addEventListener('submit', function(e) {
+        e.preventDefault()
+        
+        if (validateForm()) {
+            processCheckout()
+        }
+    })
+    
+    function validateForm() {
+        const requiredFields = checkoutForm.querySelectorAll('[required]')
+        let isValid = true
+        
+        requiredFields.forEach(field => {
+            if (!field.value.trim()) {
+                field.style.borderColor = '#d32f2f'
+                isValid = false
+            } else {
+                field.style.borderColor = ''
+            }
+        })
+        
+        if (!isValid) {
+            alert('Mohon lengkapi semua field yang wajib diisi.')
+        }
+        
+        return isValid
+    }
+    
+    function processCheckout() {
+        const formData = new FormData(checkoutForm)
+        const cartData = cartManager.getCartData()
+        
+        // Create order
+        const orderData = {
+            customerInfo: {
+                name: `${formData.get('firstName')} ${formData.get('lastName')}`,
+                email: formData.get('email'),
+                phone: formData.get('phone')
+            },
+            shippingAddress: {
+                address: formData.get('address'),
+                city: formData.get('city'),
+                province: formData.get('province'),
+                postalCode: formData.get('postalCode'),
+                country: formData.get('country')
+            },
+            items: cartData.items,
+            subtotal: cartData.subtotal,
+            tax: cartData.tax,
+            shipping: getShippingCost(),
+            total: cartData.total + getShippingCost(),
+            paymentMethod: formData.get('payment'),
+            shippingMethod: formData.get('shipping'),
+            notes: formData.get('orderNotes')
+        }
+        
+        const order = orderManager.createOrder(orderData)
+        
+        // Redirect to payment gateway
+        window.location.href = `payment-gateway.html?order=${order.id}&amount=${order.total}`
+    }
+    
+    function getShippingCost() {
+        const selectedShipping = document.querySelector('input[name="shipping"]:checked')
+        if (!selectedShipping) return 0
+        
+        const shippingText = selectedShipping.closest('.shipping-option').querySelector('.shipping-price').textContent
+        
+        if (shippingText.includes('50.000')) return 50000
+        if (shippingText.includes('100.000')) return 100000
+        return 0
+    }
+    
+    function updateOrderSummary(cartData) {
+        const itemsList = document.querySelector('.order-items')
+        if (itemsList && cartData.items) {
+            itemsList.innerHTML = cartData.items.map(item => `
+                <div class="order-item">
+                    <div class="item-image">
+                        <img src="${item.image}" alt="${item.name}">
+                    </div>
+                    <div class="item-details">
+                        <div class="item-name">${item.name}</div>
+                        <div class="item-quantity">Qty: ${item.quantity}</div>
+                        <div class="item-price">Rp ${item.price.toLocaleString('id-ID')}</div>
+                    </div>
+                </div>
+            `).join('')
+        }
+        
+        // Update totals
+        const subtotalElement = document.querySelector('.total-row:first-child span:last-child')
+        const taxElement = document.querySelector('.total-row:nth-child(3) span:last-child')
+        
+        if (subtotalElement) subtotalElement.textContent = `Rp ${cartData.subtotal.toLocaleString('id-ID')}`
+        if (taxElement) taxElement.textContent = `Rp ${cartData.tax.toLocaleString('id-ID')}`
+        
+        updateTotal()
+    }
+    
+    function updateTotal() {
+        const cartData = cartManager.getCartData()
+        const shipping = getShippingCost()
+        const total = cartData.subtotal + cartData.tax + shipping
+        
+        const finalTotalElement = document.getElementById('final-total')
+        if (finalTotalElement) {
+            finalTotalElement.textContent = `Rp ${total.toLocaleString('id-ID')}`
+        }
+    }
+})
     </script>
 </body>
 </html>

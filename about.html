@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tentang Kami - CameraHub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
+    <style>
+        /* About Page Styles */
+        .about-header {
+            padding: 5rem 0;
+            text-align: center;
+            background-color: white;
+        }
+        
+        .about-title {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            color: var(--text-color);
+        }
+        
+        .about-description {
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--light-text);
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+        
+        .about-section {
+            padding: 5rem 0;
+            background-color: var(--secondary-color);
+        }
+        
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        .about-image {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .about-content h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+        }
+        
+        .about-content p {
+            color: var(--light-text);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+        
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2.5rem;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: var(--light-text);
+            font-weight: 600;
+        }
+        
+        .mission-section {
+            padding: 5rem 0;
+            background-color: white;
+        }
+        
+        .mission-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        
+        .mission-card {
+            background-color: var(--secondary-color);
+            border-radius: 15px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: var(--transition);
+        }
+        
+        .mission-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--card-shadow);
+        }
+        
+        .mission-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .mission-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+        
+        .mission-description {
+            color: var(--light-text);
+            line-height: 1.6;
+        }
+        
+        .team-section {
+            padding: 5rem 0;
+            background-color: var(--secondary-color);
+            text-align: center;
+        }
+        
+        .section-header {
+            margin-bottom: 3rem;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+        
+        .section-subtitle {
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--light-text);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .team-card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+        }
+        
+        .team-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .team-image {
+            height: 300px;
+            overflow: hidden;
+        }
+        
+        .team-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .team-card:hover .team-image img {
+            transform: scale(1.05);
+        }
+        
+        .team-info {
+            padding: 1.5rem;
+        }
+        
+        .team-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+        
+        .team-position {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .team-bio {
+            color: var(--light-text);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .team-social {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        
+        .team-social-link {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+        
+        .team-social-link:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .brands-section {
+            padding: 5rem 0;
+            background-color: white;
+            text-align: center;
+        }
+        
+        .brands-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 2.5rem;
+            align-items: center;
+            margin-top: 3rem;
+        }
+        
+        .brand-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            filter: grayscale(100%);
+            opacity: 0.7;
+            transition: var(--transition);
+        }
+        
+        .brand-item:hover {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+        
+        .brand-item img {
+            max-width: 100%;
+            max-height: 60px;
+        }
+        
+        .cta-section {
+            padding: 5rem 0;
+            background-color: var(--primary-color);
+            text-align: center;
+            color: white;
+        }
+        
+        .cta-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta-description {
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+        
+        .cta-button {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-block;
+        }
+        
+        .cta-button-primary {
+            background-color: white;
+            color: var(--primary-color);
+        }
+        
+        .cta-button-primary:hover {
+            background-color: var(--text-color);
+            color: white;
+        }
+        
+        .cta-button-secondary {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .cta-button-secondary:hover {
+            background-color: white;
+            color: var(--primary-color);
+        }
+        
+        @media (max-width: 992px) {
+            .about-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .mission-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .about-stats {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Banner -->
+    <div class="top-banner">
+        <div class="container">
+            <p>Diskon spesial untuk pembelian pertama!</p>
+            <a href="catalog.html" class="banner-button">Belanja sekarang</a>
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Camera<span>Hub</span></h1>
+            </div>
+            <nav>
+                <div class="menu-toggle" id="mobile-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="catalog.html">Products</a></li>
+                    <li><a href="articles.html">Articles</a></li>
+                    <li><a href="about.html" class="active">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="nav-icons">
+                <a href="cart.html" class="icon-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                    <span class="cart-count">0</span>
+                </a>
+                <a href="login.html" class="quiz-button">Login</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- About Header -->
+        <section class="about-header">
+            <div class="container">
+                <h1 class="about-title">Tentang CameraHub</h1>
+                <p class="about-description">Kami adalah toko kamera terkemuka di Indonesia yang menyediakan peralatan fotografi berkualitas tinggi untuk fotografer profesional dan penggemar fotografi.</p>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="about-section">
+            <div class="container">
+                <div class="about-container">
+                    <div class="about-image">
+                        <img src="https://images.unsplash.com/photo-1472851294608-062f824d29cc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="CameraHub Store">
+                    </div>
+                    <div class="about-content">
+                        <h2>Cerita Kami</h2>
+                        <p>CameraHub didirikan pada tahun 2010 oleh sekelompok fotografer profesional yang memiliki visi untuk menyediakan peralatan fotografi berkualitas tinggi dengan harga yang terjangkau di Indonesia.</p>
+                        <p>Dimulai dari toko kecil di Surabaya, kami telah berkembang menjadi salah satu toko kamera terkemuka di Indonesia dengan cabang di Jakarta dan Bandung. Kami bangga menjadi mitra tepercaya bagi fotografer profesional dan penggemar fotografi di seluruh Indonesia.</p>
+                        <p>Kami berkomitmen untuk menyediakan produk berkualitas tinggi, layanan pelanggan yang luar biasa, dan pengetahuan teknis yang mendalam untuk membantu pelanggan kami menemukan peralatan yang tepat untuk kebutuhan fotografi mereka.</p>
+                        
+                        <div class="about-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">13+</div>
+                                <div class="stat-label">Tahun Pengalaman</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">10k+</div>
+                                <div class="stat-label">Pelanggan Puas</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">500+</div>
+                                <div class="stat-label">Produk Tersedia</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Mission Section -->
+        <section class="mission-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Misi & Nilai Kami</h2>
+                    <p class="section-subtitle">Kami didorong oleh nilai-nilai yang membantu kami memberikan pengalaman terbaik bagi pelanggan kami</p>
+                </div>
+                
+                <div class="mission-container">
+                    <div class="mission-card">
+                        <div class="mission-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        </div>
+                        <h3 class="mission-title">Kualitas</h3>
+                        <p class="mission-description">Kami hanya menjual produk berkualitas tinggi dari merek terpercaya. Semua produk kami asli dan memiliki garansi resmi dari distributor atau produsen.</p>
+                    </div>
+                    
+                    <div class="mission-card">
+                        <div class="mission-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                        </div>
+                        <h3 class="mission-title">Pengetahuan</h3>
+                        <p class="mission-description">Tim kami terdiri dari fotografer berpengalaman yang dapat memberikan saran dan rekomendasi berdasarkan pengetahuan teknis yang mendalam.</p>
+                    </div>
+                    
+                    <div class="mission-card">
+                        <div class="mission-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                        </div>
+                        <h3 class="mission-title">Layanan</h3>
+                        <p class="mission-description">Kami berkomitmen untuk memberikan layanan pelanggan yang luar biasa. Kepuasan pelanggan adalah prioritas utama kami.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Team Section -->
+        <section class="team-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Tim Kami</h2>
+                    <p class="section-subtitle">Kenali orang-orang hebat di balik CameraHub yang berdedikasi untuk memberikan pengalaman terbaik bagi Anda</p>
+                </div>
+                
+                <div class="team-grid">
+                    <div class="team-card">
+                        <div class="team-image">
+                            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Team Member">
+                        </div>
+                        <div class="team-info">
+                            <h3 class="team-name">Budi Santoso</h3>
+                            <div class="team-position">Pendiri & CEO</div>
+                            <p class="team-bio">Fotografer profesional dengan pengalaman lebih dari 20 tahun. Budi mendirikan CameraHub dengan visi untuk membantu fotografer Indonesia mendapatkan peralatan terbaik.</p>
+                            <div class="team-social">
+                                <a href="#" class="team-social-link">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                                </a>
+                                <a href="#" class="team-social-link">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                                </a>
+                                <a href="#" class="team-social-link">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="team-card">
+                        <div class="team-image">
+                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Team Member">
+                        </div>
+                        <div class="team-info">
+                            <h3 class="team-name">Dewi Lestari</h3>
+                            <div class="team-position">Manajer Operasional</div>
+                            <p class="team-bio">Dengan latar belakang di bidang manajemen ritel, Dewi memastikan operasional CameraHub berjalan lancar dan efisien untuk memberikan pengalaman terbaik bagi pelanggan.</p>
+                            <div class="team-social">
+                                <a href="#" class="team-social-link">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                                </a>
+                                <a href="#" class="team-social-link">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                                </a>
+                                <a href="#" class="team-social-link">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="team-card">
+                        <div class="team-image">
+                            <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Team Member">
+                        </div>
+                        <div class="team-info">
+                            <h3 class="team-name">Agus Wijaya</h3>
+                            <div class="team-position">Kepala Teknis</div>
+                            <p class="team-bio">Fotografer dan teknisi kamera berpengalaman. Agus memiliki pengetahuan mendalam tentang berbagai merek dan model kamera, serta dapat memberikan saran teknis yang akurat.</p>
+                            <div class="team-social">
+                                <a href="#" class="team-social-link">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                                </a>
+                                <a href="#" class="team-social-link">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                                </a>
+                                <a href="#" class="team-social-link">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="team-card">
+                        <div class="team-image">
+                            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Team Member">
+                        </div>
+                        <div class="team-info">
+                            <h3 class="team-name">Siti Rahayu</h3>
+                            <div class="team-position">Manajer Pemasaran</div>
+                            <p class="team-bio">Dengan pengalaman di bidang pemasaran digital, Siti bertanggung jawab untuk strategi pemasaran CameraHub dan memastikan pelanggan mendapatkan informasi terbaru tentang produk dan promosi.</p>
+                            <div class="team-social">
+                                <a href="#" class="team-social-link">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                                </a>
+                                <a href="#" class="team-social-link">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                                </a>
+                                <a href="#" class="team-social-link">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Brands Section -->
+        <section class="brands-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Merek yang Kami Jual</h2>
+                    <p class="section-subtitle">Kami menyediakan produk dari merek-merek terkemuka di industri fotografi</p>
+                </div>
+                
+                <div class="brands-grid">
+                    <div class="brand-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Canon_logo.svg/2560px-Canon_logo.svg.png" alt="Canon">
+                    </div>
+                    <div class="brand-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Sony_logo.svg/2560px-Sony_logo.svg.png" alt="Sony">
+                    </div>
+                    <div class="brand-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Nikon_Logo.svg/2560px-Nikon_Logo.svg.png" alt="Nikon">
+                    </div>
+                    <div class="brand-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Fujifilm_logo.svg/2560px-Fujifilm_logo.svg.png" alt="Fujifilm">
+                    </div>
+                    <div class="brand-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Olympus_Logo.svg/2560px-Olympus_Logo.svg.png" alt="Olympus">
+                    </div>
+                    <div class="brand-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Leica_Camera_logo.svg/2560px-Leica_Camera_logo.svg.png" alt="Leica">
+                    </div>
+                    <div class="brand-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Panasonic_logo_%28Blue%29.svg/2560px-Panasonic_logo_%28Blue%29.svg.png" alt="Panasonic">
+                    </div>
+                    <div class="brand-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Tamron_logo.svg/2560px-Tamron_logo.svg.png" alt="Tamron">
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="container">
+                <h2 class="cta-title">Siap untuk Meningkatkan Pengalaman Fotografi Anda?</h2>
+                <p class="cta-description">Jelajahi koleksi kamera, lensa, dan aksesoris premium kami atau kunjungi toko kami untuk konsultasi langsung dengan tim ahli kami.</p>
+                <div class="cta-buttons">
+                    <a href="catalog.html" class="cta-button cta-button-primary">Jelajahi Produk</a>
+                    <a href="contact.html" class="cta-button cta-button-secondary">Hubungi Kami</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Camera<span>Hub</span></h3>
+                    <p>Kamera dan aksesoris premium untuk profesional dan penggemar fotografi.</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Link Cepat</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="catalog.html">Produk</a></li>
+                        <li><a href="articles.html">Artikel</a></li>
+                        <li><a href="about.html">Tentang Kami</a></li>
+                        <li><a href="contact.html">Kontak</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Layanan Pelanggan</h3>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Pengiriman & Pengembalian</a></li>
+                        <li><a href="#">Garansi</a></li>
+                        <li><a href="#">Kebijakan Privasi</a></li>
+                        <li><a href="#">Syarat & Ketentuan</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Hubungi Kami</h3>
+                    <p>Jl. Kamera 123<br>Surabaya Timur, Indonesia</p>
+                    <p>Email: info@camerahub.com</p>
+                    <p>Telepon: +62 123 456 7890</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 CameraHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

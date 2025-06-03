@@ -1,0 +1,2529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Pengguna - CameraHub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
+    <style>
+        /* Profile Page Styles */
+        .profile-header {
+            padding: 5rem 0 3rem;
+            text-align: center;
+            background-color: white;
+        }
+        
+        .profile-title {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            color: var(--text-color);
+        }
+        
+        .profile-description {
+            max-width: 600px;
+            margin: 0 auto;
+            color: var(--light-text);
+            font-size: 1.2rem;
+        }
+        
+        .profile-section {
+            padding: 3rem 0 5rem;
+            background-color: var(--secondary-color);
+        }
+        
+        .profile-container {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+        }
+        
+        .profile-sidebar {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .profile-user {
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 1.5rem;
+            border: 4px solid var(--secondary-color);
+        }
+        
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .profile-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .profile-email {
+            color: var(--light-text);
+            margin-bottom: 1.5rem;
+        }
+        
+        .profile-edit-btn {
+            padding: 0.8rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-block;
+        }
+        
+        .profile-edit-btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .profile-nav {
+            padding: 1.5rem 0;
+        }
+        
+        .profile-nav-item {
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--text-color);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .profile-nav-item:hover {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+        }
+        
+        .profile-nav-item.active {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .profile-nav-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .profile-content {
+            background-color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .profile-section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .profile-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            transition: var(--transition);
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .form-select {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            transition: var(--transition);
+            background-color: white;
+        }
+        
+        .form-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .form-textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            transition: var(--transition);
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .form-actions {
+            grid-column: span 2;
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .btn-cancel {
+            padding: 0.8rem 1.5rem;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .btn-cancel:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .btn-save {
+            padding: 0.8rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .btn-save:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .orders-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .order-card {
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background-color: var(--secondary-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .order-id {
+            font-weight: 600;
+        }
+        
+        .order-date {
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+        
+        .order-status {
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .status-processing {
+            background-color: #fff8e1;
+            color: #ffa000;
+        }
+        
+        .status-shipped {
+            background-color: #e3f2fd;
+            color: #1976d2;
+        }
+        
+        .status-delivered {
+            background-color: #e8f5e9;
+            color: #388e3c;
+        }
+        
+        .status-cancelled {
+            background-color: #ffebee;
+            color: #d32f2f;
+        }
+        
+        .order-body {
+            padding: 1.5rem;
+        }
+        
+        .order-products {
+            margin-bottom: 1.5rem;
+        }
+        
+        .order-product {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .order-product:last-child {
+            border-bottom: none;
+        }
+        
+        .order-product-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        
+        .order-product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .order-product-details {
+            flex: 1;
+        }
+        
+        .order-product-name {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .order-product-price {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .order-product-quantity {
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+        
+        .order-summary {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .order-summary-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .summary-label {
+            color: var(--light-text);
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+        
+        .summary-value {
+            font-weight: 600;
+        }
+        
+        .summary-value.total {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+        
+        .order-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .order-btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .btn-track {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+        }
+        
+        .btn-track:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .btn-details {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            border: none;
+        }
+        
+        .btn-details:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .wishlist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .wishlist-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+        
+        .wishlist-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .wishlist-image {
+            height: 180px;
+            overflow: hidden;
+        }
+        
+        .wishlist-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .wishlist-card:hover .wishlist-image img {
+            transform: scale(1.05);
+        }
+        
+        .wishlist-content {
+            padding: 1.5rem;
+        }
+        
+        .wishlist-category {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background-color: var(--secondary-color);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: var(--primary-color);
+        }
+        
+        .wishlist-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            line-height: 1.3;
+        }
+        
+        .wishlist-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1.2rem;
+        }
+        
+        .wishlist-actions {
+            display: flex;
+            gap: 0.8rem;
+        }
+        
+        .wishlist-btn {
+            flex: 1;
+            padding: 0.7rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+        
+        .add-to-cart-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+        }
+        
+        .add-to-cart-btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .remove-btn {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            border: none;
+        }
+        
+        .remove-btn:hover {
+            background-color: #f8d7da;
+            color: #dc3545;
+        }
+        
+        .reviews-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .review-card {
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+        }
+        
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+        
+        .review-product {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .review-product-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .review-product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .review-product-name {
+            font-weight: 600;
+        }
+        
+        .review-date {
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+        
+        .review-rating {
+            display: flex;
+            gap: 0.3rem;
+            margin-bottom: 1rem;
+            color: #f1c40f;
+        }
+        
+        .review-text {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        
+        .review-images {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .review-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .review-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .review-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+        
+        .review-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+        
+        .btn-edit-review {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            border: none;
+        }
+        
+        .btn-edit-review:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .btn-delete-review {
+            background-color: #ffebee;
+            color: #d32f2f;
+            border: none;
+        }
+        
+        .btn-delete-review:hover {
+            background-color: #ffcdd2;
+        }
+        
+        .addresses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .address-card {
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            position: relative;
+        }
+        
+        .address-card.default {
+            border-color: var(--primary-color);
+        }
+        
+        .address-default-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.3rem 0.8rem;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .address-name {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .address-details {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .address-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .address-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+        
+        .btn-edit-address {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            border: none;
+        }
+        
+        .btn-edit-address:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .btn-delete-address {
+            background-color: #ffebee;
+            color: #d32f2f;
+            border: none;
+        }
+        
+        .btn-delete-address:hover {
+            background-color: #ffcdd2;
+        }
+        
+        .btn-add-address {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed var(--border-color);
+            border-radius: 10px;
+            padding: 2rem;
+            height: 100%;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .btn-add-address:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(231, 76, 60, 0.05);
+        }
+        
+        .add-address-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .add-address-text {
+            font-weight: 600;
+            color: var(--text-color);
+        }
+        
+        @media (max-width: 992px) {
+            .profile-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .profile-sidebar {
+                position: sticky;
+                top: 20px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .profile-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+            
+            .form-actions {
+                grid-column: span 1;
+            }
+            
+            .order-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .order-summary {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Banner -->
+    <div class="top-banner">
+        <div class="container">
+            <p>Diskon spesial untuk pembelian pertama!</p>
+            <a href="catalog.html" class="banner-button">Belanja sekarang</a>
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Camera<span>Hub</span></h1>
+            </div>
+            <nav>
+                <div class="menu-toggle" id="mobile-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="catalog.html">Products</a></li>
+                    <li><a href="articles.html">Articles</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="nav-icons">
+                <a href="wishlist.html" class="icon-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                    <span class="wishlist-count">3</span>
+                </a>
+                <a href="cart.html" class="icon-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                    <span class="cart-count">2</span>
+                </a>
+                <a href="#" class="quiz-button">Akun Saya</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Profile Header -->
+        <section class="profile-header">
+            <div class="container">
+                <h1 class="profile-title">Akun Saya</h1>
+                <p class="profile-description">Kelola profil, pesanan, dan preferensi Anda</p>
+            </div>
+        </section>
+
+        <!-- Profile Section -->
+        <section class="profile-section">
+            <div class="container">
+                <div class="profile-container">
+                    <!-- Profile Sidebar -->
+                    <div class="profile-sidebar">
+                        <div class="profile-user">
+                            <div class="profile-avatar">
+                                <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="User Avatar">
+                            </div>
+                            <div class="profile-name">Ahmad Rizki</div>
+                            <div class="profile-email">ahmad.rizki@gmail.com</div>
+                            <a href="#" class="profile-edit-btn">Edit Profil</a>
+                        </div>
+                        <div class="profile-nav">
+                            <div class="profile-nav-item active">
+                                <div class="profile-nav-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                </div>
+                                <div>Informasi Akun</div>
+                            </div>
+                            <div class="profile-nav-item">
+                                <div class="profile-nav-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                                </div>
+                                <div>Pesanan Saya</div>
+                            </div>
+                            <div class="profile-nav-item">
+                                <div class="profile-nav-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                                </div>
+                                <div>Wishlist</div>
+                            </div>
+                            <div class="profile-nav-item">
+                                <div class="profile-nav-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                                </div>
+                                <div>Ulasan Saya</div>
+                            </div>
+                            <div class="profile-nav-item">
+                                <div class="profile-nav-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                </div>
+                                <div>Alamat</div>
+                            </div>
+                            <div class="profile-nav-item">
+                                <div class="profile-nav-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                                </div>
+                                <div>Keamanan</div>
+                            </div>
+                            <div class="profile-nav-item">
+                                <div class="profile-nav-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                                </div>
+                                <div>Keluar</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Profile Content -->
+                    <div class="profile-content">
+                        <h2 class="profile-section-title">Informasi Akun</h2>
+                        
+                        <form class="profile-form">
+                            <div class="form-group">
+                                <label for="firstName" class="form-label">Nama Depan</label>
+                                <input type="text" id="firstName" class="form-input" value="Ahmad">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="lastName" class="form-label">Nama Belakang</label>
+                                <input type="text" id="lastName" class="form-input" value="Rizki">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" id="email" class="form-input" value="ahmad.rizki@gmail.com">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="phone" class="form-label">Nomor Telepon</label>
+                                <input type="tel" id="phone" class="form-input" value="081234567890">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="birthdate" class="form-label">Tanggal Lahir</label>
+                                <input type="date" id="birthdate" class="form-input" value="1990-05-15">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="gender" class="form-label">Jenis Kelamin</label>
+                                <select id="gender" class="form-select">
+                                    <option value="male" selected>Laki-laki</option>
+                                    <option value="female">Perempuan</option>
+                                    <option value="other">Lainnya</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group full-width">
+                                <label for="bio" class="form-label">Bio</label>
+                                <textarea id="bio" class="form-textarea">Saya adalah seorang fotografer amatir yang senang mengabadikan momen-momen indah dalam kehidupan. Saya tertarik dengan fotografi landscape dan street photography.</textarea>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="button" class="btn-cancel">Batal</button>
+                                <button type="submit" class="btn-save">Simpan Perubahan</button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- Orders Content (Hidden by default) -->
+                    <div class="profile-content" style="display: none;">
+                        <h2 class="profile-section-title">Pesanan Saya</h2>
+                        
+                        <div class="orders-list">
+                            <!-- Order 1 -->
+                            <div class="order-card">
+                                <div class="order-header">
+                                    <div class="order-id">Order #12345</div>
+                                    <div class="order-date">15 Mei 2023</div>
+                                    <div class="order-status status-shipped">Dikirim</div>
+                                </div>
+                                <div class="order-body">
+                                    <div class="order-products">
+                                        <div class="order-product">
+                                            <div class="order-product-image">
+                                                <img src="https://images.unsplash.com/photo-1581591524425-c7e0978865fc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Sony Alpha a7 III">
+                                            </div>
+                                            <div class="order-product-details">
+                                                <div class="order-product-name">Sony Alpha a7 III</div>
+                                                <div class="order-product-price">Rp 28.499.000</div>
+                                                <div class="order-product-quantity">Jumlah: 1</div>
+                                            </div>
+                                        </div>
+                                        <div class="order-product">
+                                            <div class="order-product-image">
+                                                <img src="https://images.unsplash.com/photo-1616423640778-28d1b53229bd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Sony 24-70mm f/2.8 GM Lens">
+                                            </div>
+                                            <div class="order-product-details">
+                                                <div class="order-product-name">Sony 24-70mm f/2.8 GM Lens</div>
+                                                <div class="order-product-price">Rp 22.999.000</div>
+                                                <div class="order-product-quantity">Jumlah: 1</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="order-summary">
+                                        <div class="order-summary-item">
+                                            <div class="summary-label">Subtotal</div>
+                                            <div class="summary-value">Rp 51.498.000</div>
+                                        </div>
+                                        <div class="order-summary-item">
+                                            <div class="summary-label">Pengiriman</div>
+                                            <div class="summary-value">Rp 50.000</div>
+                                        </div>
+                                        <div class="order-summary-item">
+                                            <div class="summary-label">Pajak</div>
+                                            <div class="summary-value">Rp 5.149.800</div>
+                                        </div>
+                                        <div class="order-summary-item">
+                                            <div class="summary-label">Total</div>
+                                            <div class="summary-value total">Rp 56.697.800</div>
+                                        </div>
+                                    </div>
+                                    <div class="order-actions">
+                                        <button class="order-btn btn-details">Detail Pesanan</button>
+                                        <button class="order-btn btn-track">Lacak Pengiriman</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Order 2 -->
+                            <div class="order-card">
+                                <div class="order-header">
+                                    <div class="order-id">Order #12344</div>
+                                    <div class="order-date">10 Mei 2023</div>
+                                    <div class="order-status status-delivered">Diterima</div>
+                                </div>
+                                <div class="order-body">
+                                    <div class="order-products">
+                                        <div class="order-product">
+                                            <div class="order-product-image">
+                                                <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Camera Tripod">
+                                            </div>
+                                            <div class="order-product-details">
+                                                <div class="order-product-name">Manfrotto MT190XPRO4 Tripod</div>
+                                                <div class="order-product-price">Rp 2.999.000</div>
+                                                <div class="order-product-quantity">Jumlah: 1</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="order-summary">
+                                        <div class="order-summary-item">
+                                            <div class="summary-label">Subtotal</div>
+                                            <div class="summary-value">Rp 2.999.000</div>
+                                        </div>
+                                        <div class="order-summary-item">
+                                            <div class="summary-label">Pengiriman</div>
+                                            <div class="summary-value">Rp 30.000</div>
+                                        </div>
+                                        <div class="order-summary-item">
+                                            <div class="summary-label">Pajak</div>
+                                            <div class="summary-value">Rp 299.900</div>
+                                        </div>
+                                        <div class="order-summary-item">
+                                            <div class="summary-label">Total</div>
+                                            <div class="summary-value total">Rp 3.328.900</div>
+                                        </div>
+                                    </div>
+                                    <div class="order-actions">
+                                        <button class="order-btn btn-details">Detail Pesanan</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Order 3 -->
+                            <div class="order-card">
+                                <div class="order-header">
+                                    <div class="order-id">Order #12343</div>
+                                    <div class="order-date">5 Mei 2023</div>
+                                    <div class="order-status status-processing">Diproses</div>
+                                </div>
+                                <div class="order-body">
+                                    <div class="order-products">
+                                        <div class="order-product">
+                                            <div class="order-product-image">
+                                                <img src="https://images.unsplash.com/photo-1502982720700-bfff97f2ecac?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Camera Bag">
+                                            </div>
+                                            <div class="order-product-details">
+                                                <div class="order-product-name">Peak Design Everyday Backpack</div>
+                                                <div class="order-product-price">Rp 3.499.000</div>
+                                                <div class="order-product-quantity">Jumlah: 1</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="order-summary">
+                                        <div class="order-summary-item">
+                                            <div class="summary-label">Subtotal</div>
+                                            <div class="summary-value">Rp 3.499.000</div>
+                                        </div>
+                                        <div class="order-summary-item">
+                                            <div class="summary-label">Pengiriman</div>
+                                            <div class="summary-value">Rp 30.000</div>
+                                        </div>
+                                        <div class="order-summary-item">
+                                            <div class="summary-label">Pajak</div>
+                                            <div class="summary-value">Rp 349.900</div>
+                                        </div>
+                                        <div class="order-summary-item">
+                                            <div class="summary-label">Total</div>
+                                            <div class="summary-value total">Rp 3.878.900</div>
+                                        </div>
+                                    </div>
+                                    <div class="order-actions">
+                                        <button class="order-btn btn-details">Detail Pesanan</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Wishlist Content (Hidden by default) -->
+                    <div class="profile-content" style="display: none;">
+                        <h2 class="profile-section-title">Wishlist Saya</h2>
+                        
+                        <div class="wishlist-grid">
+                            <!-- Wishlist Item 1 -->
+                            <div class="wishlist-card">
+                                <div class="wishlist-image">
+                                    <img src="https://images.unsplash.com/photo-1502920917128-1aa500764cbd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Canon EOS 5D Mark IV">
+                                </div>
+                                <div class="wishlist-content">
+                                    <span class="wishlist-category">DSLR Camera</span>
+                                    <h3 class="wishlist-title">Canon EOS 5D Mark IV</h3>
+                                    <div class="wishlist-price">Rp 35.999.000</div>
+                                    <div class="wishlist-actions">
+                                        <a href="#" class="wishlist-btn add-to-cart-btn">Tambah ke Keranjang</a>
+                                        <a href="#" class="wishlist-btn remove-btn">Hapus</a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Wishlist Item 2 -->
+                            <div class="wishlist-card">
+                                <div class="wishlist-image">
+                                    <img src="https://images.unsplash.com/photo-1616423640778-28d1b53229bd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Nikon Z 24-70mm f/2.8">
+                                </div>
+                                <div class="wishlist-content">
+                                    <span class="wishlist-category">Camera Lens</span>
+                                    <h3 class="wishlist-title">Nikon Z 24-70mm f/2.8</h3>
+                                    <div class="wishlist-price">Rp 25.699.000</div>
+                                    <div class="wishlist-actions">
+                                        <a href="#" class="wishlist-btn add-to-cart-btn">Tambah ke Keranjang</a>
+                                        <a href="#" class="wishlist-btn remove-btn">Hapus</a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Wishlist Item 3 -->
+                            <div class="wishlist-card">
+                                <div class="wishlist-image">
+                                    <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="DJI Ronin-S Gimbal">
+                                </div>
+                                <div class="wishlist-content">
+                                    <span class="wishlist-category">Camera Accessory</span>
+                                    <h3 class="wishlist-title">DJI Ronin-S Gimbal</h3>
+                                    <div class="wishlist-price">Rp 9.999.000</div>
+                                    <div class="wishlist-actions">
+                                        <a href="#" class="wishlist-btn add-to-cart-btn">Tambah ke Keranjang</a>
+                                        <a href="#" class="wishlist-btn remove-btn">Hapus</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Reviews Content (Hidden by default) -->
+                    <div class="profile-content" style="display: none;">
+                        <h2 class="profile-section-title">Ulasan Saya</h2>
+                        
+                        <div class="reviews-list">
+                            <!-- Review 1 -->
+                            <div class="review-card">
+                                <div class="review-header">
+                                    <div class="review-product">
+                                        <div class="review-product-image">
+                                            <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="DJI Ronin-S Gimbal">
+                                        </div>
+                                        <div class="review-product-name">DJI Ronin-S Gimbal</div>
+                                    </div>
+                                    <div class="review-date">12 Mei 2023</div>
+                                </div>
+                                <div class="review-rating">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                </div>
+                                <div class="review-text">
+                                    Gimbal yang sangat bagus dan mudah digunakan. Stabilisasi sangat baik dan baterai tahan lama. Sangat cocok untuk videografi profesional. Saya sangat puas dengan pembelian ini dan akan merekomendasikannya kepada teman-teman fotografer lainnya.
+                                </div>
+                                <div class="review-images">
+                                    <div class="review-image">
+                                        <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Review Image">
+                                    </div>
+                                    <div class="review-image">
+                                        <img src="https://images.unsplash.com/photo-1491796014055-e6835cdcd4c6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Review Image">
+                                    </div>
+                                </div>
+                                <div class="review-actions">
+                                    <button class="review-btn btn-edit-review">Edit Ulasan</button>
+                                    <button class="review-btn btn-delete-review">Hapus</button>
+                                </div>
+                            </div>
+                            
+                            <!-- Review 2 -->
+                            <div class="review-card">
+                                <div class="review-header">
+                                    <div class="review-product">
+                                        <div class="review-product-image">
+                                            <img src="https://images.unsplash.com/photo-1581591524425-c7e0978865fc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Sony Alpha a7 III">
+                                        </div>
+                                        <div class="review-product-name">Sony Alpha a7 III</div>
+                                    </div>
+                                    <div class="review-date">10 Mei 2023</div>
+                                </div>
+                                <div class="review-rating">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                </div>
+                                <div class="review-text">
+                                    Kamera mirrorless terbaik yang pernah saya gunakan. Kualitas gambar sangat bagus, autofocus cepat dan akurat, dan performa low-light luar biasa. Satu-satunya kekurangan adalah baterai yang cepat habis, tapi ini umum untuk kamera mirrorless. Sangat direkomendasikan untuk fotografer profesional maupun hobi.
+                                </div>
+                                <div class="review-actions">
+                                    <button class="review-btn btn-edit-review">Edit Ulasan</button>
+                                    <button class="review-btn btn-delete-review">Hapus</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Addresses Content (Hidden by default) -->
+                    <div class="profile-content" style="display: none;">
+                        <h2 class="profile-section-title">Alamat Saya</h2>
+                        
+                        <div class="addresses-grid">
+                            <!-- Address 1 -->
+                            <div class="address-card default">
+                                <div class="address-default-badge">Utama</div>
+                                <div class="address-name">Rumah</div>
+                                <div class="address-details">
+                                    Ahmad Rizki<br>
+                                    Jl. Merdeka No. 123<br>
+                                    Kelurahan Sukajadi, Kecamatan Sukajadi<br>
+                                    Jakarta Selatan, 12345<br>
+                                    Indonesia<br>
+                                    Telepon: 081234567890
+                                </div>
+                                <div class="address-actions">
+                                    <button class="address-btn btn-edit-address">Edit</button>
+                                    <button class="address-btn btn-delete-address">Hapus</button>
+                                </div>
+                            </div>
+                            
+                            <!-- Address 2 -->
+                            <div class="address-card">
+                                <div class="address-name">Kantor</div>
+                                <div class="address-details">
+                                    Ahmad Rizki<br>
+                                    Gedung Menara Tinggi, Lantai 15<br>
+                                    Jl. Sudirman No. 45<br>
+                                    Jakarta Pusat, 10220<br>
+                                    Indonesia<br>
+                                    Telepon: 081234567890
+                                </div>
+                                <div class="address-actions">
+                                    <button class="address-btn btn-edit-address">Edit</button>
+                                    <button class="address-btn btn-delete-address">Hapus</button>
+                                </div>
+                            </div>
+                            
+                            <!-- Add Address Button -->
+                            <div class="btn-add-address">
+                                <div class="add-address-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                </div>
+                                <div class="add-address-text">Tambah Alamat Baru</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Security Content
+```Saya akan melanjutkan dengan fitur-fitur yang belum selesai untuk website toko kamera CameraHub:
+
+## 1. Halaman Profil Pengguna
+
+```html project="Camera Store" file="profile.html" type="html"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Pengguna - CameraHub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
+    <style>
+        /* Profile Page Styles */
+        .profile-header {
+            padding: 5rem 0 3rem;
+            text-align: center;
+            background-color: white;
+        }
+        
+        .profile-title {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            color: var(--text-color);
+        }
+        
+        .profile-description {
+            max-width: 600px;
+            margin: 0 auto;
+            color: var(--light-text);
+            font-size: 1.2rem;
+        }
+        
+        .profile-section {
+            padding: 3rem 0 5rem;
+            background-color: var(--secondary-color);
+        }
+        
+        .profile-container {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+        }
+        
+        .profile-sidebar {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .profile-user {
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 1.5rem;
+            border: 4px solid var(--secondary-color);
+        }
+        
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .profile-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .profile-email {
+            color: var(--light-text);
+            margin-bottom: 1.5rem;
+        }
+        
+        .profile-edit-btn {
+            padding: 0.8rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-block;
+        }
+        
+        .profile-edit-btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .profile-nav {
+            padding: 1.5rem 0;
+        }
+        
+        .profile-nav-item {
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--text-color);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .profile-nav-item:hover {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+        }
+        
+        .profile-nav-item.active {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .profile-nav-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .profile-content {
+            background-color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .profile-section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .profile-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            transition: var(--transition);
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .form-select {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            transition: var(--transition);
+            background-color: white;
+        }
+        
+        .form-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .form-textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            transition: var(--transition);
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .form-actions {
+            grid-column: span 2;
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .btn-cancel {
+            padding: 0.8rem 1.5rem;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .btn-cancel:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .btn-save {
+            padding: 0.8rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .btn-save:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .orders-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .order-card {
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background-color: var(--secondary-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .order-id {
+            font-weight: 600;
+        }
+        
+        .order-date {
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+        
+        .order-status {
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .status-processing {
+            background-color: #fff8e1;
+            color: #ffa000;
+        }
+        
+        .status-shipped {
+            background-color: #e3f2fd;
+            color: #1976d2;
+        }
+        
+        .status-delivered {
+            background-color: #e8f5e9;
+            color: #388e3c;
+        }
+        
+        .status-cancelled {
+            background-color: #ffebee;
+            color: #d32f2f;
+        }
+        
+        .order-body {
+            padding: 1.5rem;
+        }
+        
+        .order-products {
+            margin-bottom: 1.5rem;
+        }
+        
+        .order-product {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .order-product:last-child {
+            border-bottom: none;
+        }
+        
+        .order-product-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        
+        .order-product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .order-product-details {
+            flex: 1;
+        }
+        
+        .order-product-name {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .order-product-price {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .order-product-quantity {
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+        
+        .order-summary {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .order-summary-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .summary-label {
+            color: var(--light-text);
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+        
+        .summary-value {
+            font-weight: 600;
+        }
+        
+        .summary-value.total {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+        
+        .order-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .order-btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .btn-track {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+        }
+        
+        .btn-track:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .btn-details {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            border: none;
+        }
+        
+        .btn-details:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .wishlist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .wishlist-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+        
+        .wishlist-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .wishlist-image {
+            height: 180px;
+            overflow: hidden;
+        }
+        
+        .wishlist-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .wishlist-card:hover .wishlist-image img {
+            transform: scale(1.05);
+        }
+        
+        .wishlist-content {
+            padding: 1.5rem;
+        }
+        
+        .wishlist-category {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background-color: var(--secondary-color);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: var(--primary-color);
+        }
+        
+        .wishlist-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            line-height: 1.3;
+        }
+        
+        .wishlist-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1.2rem;
+        }
+        
+        .wishlist-actions {
+            display: flex;
+            gap: 0.8rem;
+        }
+        
+        .wishlist-btn {
+            flex: 1;
+            padding: 0.7rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+        
+        .add-to-cart-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+        }
+        
+        .add-to-cart-btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .remove-btn {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            border: none;
+        }
+        
+        .remove-btn:hover {
+            background-color: #f8d7da;
+            color: #dc3545;
+        }
+        
+        .reviews-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .review-card {
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+        }
+        
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+        
+        .review-product {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .review-product-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .review-product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .review-product-name {
+            font-weight: 600;
+        }
+        
+        .review-date {
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+        
+        .review-rating {
+            display: flex;
+            gap: 0.3rem;
+            margin-bottom: 1rem;
+            color: #f1c40f;
+        }
+        
+        .review-text {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        
+        .review-images {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .review-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .review-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .review-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+        
+        .review-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+        
+        .btn-edit-review {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            border: none;
+        }
+        
+        .btn-edit-review:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .btn-delete-review {
+            background-color: #ffebee;
+            color: #d32f2f;
+            border: none;
+        }
+        
+        .btn-delete-review:hover {
+            background-color: #ffcdd2;
+        }
+        
+        .addresses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .address-card {
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            position: relative;
+        }
+        
+        .address-card.default {
+            border-color: var(--primary-color);
+        }
+        
+        .address-default-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.3rem 0.8rem;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .address-name {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .address-details {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .address-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .address-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+        
+        .btn-edit-address {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            border: none;
+        }
+        
+        .btn-edit-address:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .btn-delete-address {
+            background-color: #ffebee;
+            color: #d32f2f;
+            border: none;
+        }
+        
+        .btn-delete-address:hover {
+            background-color: #ffcdd2;
+        }
+        
+        .btn-add-address {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed var(--border-color);
+            border-radius: 10px;
+            padding: 2rem;
+            height: 100%;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .btn-add-address:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(231, 76, 60, 0.05);
+        }
+        
+        .add-address-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .add-address-text {
+            font-weight: 600;
+            color: var(--text-color);
+        }
+        
+        @media (max-width: 992px) {
+            .profile-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .profile-sidebar {
+                position: sticky;
+                top: 20px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .profile-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+            
+            .form-actions {
+                grid-column: span 1;
+            }
+            
+            .order-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .order-summary {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Banner -->
+    <div class="top-banner">
+        <div class="container">
+            <p>Diskon spesial untuk pembelian pertama!</p>
+            <a href="catalog.html" class="banner-button">Belanja sekarang</a>
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Camera<span>Hub</span></h1>
+            </div>
+            <nav>
+                <div class="menu-toggle" id="mobile-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="catalog.html">Products</a></li>
+                    <li><a href="articles.html">Articles</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="nav-icons">
+                <a href="wishlist.html" class="icon-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                    <span class="wishlist-count">3</span>
+                </a>
+                <a href="cart.html" class="icon-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                    <span class="cart-count">2</span>
+                </a>
+                <a href="#" class="quiz-button">Akun Saya</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Profile Header -->
+        <section class="profile-header">
+            <div class="container">
+                <h1 class="profile-title">Akun Saya</h1>
+                <p class="profile-description">Kelola profil, pesanan, dan preferensi Anda</p>
+            </div>
+        </section>
+
+        <!-- Profile Section -->
+        <section class="profile-section">
+            <div class="container">
+                <div class="profile-container">
+                    <!-- Profile Sidebar -->
+                    <div class="profile-sidebar">
+                        <div class="profile-user">
+                            <div class="profile-avatar">
+                                <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="User Avatar">
+                            </div>
+                            <div class="profile-name">Ahmad Rizki</div>
+                            <div class="profile-email">ahmad.rizki@gmail.com</div>
+                            <a href="#" class="profile-edit-btn">Edit Profil</a>
+                        </div>
+                        <div class="profile-nav">
+                            <div class="profile-nav-item active">
+                                <div class="profile-nav-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                </div>
+                                <div>Informasi Akun</div>
+                            </div>
+                            <div class="profile-nav-item">
+                                <div class="profile-nav-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                                </div>
+                                <div>Pesanan Saya</div>
+                            </div>
+                            <div class="profile-nav-item">
+                                <div class="profile-nav-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                                </div>
+                                <div>Wishlist</div>
+                            </div>
+                            <div class="profile-nav-item">
+                                <div class="profile-nav-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                                </div>
+                                <div>Ulasan Saya</div>
+                            </div>
+                            <div class="profile-nav-item">
+                                <div class="profile-nav-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                </div>
+                                <div>Alamat</div>
+                            </div>
+                            <div class="profile-nav-item">
+                                <div class="profile-nav-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                                </div>
+                                <div>Keamanan</div>
+                            </div>
+                            <div class="profile-nav-item">
+                                <div class="profile-nav-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                                </div>
+                                <div>Keluar</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Profile Content -->
+                    <div class="profile-content">
+                        <h2 class="profile-section-title">Informasi Akun</h2>
+                        
+                        <form class="profile-form">
+                            <div class="form-group">
+                                <label for="firstName" class="form-label">Nama Depan</label>
+                                <input type="text" id="firstName" class="form-input" value="Ahmad">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="lastName" class="form-label">Nama Belakang</label>
+                                <input type="text" id="lastName" class="form-input" value="Rizki">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" id="email" class="form-input" value="ahmad.rizki@gmail.com">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="phone" class="form-label">Nomor Telepon</label>
+                                <input type="tel" id="phone" class="form-input" value="081234567890">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="birthdate" class="form-label">Tanggal Lahir</label>
+                                <input type="date" id="birthdate" class="form-input" value="1990-05-15">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="gender" class="form-label">Jenis Kelamin</label>
+                                <select id="gender" class="form-select">
+                                    <option value="male" selected>Laki-laki</option>
+                                    <option value="female">Perempuan</option>
+                                    <option value="other">Lainnya</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group full-width">
+                                <label for="bio" class="form-label">Bio</label>
+                                <textarea id="bio" class="form-textarea">Saya adalah seorang fotografer amatir yang senang mengabadikan momen-momen indah dalam kehidupan. Saya tertarik dengan fotografi landscape dan street photography.</textarea>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="button" class="btn-cancel">Batal</button>
+                                <button type="submit" class="btn-save">Simpan Perubahan</button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- Orders Content (Hidden by default) -->
+                    <div class="profile-content" style="display: none;">
+                        <h2 class="profile-section-title">Pesanan Saya</h2>
+                        
+                        <div class="orders-list">
+                            <!-- Order 1 -->
+                            <div class="order-card">
+                                <div class="order-header">
+                                    <div class="order-id">Order #12345</div>
+                                    <div class="order-date">15 Mei 2023</div>
+                                    <div class="order-status status-shipped">Dikirim</div>
+                                </div>
+                                <div class="order-body">
+                                    <div class="order-products">
+                                        <div class="order-product">
+                                            <div class="order-product-image">
+                                                <img src="https://images.unsplash.com/photo-1581591524425-c7e0978865fc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Sony Alpha a7 III">
+                                            </div>
+                                            <div class="order-product-details">
+                                                <div class="order-product-name">Sony Alpha a7 III</div>
+                                                <div class="order-product-price">Rp 28.499.000</div>
+                                                <div class="order-product-quantity">Jumlah: 1</div>
+                                            </div>
+                                        </div>
+                                        <div class="order-product">
+                                            <div class="order-product-image">
+                                                <img src="https://images.unsplash.com/photo-1616423640778-28d1b53229bd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Sony 24-70mm f/2.8 GM Lens">
+                                            </div>
+                                            <div class="order-product-details">
+                                                <div class="order-product-name">Sony 24-70mm f/2.8 GM Lens</div>
+                                                <div class="order-product-price">Rp 22.999.000</div>
+                                                <div class="order-product-quantity">Jumlah: 1</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="order-summary">
+                                        <div class="order-summary-item">
+                                            <div class="summary-label">Subtotal</div>
+                                            <div class="summary-value">Rp 51.498.000</div>
+                                        </div>
+                                        <div class="order-summary-item">
+                                            <div class="summary-label">Pengiriman</div>
+                                            <div class="summary-value">Rp 50.000</div>
+                                        </div>
+                                        <div class="order-summary-item">
+                                            <div class="summary-label">Pajak</div>
+                                            <div class="summary-value">Rp 5.149.800</div>
+                                        </div>
+                                        <div class="order-summary-item">
+                                            <div class="summary-label">Total</div>
+                                            <div class="summary-value total">Rp 56.697.800</div>
+                                        </div>
+                                    </div>
+                                    <div class="order-actions">
+                                        <button class="order-btn btn-details">Detail Pesanan</button>
+                                        <button class="order-btn btn-track">Lacak Pengiriman</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Order 2 -->
+                            <div class="order-card">
+                                <div class="order-header">
+                                    <div class="order-id">Order #12344</div>
+                                    <div class="order-date">10 Mei 2023</div>
+                                    <div class="order-status status-delivered">Diterima</div>
+                                </div>
+                                <div class="order-body">
+                                    <div class="order-products">
+                                        <div class="order-product">
+                                            <div class="order-product-image">
+                                                <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Camera Tripod">
+                                            </div>
+                                            <div class="order-product-details">
+                                                <div class="order-product-name">Manfrotto MT190XPRO4 Tripod</div>
+                                                <div class="order-product-price">Rp 2.999.000</div>
+                                                <div class="order-product-quantity">Jumlah: 1</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="order-summary">
+                                        <div class="order-summary-item">
+                                            <div class="summary-label">Subtotal</div>
+                                            <div class="summary-value">Rp 2.999.000</div>
+                                        </div>
+                                        <div class="order-summary-item">
+                                            <div class="summary-label">Pengiriman</div>
+                                            <div class="summary-value">Rp 30.000</div>
+                                        </div>
+                                        <div class="order-summary-item">
+                                            <div class="summary-label">Pajak</div>
+                                            <div class="summary-value">Rp 299.900</div>
+                                        </div>
+                                        <div class="order-summary-item">
+                                            <div class="summary-label">Total</div>
+                                            <div class="summary-value total">Rp 3.328.900</div>
+                                        </div>
+                                    </div>
+                                    <div class="order-actions">
+                                        <button class="order-btn btn-details">Detail Pesanan</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Order 3 -->
+                            <div class="order-card">
+                                <div class="order-header">
+                                    <div class="order-id">Order #12343</div>
+                                    <div class="order-date">5 Mei 2023</div>
+                                    <div class="order-status status-processing">Diproses</div>
+                                </div>
+                                <div class="order-body">
+                                    <div class="order-products">
+                                        <div class="order-product">
+                                            <div class="order-product-image">
+                                                <img src="https://images.unsplash.com/photo-1502982720700-bfff97f2ecac?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Camera Bag">
+                                            </div>
+                                            <div class="order-product-details">
+                                                <div class="order-product-name">Peak Design Everyday Backpack</div>
+                                                <div class="order-product-price">Rp 3.499.000</div>
+                                                <div class="order-product-quantity">Jumlah: 1</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="order-summary">
+                                        <div class="order-summary-item">
+                                            <div class="summary-label">Subtotal</div>
+                                            <div class="summary-value">Rp 3.499.000</div>
+                                        </div>
+                                        <div class="order-summary-item">
+                                            <div class="summary-label">Pengiriman</div>
+                                            <div class="summary-value">Rp 30.000</div>
+                                        </div>
+                                        <div class="order-summary-item">
+                                            <div class="summary-label">Pajak</div>
+                                            <div class="summary-value">Rp 349.900</div>
+                                        </div>
+                                        <div class="order-summary-item">
+                                            <div class="summary-label">Total</div>
+                                            <div class="summary-value total">Rp 3.878.900</div>
+                                        </div>
+                                    </div>
+                                    <div class="order-actions">
+                                        <button class="order-btn btn-details">Detail Pesanan</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Wishlist Content (Hidden by default) -->
+                    <div class="profile-content" style="display: none;">
+                        <h2 class="profile-section-title">Wishlist Saya</h2>
+                        
+                        <div class="wishlist-grid">
+                            <!-- Wishlist Item 1 -->
+                            <div class="wishlist-card">
+                                <div class="wishlist-image">
+                                    <img src="https://images.unsplash.com/photo-1502920917128-1aa500764cbd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Canon EOS 5D Mark IV">
+                                </div>
+                                <div class="wishlist-content">
+                                    <span class="wishlist-category">DSLR Camera</span>
+                                    <h3 class="wishlist-title">Canon EOS 5D Mark IV</h3>
+                                    <div class="wishlist-price">Rp 35.999.000</div>
+                                    <div class="wishlist-actions">
+                                        <a href="#" class="wishlist-btn add-to-cart-btn">Tambah ke Keranjang</a>
+                                        <a href="#" class="wishlist-btn remove-btn">Hapus</a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Wishlist Item 2 -->
+                            <div class="wishlist-card">
+                                <div class="wishlist-image">
+                                    <img src="https://images.unsplash.com/photo-1616423640778-28d1b53229bd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Nikon Z 24-70mm f/2.8">
+                                </div>
+                                <div class="wishlist-content">
+                                    <span class="wishlist-category">Camera Lens</span>
+                                    <h3 class="wishlist-title">Nikon Z 24-70mm f/2.8</h3>
+                                    <div class="wishlist-price">Rp 25.699.000</div>
+                                    <div class="wishlist-actions">
+                                        <a href="#" class="wishlist-btn add-to-cart-btn">Tambah ke Keranjang</a>
+                                        <a href="#" class="wishlist-btn remove-btn">Hapus</a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Wishlist Item 3 -->
+                            <div class="wishlist-card">
+                                <div class="wishlist-image">
+                                    <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="DJI Ronin-S Gimbal">
+                                </div>
+                                <div class="wishlist-content">
+                                    <span class="wishlist-category">Camera Accessory</span>
+                                    <h3 class="wishlist-title">DJI Ronin-S Gimbal</h3>
+                                    <div class="wishlist-price">Rp 9.999.000</div>
+                                    <div class="wishlist-actions">
+                                        <a href="#" class="wishlist-btn add-to-cart-btn">Tambah ke Keranjang</a>
+                                        <a href="#" class="wishlist-btn remove-btn">Hapus</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Reviews Content (Hidden by default) -->
+                    <div class="profile-content" style="display: none;">
+                        <h2 class="profile-section-title">Ulasan Saya</h2>
+                        
+                        <div class="reviews-list">
+                            <!-- Review 1 -->
+                            <div class="review-card">
+                                <div class="review-header">
+                                    <div class="review-product">
+                                        <div class="review-product-image">
+                                            <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="DJI Ronin-S Gimbal">
+                                        </div>
+                                        <div class="review-product-name">DJI Ronin-S Gimbal</div>
+                                    </div>
+                                    <div class="review-date">12 Mei 2023</div>
+                                </div>
+                                <div class="review-rating">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                </div>
+                                <div class="review-text">
+                                    Gimbal yang sangat bagus dan mudah digunakan. Stabilisasi sangat baik dan baterai tahan lama. Sangat cocok untuk videografi profesional. Saya sangat puas dengan pembelian ini dan akan merekomendasikannya kepada teman-teman fotografer lainnya.
+                                </div>
+                                <div class="review-images">
+                                    <div class="review-image">
+                                        <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Review Image">
+                                    </div>
+                                    <div class="review-image">
+                                        <img src="https://images.unsplash.com/photo-1491796014055-e6835cdcd4c6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Review Image">
+                                    </div>
+                                </div>
+                                <div class="review-actions">
+                                    <button class="review-btn btn-edit-review">Edit Ulasan</button>
+                                    <button class="review-btn btn-delete-review">Hapus</button>
+                                </div>
+                            </div>
+                            
+                            <!-- Review 2 -->
+                            <div class="review-card">
+                                <div class="review-header">
+                                    <div class="review-product">
+                                        <div class="review-product-image">
+                                            <img src="https://images.unsplash.com/photo-1581591524425-c7e0978865fc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Sony Alpha a7 III">
+                                        </div>
+                                        <div class="review-product-name">Sony Alpha a7 III</div>
+                                    </div>
+                                    <div class="review-date">10 Mei 2023</div>
+                                </div>
+                                <div class="review-rating">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                </div>
+                                <div class="review-text">
+                                    Kamera mirrorless terbaik yang pernah saya gunakan. Kualitas gambar sangat bagus, autofocus cepat dan akurat, dan performa low-light luar biasa. Satu-satunya kekurangan adalah baterai yang cepat habis, tapi ini umum untuk kamera mirrorless. Sangat direkomendasikan untuk fotografer profesional maupun hobi.
+                                </div>
+                                <div class="review-actions">
+                                    <button class="review-btn btn-edit-review">Edit Ulasan</button>
+                                    <button class="review-btn btn-delete-review">Hapus</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Addresses Content (Hidden by default) -->
+                    <div class="profile-content" style="display: none;">
+                        <h2 class="profile-section-title">Alamat Saya</h2>
+                        
+                        <div class="addresses-grid">
+                            <!-- Address 1 -->
+                            <div class="address-card default">
+                                <div class="address-default-badge">Utama</div>
+                                <div class="address-name">Rumah</div>
+                                <div class="address-details">
+                                    Ahmad Rizki<br>
+                                    Jl. Merdeka No. 123<br>
+                                    Kelurahan Sukajadi, Kecamatan Sukajadi<br>
+                                    Jakarta Selatan, 12345<br>
+                                    Indonesia<br>
+                                    Telepon: 081234567890
+                                </div>
+                                <div class="address-actions">
+                                    <button class="address-btn btn-edit-address">Edit</button>
+                                    <button class="address-btn btn-delete-address">Hapus</button>
+                                </div>
+                            </div>
+                            
+                            <!-- Address 2 -->
+                            <div class="address-card">
+                                <div class="address-name">Kantor</div>
+                                <div class="address-details">
+                                    Ahmad Rizki<br>
+                                    Gedung Menara Tinggi, Lantai 15<br>
+                                    Jl. Sudirman No. 45<br>
+                                    Jakarta Pusat, 10220<br>
+                                    Indonesia<br>
+                                    Telepon: 081234567890
+                                </div>
+                                <div class="address-actions">
+                                    <button class="address-btn btn-edit-address">Edit</button>
+                                    <button class="address-btn btn-delete-address">Hapus</button>
+                                </div>
+                            </div>
+                            
+                            <!-- Add Address Button -->
+                            <div class="btn-add-address">
+                                <div class="add-address-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                </div>
+                                <div class="add-address-text">Tambah Alamat Baru</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Security Content

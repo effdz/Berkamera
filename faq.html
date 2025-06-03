@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - Pertanyaan yang Sering Diajukan - CameraHub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
+    <style>
+        /* FAQ Page Styles */
+        .faq-header {
+            padding: 5rem 0 3rem;
+            text-align: center;
+            background-color: white;
+        }
+        
+        .faq-title {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            color: var(--text-color);
+        }
+        
+        .faq-description {
+            max-width: 600px;
+            margin: 0 auto;
+            color: var(--light-text);
+            font-size: 1.2rem;
+        }
+        
+        .faq-search {
+            max-width: 500px;
+            margin: 2rem auto 0;
+            position: relative;
+        }
+        
+        .faq-search-input {
+            width: 100%;
+            padding: 1rem 1.5rem 1rem 3rem;
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+        }
+        
+        .faq-search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .faq-search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--light-text);
+        }
+        
+        .faq-section {
+            padding: 3rem 0 5rem;
+            background-color: var(--secondary-color);
+        }
+        
+        .faq-container {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+        }
+        
+        .faq-sidebar {
+            background-color: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: var(--card-shadow);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+        
+        .faq-categories {
+            margin-bottom: 2rem;
+        }
+        
+        .categories-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .category-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .category-item {
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .category-item:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .category-item.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .category-count {
+            font-size: 0.8rem;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 50px;
+        }
+        
+        .faq-contact {
+            background-color: var(--secondary-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: white;
+        }
+        
+        .contact-title {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .contact-text {
+            color: var(--light-text);
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .contact-btn {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .contact-btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .faq-content {
+            background-color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .faq-content-header {
+            margin-bottom: 2rem;
+        }
+        
+        .content-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .content-subtitle {
+            color: var(--light-text);
+        }
+        
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .faq-item {
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        
+        .faq-item:hover {
+            border-color: var(--primary-color);
+        }
+        
+        .faq-item.active {
+            border-color: var(--primary-color);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.1);
+        }
+        
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white;
+            transition: var(--transition);
+        }
+        
+        .faq-question:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .faq-item.active .faq-question {
+            background-color: var(--secondary-color);
+        }
+        
+        .question-text {
+            font-weight: 600;
+            flex: 1;
+            margin-right: 1rem;
+        }
+        
+        .question-icon {
+            transition: transform 0.3s ease;
+            color: var(--primary-color);
+        }
+        
+        .faq-item.active .question-icon {
+            transform: rotate(180deg);
+        }
+        
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-item.active .faq-answer {
+            padding: 0 1.5rem 1.5rem;
+            max-height: 500px;
+        }
+        
+        .answer-text {
+            line-height: 1.6;
+            color: var(--text-color);
+        }
+        
+        .answer-text ul {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+        
+        .answer-text li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .answer-text a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .answer-text a:hover {
+            text-decoration: underline;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: var(--light-text);
+        }
+        
+        .no-results-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        
+        .no-results h3 {
+            margin-bottom: 0.5rem;
+        }
+        
+        @media (max-width: 992px) {
+            .faq-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .faq-sidebar {
+                position: static;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .faq-title {
+                font-size: 2.5rem;
+            }
+            
+            .category-list {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Banner -->
+    <div class="top-banner">
+        <div class="container">
+            <p>Diskon spesial untuk pembelian pertama!</p>
+            <a href="catalog.html" class="banner-button">Belanja sekarang</a>
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Camera<span>Hub</span></h1>
+            </div>
+            <nav>
+                <div class="menu-toggle" id="mobile-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="catalog.html">Products</a></li>
+                    <li><a href="articles.html">Articles</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="nav-icons">
+                <a href="wishlist.html" class="icon-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                    <span class="wishlist-count">3</span>
+                </a>
+                <a href="cart.html" class="icon-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                    <span class="cart-count">2</span>
+                </a>
+                <a href="login.html" class="quiz-button">Login</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- FAQ Header -->
+        <section class="faq-header">
+            <div class="container">
+                <h1 class="faq-title">Pertanyaan yang Sering Diajukan</h1>
+                <p class="faq-description">Temukan jawaban untuk pertanyaan umum tentang produk dan layanan kami</p>
+                
+                <div class="faq-search">
+                    <div class="faq-search-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    </div>
+                    <input type="text" class="faq-search-input" placeholder="Cari pertanyaan..." id="faq-search">
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <div class="container">
+                <div class="faq-container">
+                    <!-- FAQ Sidebar -->
+                    <div class="faq-sidebar">
+                        <div class="faq-categories">
+                            <h3 class="categories-title">Kategori</h3>
+                            <div class="category-list">
+                                <div class="category-item active" data-category="all">
+                                    <span>Semua</span>
+                                    <span class="category-count">24</span>
+                                </div>
+                                <div class="category-item" data-category="products">
+                                    <span>Produk</span>
+                                    <span class="category-count">8</span>
+                                </div>
+                                <div class="category-item" data-category="shipping">
+                                    <span>Pengiriman</span>
+                                    <span class="category-count">6</span>
+                                </div>
+                                <div class="category-item" data-category="payment">
+                                    <span>Pembayaran</span>
+                                    <span class="category-count">5</span>
+                                </div>
+                                <div class="category-item" data-category="warranty">
+                                    <span>Garansi</span>
+                                    <span class="category-count">3</span>
+                                </div>
+                                <div class="category-item" data-category="account">
+                                    <span>Akun</span>
+                                    <span class="category-count">2</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-contact">
+                            <div class="contact-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                            </div>
+                            <div class="contact-title">Butuh Bantuan Lain?</div>
+                            <div class="contact-text">Tim customer service kami siap membantu Anda 24/7</div>
+                            <a href="contact.html" class="contact-btn">Hubungi Kami</a>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Content -->
+                    <div class="faq-content">
+                        <div class="faq-content-header">
+                            <h2 class="content-title">Pertanyaan Umum</h2>
+                            <p class="content-subtitle">Klik pada pertanyaan untuk melihat jawaban</p>
+                        </div>
+                        
+                        <div class="faq-list" id="faq-list">
+                            <!-- Products Category -->
+                            <div class="faq-item" data-category="products">
+                                <div class="faq-question">
+                                    <div class="question-text">Apakah semua produk yang dijual adalah original?</div>
+                                    <div class="question-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                    </div>
+                                </div>
+                                <div class="faq-answer">
+                                    <div class="answer-text">
+                                        Ya, semua produk yang kami jual adalah 100% original dan bergaransi resmi. Kami bekerja sama langsung dengan distributor resmi dan authorized dealer untuk memastikan keaslian produk. Setiap produk dilengkapi dengan:
+                                        <ul>
+                                            <li>Garansi resmi dari distributor</li>
+                                            <li>Sertifikat keaslian</li>
+                                            <li>Kelengkapan original dari pabrik</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item" data-category="products">
+                                <div class="faq-question">
+                                    <div class="question-text">Bagaimana cara memilih kamera yang tepat untuk pemula?</div>
+                                    <div class="question-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                    </div>
+                                </div>
+                                <div class="faq-answer">
+                                    <div class="answer-text">
+                                        Untuk pemula, kami merekomendasikan mempertimbangkan beberapa faktor:
+                                        <ul>
+                                            <li><strong>Budget:</strong> Tentukan anggaran yang realistis termasuk lensa dan aksesoris</li>
+                                            <li><strong>Tujuan penggunaan:</strong> Fotografi casual, travel, atau belajar serius</li>
+                                            <li><strong>Ukuran dan berat:</strong> Pilih yang nyaman untuk dibawa</li>
+                                            <li><strong>Kemudahan penggunaan:</strong> Cari kamera dengan mode auto yang baik</li>
+                                        </ul>
+                                        Tim kami siap membantu konsultasi gratis untuk memilih kamera yang tepat. Hubungi kami di <a href="contact.html">halaman kontak</a>.
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item" data-category="products">
+                                <div class="faq-question">
+                                    <div class="question-text">Apakah ada program trade-in untuk kamera lama?</div>
+                                    <div class="question-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                    </div>
+                                </div>
+                                <div class="faq-answer">
+                                    <div class="answer-text">
+                                        Ya, kami menyediakan program trade-in untuk kamera dan lensa bekas. Syarat dan ketentuan:
+                                        <ul>
+                                            <li>Kondisi fisik dan fungsi masih baik</li>
+                                            <li>Kelengkapan minimal body dan charger</li>
+                                            <li>Tidak ada kerusakan mayor atau bekas service</li>
+                                            <li>Harga trade-in akan dievaluasi oleh tim teknis kami</li>
+                                        </ul>
+                                        Untuk informasi lebih lanjut, silakan kunjungi toko kami atau hubungi customer service.
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Shipping Category -->
+                            <div class="faq-item" data-category="shipping">
+                                <div class="faq-question">
+                                    <div class="question-text">Berapa lama waktu pengiriman?</div>
+                                    <div class="question-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                    </div>
+                                </div>
+                                <div class="faq-answer">
+                                    <div class="answer-text">
+                                        Waktu pengiriman tergantung pada metode yang dipilih:
+                                        <ul>
+                                            <li><strong>Reguler:</strong> 5-7 hari kerja (gratis untuk pembelian di atas Rp 1 juta)</li>
+                                            <li><strong>Express:</strong> 2-3 hari kerja (Rp 50.000)</li>
+                                            <li><strong>Same Day:</strong> Hari yang sama untuk area Jakarta (Rp 100.000)</li>
+                                        </ul>
+                                        Pengiriman dilakukan setiap hari Senin-Jumat. Pesanan yang masuk sebelum jam 14:00 akan diproses di hari yang sama.
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item" data-category="shipping">
+                                <div class="faq-question">
+                                    <div class="question-text">Apakah ada asuransi pengiriman?</div>
+                                    <div class="question-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                    </div>
+                                </div>
+                                <div class="faq-answer">
+                                    <div class="answer-text">
+                                        Ya, semua pengiriman sudah termasuk asuransi penuh sesuai nilai barang. Jika terjadi kerusakan atau kehilangan selama pengiriman, kami akan mengganti 100% nilai barang. Proses klaim asuransi:
+                                        <ul>
+                                            <li>Laporkan dalam 24 jam setelah barang diterima</li>
+                                            <li>Sertakan foto kerusakan dan kemasan</li>
+                                            <li>Tim kami akan memproses klaim dalam 3-5 hari kerja</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item" data-category="shipping">
+                                <div class="faq-question">
+                                    <div class="question-text">Bisakah mengubah alamat pengiriman setelah checkout?</div>
+                                    <div class="question-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                    </div>
+                                </div>
+                                <div class="faq-answer">
+                                    <div class="answer-text">
+                                        Perubahan alamat pengiriman hanya bisa dilakukan sebelum barang dikirim. Jika pesanan belum diproses (status "Menunggu Konfirmasi"), Anda bisa menghubungi customer service untuk mengubah alamat. Setelah barang dikirim, alamat tidak bisa diubah lagi.
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Payment Category -->
+                            <div class="faq-item" data-category="payment">
+                                <div class="faq-question">
+                                    <div class="question-text">Metode pembayaran apa saja yang tersedia?</div>
+                                    <div class="question-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                    </div>
+                                </div>
+                                <div class="faq-answer">
+                                    <div class="answer-text">
+                                        Kami menerima berbagai metode pembayaran untuk kemudahan Anda:
+                                        <ul>
+                                            <li><strong>Kartu Kredit/Debit:</strong> Visa, Mastercard, American Express</li>
+                                            <li><strong>Transfer Bank:</strong> BCA, Mandiri, BNI, BRI</li>
+                                            <li><strong>E-Wallet:</strong> GoPay, OVO, DANA, LinkAja</li>
+                                            <li><strong>COD:</strong> Bayar di tempat (area tertentu)</li>
+                                            <li><strong>Cicilan 0%:</strong> Tersedia untuk kartu kredit tertentu</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item" data-category="payment">
+                                <div class="faq-question">
+                                    <div class="question-text">Apakah pembayaran aman?</div>
+                                    <div class="question-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                    </div>
+                                </div>
+                                <div class="faq-answer">
+                                    <div class="answer-text">
+                                        Keamanan pembayaran adalah prioritas utama kami. Sistem pembayaran kami menggunakan:
+                                        <ul>
+                                            <li>Enkripsi SSL 256-bit untuk semua transaksi</li>
+                                            <li>Sertifikasi PCI DSS untuk keamanan data kartu</li>
+                                            <li>Gateway pembayaran terpercaya (Midtrans, Xendit)</li>
+                                            <li>Verifikasi 3D Secure untuk kartu kredit</li>
+                                        </ul>
+                                        Data pembayaran Anda tidak disimpan di server kami dan langsung diproses oleh payment gateway yang tersertifikasi.
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Warranty Category -->
+                            <div class="faq-item" data-category="warranty">
+                                <div class="faq-question">
+                                    <div class="question-text">Bagaimana cara klaim garansi?</div>
+                                    <div class="question-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                    </div>
+                                </div>
+                                <div class="faq-answer">
+                                    <div class="answer-text">
+                                        Untuk klaim garansi, ikuti langkah berikut:
+                                        <ul>
+                                            <li>Hubungi customer service dengan menyertakan nomor invoice</li>
+                                            <li>Jelaskan masalah yang dialami secara detail</li>
+                                            <li>Kirim foto/video kondisi produk jika diperlukan</li>
+                                            <li>Bawa produk ke service center resmi atau kirim ke alamat yang ditentukan</li>
+                                            <li>Sertakan invoice pembelian dan kartu garansi</li>
+                                        </ul>
+                                        Proses klaim garansi biasanya memakan waktu 7-14 hari kerja tergantung jenis kerusakan.
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item" data-category="warranty">
+                                <div class="faq-question">
+                                    <div class="question-text">Apa saja yang tidak tercover garansi?</div>
+                                    <div class="question-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                    </div>
+                                </div>
+                                <div class="faq-answer">
+                                    <div class="answer-text">
+                                        Garansi tidak berlaku untuk:
+                                        <ul>
+                                            <li>Kerusakan akibat kelalaian pengguna (jatuh, terkena air, dll)</li>
+                                            <li>Kerusakan akibat modifikasi atau pembongkaran</li>
+                                            <li>Kerusakan kosmetik yang tidak mempengaruhi fungsi</li>
+                                            <li>Kerusakan akibat penggunaan di luar spesifikasi</li>
+                                            <li>Aksesoris seperti strap, tutup lensa, tas</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Account Category -->
+                            <div class="faq-item" data-category="account">
+                                <div class="faq-question">
+                                    <div class="question-text">Bagaimana cara membuat akun?</div>
+                                    <div class="question-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                    </div>
+                                </div>
+                                <div class="faq-answer">
+                                    <div class="answer-text">
+                                        Membuat akun di CameraHub sangat mudah:
+                                        <ul>
+                                            <li>Klik tombol "Login" di pojok kanan atas</li>
+                                            <li>Pilih "Daftar Akun Baru"</li>
+                                            <li>Isi form dengan email dan password</li>
+                                            <li>Verifikasi email yang dikirim ke inbox Anda</li>
+                                            <li>Akun siap digunakan!</li>
+                                        </ul>
+                                        Dengan akun, Anda bisa melacak pesanan, menyimpan wishlist, dan mendapat notifikasi promo eksklusif.
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item" data-category="account">
+                                <div class="faq-question">
+                                    <div class="question-text">Lupa password, bagaimana cara reset?</div>
+                                    <div class="question-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                    </div>
+                                </div>
+                                <div class="faq-answer">
+                                    <div class="answer-text">
+                                        Untuk reset password:
+                                        <ul>
+                                            <li>Klik "Lupa Password" di halaman login</li>
+                                            <li>Masukkan email yang terdaftar</li>
+                                            <li>Cek email untuk link reset password</li>
+                                            <li>Klik link dan buat password baru</li>
+                                            <li>Login dengan password baru</li>
+                                        </ul>
+                                        Jika tidak menerima email, cek folder spam atau hubungi customer service.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- No Results -->
+                        <div class="no-results" id="no-results" style="display: none;">
+                            <div class="no-results-icon">🔍</div>
+                            <h3>Tidak ada hasil ditemukan</h3>
+                            <p>Coba gunakan kata kunci yang berbeda atau hubungi customer service untuk bantuan lebih lanjut.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Camera<span>Hub</span></h3>
+                    <p>Kamera dan aksesoris premium untuk profesional dan penggemar fotografi.</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Link Cepat</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="catalog.html">Produk</a></li>
+                        <li><a href="articles.html">Artikel</a></li>
+                        <li><a href="about.html">Tentang Kami</a></li>
+                        <li><a href="contact.html">Kontak</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Layanan Pelanggan</h3>
+                    <ul>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="#">Pengiriman & Pengembalian</a></li>
+                        <li><a href="#">Garansi</a></li>
+                        <li><a href="privacy.html">Kebijakan Privasi</a></li>
+                        <li><a href="terms.html">Syarat & Ketentuan</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Hubungi Kami</h3>
+                    <p>Jl. Kamera 123<br>Surabaya Timur, Indonesia</p>
+                    <p>Email: info@camerahub.com</p>
+                    <p>Telepon: +62 123 456 7890</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 CameraHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // FAQ accordion functionality
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                
+                question.addEventListener('click', function() {
+                    const isActive = item.classList.contains('active');
+                    
+                    // Close all other items
+                    faqItems.forEach(otherItem => {
+                        otherItem.classList.remove('active');
+                    });
+                    
+                    // Toggle current item
+                    if (!isActive) {
+                        item.classList.add('active');
+                    }
+                });
+            });
+            
+            // Category filtering
+            const categoryItems = document.querySelectorAll('.category-item');
+            const faqList = document.getElementById('faq-list');
+            const noResults = document.getElementById('no-results');
+            
+            categoryItems.forEach(category => {
+                category.addEventListener('click', function() {
+                    // Update active category
+                    categoryItems.forEach(cat => cat.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const selectedCategory = this.dataset.category;
+                    filterFAQs(selectedCategory);
+                });
+            });
+            
+            // Search functionality
+            const searchInput = document.getElementById('faq-search');
+            
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                searchFAQs(searchTerm);
+            });
+            
+            function filterFAQs(category) {
+                const items = faqList.querySelectorAll('.faq-item');
+                let visibleCount = 0;
+                
+                items.forEach(item => {
+                    if (category === 'all' || item.dataset.category === category) {
+                        item.style.display = 'block';
+                        visibleCount++;
+                    } else {
+                        item.style.display = 'none';
+                        item.classList.remove('active');
+                    }
+                });
+                
+                // Show/hide no results
+                if (visibleCount === 0) {
+                    noResults.style.display = 'block';
+                    faqList.style.display = 'none';
+                } else {
+                    noResults.style.display = 'none';
+                    faqList.style.display = 'block';
+                }
+            }
+            
+            function searchFAQs(searchTerm) {
+                const items = faqList.querySelectorAll('.faq-item');
+                let visibleCount = 0;
+                
+                items.forEach(item => {
+                    const question = item.querySelector('.question-text').textContent.toLowerCase();
+                    const answer = item.querySelector('.answer-text').textContent.toLowerCase();
+                    
+                    if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+                        item.style.display = 'block';
+                        visibleCount++;
+                        
+                        // Highlight search term
+                        if (searchTerm) {
+                            highlightSearchTerm(item, searchTerm);
+                        }
+                    } else {
+                        item.style.display = 'none';
+                        item.classList.remove('active');
+                    }
+                });
+                
+                // Reset category selection when searching
+                if (searchTerm) {
+                    categoryItems.forEach(cat => cat.classList.remove('active'));
+                    categoryItems[0].classList.add('active'); // Select "All"
+                }
+                
+                // Show/hide no results
+                if (visibleCount === 0 && searchTerm) {
+                    noResults.style.display = 'block';
+                    faqList.style.display = 'none';
+                } else {
+                    noResults.style.display = 'none';
+                    faqList.style.display = 'block';
+                }
+            }
+            
+            function highlightSearchTerm(item, term) {
+                // Simple highlighting - in a real app, you'd want more sophisticated highlighting
+                const question = item.querySelector('.question-text');
+                const originalText = question.textContent;
+                
+                if (originalText.toLowerCase().includes(term)) {
+                    const regex = new RegExp(`(${term})`, 'gi');
+                    const highlightedText = originalText.replace(regex, '<mark>$1</mark>');
+                    question.innerHTML = highlightedText;
+                }
+            }
+            
+            // Clear search when clicking categories
+            categoryItems.forEach(category => {
+                category.addEventListener('click', function() {
+                    searchInput.value = '';
+                    // Remove any highlighting
+                    faqItems.forEach(item => {
+                        const question = item.querySelector('.question-text');
+                        question.innerHTML = question.textContent;
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

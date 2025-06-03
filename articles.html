@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artikel - CameraHub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
+    <style>
+        /* Articles specific styles */
+        .articles-filters {
+            background: white;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        .filter-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .search-box {
+            position: relative;
+            min-width: 300px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 3rem;
+            border: 2px solid var(--border-color);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+        }
+
+        .category-tabs {
+            display: flex;
+            gap: 0.5rem;
+            background: var(--bg-light);
+            padding: 0.25rem;
+            border-radius: 50px;
+        }
+
+        .category-tab {
+            padding: 0.5rem 1rem;
+            border: none;
+            background: transparent;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        .category-tab.active {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            color: var(--primary-color);
+        }
+
+        .articles-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .results-count {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .sort-select {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: white;
+            font-size: 0.9rem;
+        }
+
+        /* Enhanced articles grid */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .article-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .article-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .article-image {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .article-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .article-card:hover .article-image img {
+            transform: scale(1.05);
+        }
+
+        .article-category {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: rgba(59, 130, 246, 0.9);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .bookmark-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .article-card:hover .bookmark-btn {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .bookmark-btn.bookmarked {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .article-content {
+            padding: 1.5rem;
+        }
+
+        .article-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--text-color);
+            line-height: 1.4;
+        }
+
+        .article-excerpt {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .article-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .meta-item svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .article-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .read-more-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .read-more-btn:hover {
+            gap: 0.75rem;
+            color: var(--primary-color);
+        }
+
+        .article-stats {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        /* Loading skeleton */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .skeleton-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .skeleton-image {
+            height: 200px;
+            background: #f0f0f0;
+        }
+
+        .skeleton-content {
+            padding: 1.5rem;
+        }
+
+        .skeleton-line {
+            height: 1rem;
+            background: #f0f0f0;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+        }
+
+        .skeleton-line.short {
+            width: 60%;
+        }
+
+        .skeleton-line.medium {
+            width: 80%;
+        }
+
+        /* Featured article */
+        .featured-article {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            background: linear-gradient(135deg, var(--primary-color), #4f46e5);
+            color: white;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .featured-content {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .featured-badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            width: fit-content;
+            margin-bottom: 1rem;
+        }
+
+        .featured-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .featured-excerpt {
+            font-size: 1rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .featured-btn {
+            background: white;
+            color: var(--primary-color);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            width: fit-content;
+            transition: all 0.3s ease;
+        }
+
+        .featured-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            color: var(--primary-color);
+        }
+
+        .featured-image {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .filter-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-group {
+                justify-content: space-between;
+            }
+
+            .search-box {
+                min-width: auto;
+                width: 100%;
+            }
+
+            .category-tabs {
+                overflow-x: auto;
+                padding: 0.25rem 0.5rem;
+            }
+
+            .articles-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .featured-article {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-image {
+                order: -1;
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Banner -->
+    <div class="top-banner">
+        <div class="container">
+            <p>Diskon spesial untuk pembelian pertama!</p>
+            <a href="catalog.html" class="banner-button">Belanja sekarang</a>
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Camera<span>Hub</span></h1>
+            </div>
+            <nav>
+                <div class="menu-toggle" id="mobile-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="catalog.html">Products</a></li>
+                    <li><a href="articles.html" class="active">Articles</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="nav-icons">
+                <a href="wishlist.html" class="icon-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                    <span class="wishlist-count">0</span>
+                </a>
+                <a href="cart.html" class="icon-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                    <span class="cart-count">0</span>
+                </a>
+                <a href="login.html" class="quiz-button">Login</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Articles Header -->
+        <section class="articles-header">
+            <div class="container">
+                <h1 class="articles-title">Artikel & Tutorial</h1>
+                <p class="articles-subtitle">Pelajari tips, trik, dan teknik fotografi dari para ahli</p>
+            </div>
+        </section>
+
+        <!-- Filters -->
+        <section class="articles-filters">
+            <div class="container">
+                <div class="filter-container">
+                    <div class="filter-group">
+                        <div class="search-box">
+                            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                            <input type="text" class="search-input" placeholder="Cari artikel..." id="search-input">
+                        </div>
+                        <div class="category-tabs">
+                            <button class="category-tab active" data-category="">Semua</button>
+                            <button class="category-tab" data-category="tutorial">Tutorial</button>
+                            <button class="category-tab" data-category="review">Review</button>
+                            <button class="category-tab" data-category="gear-guide">Gear Guide</button>
+                            <button class="category-tab" data-category="post-processing">Post-Processing</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Articles Section -->
+        <section class="articles-section">
+            <div class="container">
+                <div class="articles-header">
+                    <div class="results-count" id="results-count">Menampilkan 6 artikel</div>
+                    <select class="sort-select" id="sort-select">
+                        <option value="newest">Terbaru</option>
+                        <option value="popular">Terpopuler</option>
+                        <option value="title">Judul A-Z</option>
+                        <option value="oldest">Terlama</option>
+                    </select>
+                </div>
+                <div class="articles-grid" id="articles-container">
+                    <!-- Loading skeletons -->
+                    <div class="skeleton-card">
+                        <div class="skeleton-image skeleton"></div>
+                        <div class="skeleton-content">
+                            <div class="skeleton-line skeleton"></div>
+                            <div class="skeleton-line medium skeleton"></div>
+                            <div class="skeleton-line short skeleton"></div>
+                        </div>
+                    </div>
+                    <div class="skeleton-card">
+                        <div class="skeleton-image skeleton"></div>
+                        <div class="skeleton-content">
+                            <div class="skeleton-line skeleton"></div>
+                            <div class="skeleton-line medium skeleton"></div>
+                            <div class="skeleton-line short skeleton"></div>
+                        </div>
+                    </div>
+                    <div class="skeleton-card">
+                        <div class="skeleton-image skeleton"></div>
+                        <div class="skeleton-content">
+                            <div class="skeleton-line skeleton"></div>
+                            <div class="skeleton-line medium skeleton"></div>
+                            <div class="skeleton-line short skeleton"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <h3>Camera<span>Hub</span></h3>
+                        <p>Platform terpercaya untuk semua kebutuhan fotografi Anda.</p>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="catalog.html">Products</a></li>
+                        <li><a href="articles.html">Articles</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Customer Service</h4>
+                    <ul>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="track-order.html">Track Order</a></li>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <div class="contact-info">
+                        <p><strong>Phone:</strong> +62 123 456 7890</p>
+                        <p><strong>Email:</strong> info@camerahub.com</p>
+                        <p><strong>Address:</strong> Jakarta, Indonesia</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 CameraHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Enhanced demo articles data
+        const articles = [
+            {
+                id: 'tips-fotografi-pemula',
+                title: '10 Tips Fotografi untuk Pemula',
+                excerpt: 'Pelajari dasar-dasar fotografi dengan 10 tips praktis yang mudah diterapkan untuk fotografer pemula. Mulai dari komposisi hingga pengaturan kamera.',
+                image: '/placeholder.svg?height=300&width=400&text=Tips+Fotografi+Pemula',
+                category: 'tutorial',
+                author: 'Admin CameraHub',
+                date: '2024-01-15',
+                views: 1250,
+                readingTime: '8 min read',
+                likes: 89,
+                isFeatured: true
+            },
+            {
+                id: 'review-canon-r5',
+                title: 'Review Canon EOS R5: Kamera Mirrorless Terbaik 2024',
+                excerpt: 'Review mendalam tentang Canon EOS R5, kamera mirrorless flagship yang menawarkan performa luar biasa untuk fotografi dan videografi profesional.',
+                image: '/placeholder.svg?height=300&width=400&text=Canon+EOS+R5+Review',
+                category: 'review',
+                author: 'Admin CameraHub',
+                date: '2024-01-12',
+                views: 890,
+                readingTime: '12 min read',
+                likes: 67
+            },
+            {
+                id: 'memilih-lensa-kamera',
+                title: 'Cara Memilih Lensa yang Tepat untuk Kebutuhan Anda',
+                excerpt: 'Panduan lengkap memilih lensa kamera yang sesuai dengan gaya fotografi dan budget Anda. Dari wide angle hingga telephoto.',
+                image: '/placeholder.svg?height=300&width=400&text=Panduan+Memilih+Lensa',
+                category: 'gear-guide',
+                author: 'Admin CameraHub',
+                date: '2024-01-10',
+                views: 650,
+                readingTime: '10 min read',
+                likes: 45
+            },
+            {
+                id: 'teknik-portrait-photography',
+                title: 'Teknik Portrait Photography yang Wajib Dikuasai',
+                excerpt: 'Pelajari teknik-teknik essential dalam portrait photography untuk menghasilkan foto potret yang memukau dan profesional.',
+                image: '/placeholder.svg?height=300&width=400&text=Portrait+Photography',
+                category: 'tutorial',
+                author: 'Admin CameraHub',
+                date: '2024-01-08',
+                views: 780,
+                readingTime: '9 min read',
+                likes: 56
+            },
+            {
+                id: 'landscape-photography-guide',
+                title: 'Panduan Lengkap Landscape Photography',
+                excerpt: 'Tips dan trik untuk mengambil foto landscape yang menakjubkan, mulai dari perencanaan hingga post-processing.',
+                image: '/placeholder.svg?height=300&width=400&text=Landscape+Photography',
+                category: 'tutorial',
+                author: 'Admin CameraHub',
+                date: '2024-01-05',
+                views: 920,
+                readingTime: '11 min read',
+                likes: 78
+            },
+            {
+                id: 'editing-lightroom-tips',
+                title: 'Tips Editing di Adobe Lightroom untuk Pemula',
+                excerpt: 'Pelajari dasar-dasar editing foto menggunakan Adobe Lightroom dengan tips dan workflow yang efektif.',
+                image: '/placeholder.svg?height=300&width=400&text=Lightroom+Tips',
+                category: 'post-processing',
+                author: 'Admin CameraHub',
+                date: '2024-01-03',
+                views: 1100,
+                readingTime: '7 min read',
+                likes: 92
+            },
+            {
+                id: 'street-photography-ethics',
+                title: 'Etika dalam Street Photography',
+                excerpt: 'Memahami etika dan hukum dalam street photography untuk menghasilkan karya yang menghormati subjek dan lingkungan.',
+                image: '/placeholder.svg?height=300&width=400&text=Street+Photography+Ethics',
+                category: 'tutorial',
+                author: 'Admin CameraHub',
+                date: '2024-01-01',
+                views: 540,
+                readingTime: '6 min read',
+                likes: 34
+            }
+        ];
+
+        let filteredArticles = [...articles];
+        let bookmarkedArticles = JSON.parse(localStorage.getItem('bookmarkedArticles') || '[]');
+
+        function generateFeaturedArticle(article) {
+            return `
+                <div class="featured-article">
+                    <div class="featured-content">
+                        <div class="featured-badge">Featured Article</div>
+                        <h2 class="featured-title">${article.title}</h2>
+                        <p class="featured-excerpt">${article.excerpt}</p>
+                        <a href="article-detail.html?id=${article.id}" class="featured-btn">
+                            Baca Sekarang
+                        </a>
+                    </div>
+                    <div class="featured-image">
+                        <img src="${article.image}" alt="${article.title}">
+                    </div>
+                </div>
+            `;
+        }
+
+        function generateArticleCard(article) {
+            const isBookmarked = bookmarkedArticles.includes(article.id);
+            
+            return `
+                <article class="article-card" data-id="${article.id}">
+                    <a href="article-detail.html?id=${article.id}" class="article-link">
+                        <div class="article-image">
+                            <img src="${article.image}" alt="${article.title}">
+                            <div class="article-category">${article.category.replace('-', ' ')}</div>
+                            <button class="bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark('${article.id}', event)" title="${isBookmarked ? 'Remove bookmark' : 'Add bookmark'}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="${isBookmarked ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+                            </button>
+                        </div>
+                        <div class="article-content">
+                            <h3 class="article-title">${article.title}</h3>
+                            <p class="article-excerpt">${article.excerpt}</p>
+                            <div class="article-meta">
+                                <div class="meta-item">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="12" r="4"></circle></svg>
+                                    <span>${article.author}</span>
+                                </div>
+                                <div class="meta-item">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                    <span>${new Date(article.date).toLocaleDateString('id-ID')}</span>
+                                </div>
+                                <div class="meta-item">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12,6 12,12 16,14"></polyline></svg>
+                                    <span>${article.readingTime}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="article-actions">
+                        <a href="article-detail.html?id=${article.id}" class="read-more-btn">
+                            Baca Selengkapnya
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+                        </a>
+                        <div class="article-stats">
+                            <div class="stat-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                <span>${article.views}</span>
+                            </div>
+                            <div class="stat-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                                <span>${article.likes}</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            `;
+        }
+
+        function renderArticles() {
+            const articlesContainer = document.getElementById('articles-container');
+            const resultsCount = document.getElementById('results-count');
+            
+            if (filteredArticles.length === 0) {
+                articlesContainer.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--text-light);">Tidak ada artikel yang ditemukan</div>';
+                resultsCount.textContent = 'Tidak ada artikel ditemukan';
+                return;
+            }
+
+            let html = '';
+            
+            // Add featured article if exists
+            const featuredArticle = filteredArticles.find(article => article.isFeatured);
+            if (featuredArticle) {
+                html += generateFeaturedArticle(featuredArticle);
+            }
+
+            // Add regular articles
+            const regularArticles = filteredArticles.filter(article => !article.isFeatured);
+            html += regularArticles.map(article => generateArticleCard(article)).join('');
+            
+            articlesContainer.innerHTML = html;
+            resultsCount.textContent = `Menampilkan ${filteredArticles.length} artikel`;
+        }
+
+        function filterArticles() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const activeCategory = document.querySelector('.category-tab.active').dataset.category;
+            const sortBy = document.getElementById('sort-select').value;
+
+            filteredArticles = articles.filter(article => {
+                const matchesSearch = article.title.toLowerCase().includes(searchTerm) || 
+                                    article.excerpt.toLowerCase().includes(searchTerm);
+                const matchesCategory = !activeCategory || article.category === activeCategory;
+                
+                return matchesSearch && matchesCategory;
+            });
+
+            // Sort articles
+            switch (sortBy) {
+                case 'popular':
+                    filteredArticles.sort((a, b) => b.views - a.views);
+                    break;
+                case 'title':
+                    filteredArticles.sort((a, b) => a.title.localeCompare(b.title));
+                    break;
+                case 'oldest':
+                    filteredArticles.sort((a, b) => new Date(a.date) - new Date(b.date));
+                    break;
+                default: // newest
+                    filteredArticles.sort((a, b) => new Date(b.date) - new Date(a.date));
+            }
+
+            renderArticles();
+        }
+
+        function toggleBookmark(articleId, event) {
+            event.preventDefault();
+            event.stopPropagation();
+            
+            const index = bookmarkedArticles.indexOf(articleId);
+            if (index > -1) {
+                bookmarkedArticles.splice(index, 1);
+            } else {
+                bookmarkedArticles.push(articleId);
+            }
+            
+            localStorage.setItem('bookmarkedArticles', JSON.stringify(bookmarkedArticles));
+            renderArticles();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Simulate loading
+            setTimeout(() => {
+                renderArticles();
+            }, 1000);
+
+            // Update cart and wishlist counts
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+            
+            const totalCartItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.querySelector('.cart-count').textContent = totalCartItems;
+            document.querySelector('.wishlist-count').textContent = wishlist.length;
+
+            // Event listeners
+            document.getElementById('search-input').addEventListener('input', filterArticles);
+            document.getElementById('sort-select').addEventListener('change', filterArticles);
+
+            // Category tabs
+            document.querySelectorAll('.category-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    filterArticles();
+                });
+            });
+
+            // Mobile menu toggle
+            const mobileMenu = document.getElementById('mobile-menu');
+            const navMenu = document.querySelector('.nav-menu');
+
+            if (mobileMenu && navMenu) {
+                mobileMenu.addEventListener('click', () => {
+                    navMenu.classList.toggle('active');
+                    mobileMenu.classList.toggle('active');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

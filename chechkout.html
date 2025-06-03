@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - CameraHub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
+    <style>
+        /* Checkout Page Styles */
+        .checkout-header {
+            padding: 3rem 0 2rem;
+            text-align: center;
+            background-color: white;
+        }
+        
+        .checkout-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            color: var(--text-color);
+        }
+        
+        .checkout-steps {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .checkout-step {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+        }
+        
+        .checkout-step.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .checkout-step.completed {
+            background-color: #388e3c;
+            color: white;
+        }
+        
+        .checkout-step.inactive {
+            background-color: var(--secondary-color);
+            color: var(--light-text);
+        }
+        
+        .checkout-section {
+            padding: 3rem 0 5rem;
+            background-color: var(--secondary-color);
+        }
+        
+        .checkout-container {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 2rem;
+        }
+        
+        .checkout-form {
+            background-color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .form-section {
+            margin-bottom: 2.5rem;
+        }
+        
+        .form-section:last-child {
+            margin-bottom: 0;
+        }
+        
+        .form-section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            transition: var(--transition);
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .form-select {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            transition: var(--transition);
+            background-color: white;
+        }
+        
+        .form-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .form-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .form-checkbox input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+        }
+        
+        .shipping-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .shipping-option {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .shipping-option:hover {
+            border-color: var(--primary-color);
+        }
+        
+        .shipping-option.selected {
+            border-color: var(--primary-color);
+            background-color: rgba(231, 76, 60, 0.05);
+        }
+        
+        .shipping-option input[type="radio"] {
+            margin-right: 1rem;
+        }
+        
+        .shipping-info {
+            flex: 1;
+        }
+        
+        .shipping-name {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+        
+        .shipping-desc {
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+        
+        .shipping-price {
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .payment-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .payment-method {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .payment-method:hover {
+            border-color: var(--primary-color);
+        }
+        
+        .payment-method.selected {
+            border-color: var(--primary-color);
+            background-color: rgba(231, 76, 60, 0.05);
+        }
+        
+        .payment-method input[type="radio"] {
+            margin-right: 1rem;
+        }
+        
+        .payment-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 1rem;
+            border-radius: 8px;
+            background-color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .payment-info {
+            flex: 1;
+        }
+        
+        .payment-name {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+        
+        .payment-desc {
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+        
+        .card-details {
+            display: none;
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: var(--secondary-color);
+            border-radius: 8px;
+        }
+        
+        .card-details.show {
+            display: block;
+        }
+        
+        .checkout-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .order-summary {
+            background-color: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .summary-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .order-items {
+            margin-bottom: 1.5rem;
+        }
+        
+        .order-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .order-item:last-child {
+            border-bottom: none;
+        }
+        
+        .item-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        
+        .item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .item-details {
+            flex: 1;
+        }
+        
+        .item-name {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            font-size: 0.9rem;
+        }
+        
+        .item-quantity {
+            color: var(--light-text);
+            font-size: 0.8rem;
+            margin-bottom: 0.3rem;
+        }
+        
+        .item-price {
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+        }
+        
+        .order-totals {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .total-row.final {
+            padding-top: 0.8rem;
+            border-top: 1px solid var(--border-color);
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+        }
+        
+        .promo-code {
+            margin-bottom: 1.5rem;
+        }
+        
+        .promo-input {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .promo-input input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+        
+        .promo-btn {
+            padding: 0.8rem 1rem;
+            background-color: var(--secondary-color);
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .promo-btn:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .place-order-btn {
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .place-order-btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .security-info {
+            background-color: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: var(--card-shadow);
+            text-align: center;
+        }
+        
+        .security-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #e8f5e9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: #388e3c;
+        }
+        
+        .security-title {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .security-text {
+            color: var(--light-text);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        @media (max-width: 992px) {
+            .checkout-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+            
+            .checkout-steps {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .checkout-title {
+                font-size: 2rem;
+            }
+            
+            .shipping-option,
+            .payment-method {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Banner -->
+    <div class="top-banner">
+        <div class="container">
+            <p>Diskon spesial untuk pembelian pertama!</p>
+            <a href="catalog.html" class="banner-button">Belanja sekarang</a>
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Camera<span>Hub</span></h1>
+            </div>
+            <nav>
+                <div class="menu-toggle" id="mobile-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="catalog.html">Products</a></li>
+                    <li><a href="articles.html">Articles</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="nav-icons">
+                <a href="wishlist.html" class="icon-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                    <span class="wishlist-count">3</span>
+                </a>
+                <a href="cart.html" class="icon-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                    <span class="cart-count">2</span>
+                </a>
+                <a href="login.html" class="quiz-button">Login</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Checkout Header -->
+        <section class="checkout-header">
+            <div class="container">
+                <h1 class="checkout-title">Checkout</h1>
+                <div class="checkout-steps">
+                    <div class="checkout-step completed">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                        Keranjang
+                    </div>
+                    <div class="checkout-step active">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        Checkout
+                    </div>
+                    <div class="checkout-step inactive">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        Konfirmasi
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Checkout Section -->
+        <section class="checkout-section">
+            <div class="container">
+                <div class="checkout-container">
+                    <!-- Checkout Form -->
+                    <div class="checkout-form">
+                        <form id="checkout-form">
+                            <!-- Billing Information -->
+                            <div class="form-section">
+                                <h2 class="form-section-title">Informasi Penagihan</h2>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="firstName" class="form-label">Nama Depan *</label>
+                                        <input type="text" id="firstName" class="form-input" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="lastName" class="form-label">Nama Belakang *</label>
+                                        <input type="text" id="lastName" class="form-input" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" class="form-label">Email *</label>
+                                    <input type="email" id="email" class="form-input" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone" class="form-label">Nomor Telepon *</label>
+                                    <input type="tel" id="phone" class="form-input" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="address" class="form-label">Alamat Lengkap *</label>
+                                    <input type="text" id="address" class="form-input" required>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="city" class="form-label">Kota *</label>
+                                        <input type="text" id="city" class="form-input" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="province" class="form-label">Provinsi *</label>
+                                        <select id="province" class="form-select" required>
+                                            <option value="">Pilih Provinsi</option>
+                                            <option value="jakarta">DKI Jakarta</option>
+                                            <option value="jabar">Jawa Barat</option>
+                                            <option value="jateng">Jawa Tengah</option>
+                                            <option value="jatim">Jawa Timur</option>
+                                            <option value="bali">Bali</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="postalCode" class="form-label">Kode Pos *</label>
+                                        <input type="text" id="postalCode" class="form-input" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="country" class="form-label">Negara *</label>
+                                        <select id="country" class="form-select" required>
+                                            <option value="indonesia">Indonesia</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-checkbox">
+                                    <input type="checkbox" id="saveAddress">
+                                    <label for="saveAddress">Simpan alamat ini untuk pembelian selanjutnya</label>
+                                </div>
+                            </div>
+
+                            <!-- Shipping Information -->
+                            <div class="form-section">
+                                <h2 class="form-section-title">Metode Pengiriman</h2>
+                                <div class="shipping-options">
+                                    <div class="shipping-option selected">
+                                        <input type="radio" name="shipping" value="regular" checked>
+                                        <div class="shipping-info">
+                                            <div class="shipping-name">Pengiriman Reguler</div>
+                                            <div class="shipping-desc">5-7 hari kerja</div>
+                                        </div>
+                                        <div class="shipping-price">Gratis</div>
+                                    </div>
+                                    <div class="shipping-option">
+                                        <input type="radio" name="shipping" value="express">
+                                        <div class="shipping-info">
+                                            <div class="shipping-name">Pengiriman Express</div>
+                                            <div class="shipping-desc">2-3 hari kerja</div>
+                                        </div>
+                                        <div class="shipping-price">Rp 50.000</div>
+                                    </div>
+                                    <div class="shipping-option">
+                                        <input type="radio" name="shipping" value="same-day">
+                                        <div class="shipping-info">
+                                            <div class="shipping-name">Same Day Delivery</div>
+                                            <div class="shipping-desc">Hari yang sama (Jakarta only)</div>
+                                        </div>
+                                        <div class="shipping-price">Rp 100.000</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Payment Method -->
+                            <div class="form-section">
+                                <h2 class="form-section-title">Metode Pembayaran</h2>
+                                <div class="payment-methods">
+                                    <div class="payment-method selected">
+                                        <input type="radio" name="payment" value="credit-card" checked>
+                                        <div class="payment-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                                        </div>
+                                        <div class="payment-info">
+                                            <div class="payment-name">Kartu Kredit/Debit</div>
+                                            <div class="payment-desc">Visa, Mastercard, American Express</div>
+                                        </div>
+                                    </div>
+                                    <div class="payment-method">
+                                        <input type="radio" name="payment" value="bank-transfer">
+                                        <div class="payment-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18V3"></path><path d="M8 12h8"></path><path d="M8 8h8"></path><path d="M8 16h8"></path></svg>
+                                        </div>
+                                        <div class="payment-info">
+                                            <div class="payment-name">Transfer Bank</div>
+                                            <div class="payment-desc">BCA, Mandiri, BNI, BRI</div>
+                                        </div>
+                                    </div>
+                                    <div class="payment-method">
+                                        <input type="radio" name="payment" value="e-wallet">
+                                        <div class="payment-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"></path><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"></path><line x1="18" y1="12" x2="18" y2="12"></line></svg>
+                                        </div>
+                                        <div class="payment-info">
+                                            <div class="payment-name">E-Wallet</div>
+                                            <div class="payment-desc">GoPay, OVO, DANA, LinkAja</div>
+                                        </div>
+                                    </div>
+                                    <div class="payment-method">
+                                        <input type="radio" name="payment" value="cod">
+                                        <div class="payment-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20m8-10H4"></path></svg>
+                                        </div>
+                                        <div class="payment-info">
+                                            <div class="payment-name">Bayar di Tempat (COD)</div>
+                                            <div class="payment-desc">Bayar saat barang diterima</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Credit Card Details -->
+                                <div class="card-details show" id="card-details">
+                                    <div class="form-group">
+                                        <label for="cardNumber" class="form-label">Nomor Kartu *</label>
+                                        <input type="text" id="cardNumber" class="form-input" placeholder="1234 5678 9012 3456">
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="expiryDate" class="form-label">Tanggal Kadaluarsa *</label>
+                                            <input type="text" id="expiryDate" class="form-input" placeholder="MM/YY">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="cvv" class="form-label">CVV *</label>
+                                            <input type="text" id="cvv" class="form-input" placeholder="123">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cardName" class="form-label">Nama di Kartu *</label>
+                                        <input type="text" id="cardName" class="form-input" placeholder="Nama sesuai kartu">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Order Notes -->
+                            <div class="form-section">
+                                <h2 class="form-section-title">Catatan Pesanan (Opsional)</h2>
+                                <div class="form-group">
+                                    <label for="orderNotes" class="form-label">Catatan untuk penjual</label>
+                                    <textarea id="orderNotes" class="form-input" rows="4" placeholder="Catatan khusus untuk pesanan Anda..."></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Checkout Sidebar -->
+                    <div class="checkout-sidebar">
+                        <!-- Order Summary -->
+                        <div class="order-summary">
+                            <h3 class="summary-title">Ringkasan Pesanan</h3>
+                            
+                            <div class="order-items">
+                                <div class="order-item">
+                                    <div class="item-image">
+                                        <img src="https://images.unsplash.com/photo-1581591524425-c7e0978865fc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Sony Alpha a7 III">
+                                    </div>
+                                    <div class="item-details">
+                                        <div class="item-name">Sony Alpha a7 III</div>
+                                        <div class="item-quantity">Qty: 1</div>
+                                        <div class="item-price">Rp 28.499.000</div>
+                                    </div>
+                                </div>
+                                <div class="order-item">
+                                    <div class="item-image">
+                                        <img src="https://images.unsplash.com/photo-1616423640778-28d1b53229bd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Sony 24-70mm f/2.8 GM Lens">
+                                    </div>
+                                    <div class="item-details">
+                                        <div class="item-name">Sony 24-70mm f/2.8 GM Lens</div>
+                                        <div class="item-quantity">Qty: 1</div>
+                                        <div class="item-price">Rp 22.999.000</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="promo-code">
+                                <div class="promo-input">
+                                    <input type="text" placeholder="Kode promo">
+                                    <button type="button" class="promo-btn">Terapkan</button>
+                                </div>
+                            </div>
+
+                            <div class="order-totals">
+                                <div class="total-row">
+                                    <span>Subtotal</span>
+                                    <span>Rp 51.498.000</span>
+                                </div>
+                                <div class="total-row">
+                                    <span>Pengiriman</span>
+                                    <span id="shipping-cost">Gratis</span>
+                                </div>
+                                <div class="total-row">
+                                    <span>Pajak (10%)</span>
+                                    <span>Rp 5.149.800</span>
+                                </div>
+                                <div class="total-row">
+                                    <span>Diskon</span>
+                                    <span>-Rp 0</span>
+                                </div>
+                                <div class="total-row final">
+                                    <span>Total</span>
+                                    <span id="final-total">Rp 56.647.800</span>
+                                </div>
+                            </div>
+
+                            <button type="submit" form="checkout-form" class="place-order-btn">
+                                Buat Pesanan
+                            </button>
+                        </div>
+
+                        <!-- Security Info -->
+                        <div class="security-info">
+                            <div class="security-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                            </div>
+                            <div class="security-title">Pembayaran Aman</div>
+                            <div class="security-text">
+                                Informasi pembayaran Anda dienkripsi dengan teknologi SSL 256-bit untuk keamanan maksimal.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Camera<span>Hub</span></h3>
+                    <p>Kamera dan aksesoris premium untuk profesional dan penggemar fotografi.</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Link Cepat</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="catalog.html">Produk</a></li>
+                        <li><a href="articles.html">Artikel</a></li>
+                        <li><a href="about.html">Tentang Kami</a></li>
+                        <li><a href="contact.html">Kontak</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Layanan Pelanggan</h3>
+                    <ul>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="#">Pengiriman & Pengembalian</a></li>
+                        <li><a href="#">Garansi</a></li>
+                        <li><a href="privacy.html">Kebijakan Privasi</a></li>
+                        <li><a href="terms.html">Syarat & Ketentuan</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Hubungi Kami</h3>
+                    <p>Jl. Kamera 123<br>Surabaya Timur, Indonesia</p>
+                    <p>Email: info@camerahub.com</p>
+                    <p>Telepon: +62 123 456 7890</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 CameraHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Shipping options
+            const shippingOptions = document.querySelectorAll('.shipping-option');
+            const shippingCost = document.getElementById('shipping-cost');
+            const finalTotal = document.getElementById('final-total');
+            
+            shippingOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    shippingOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    
+                    const radio = this.querySelector('input[type="radio"]');
+                    radio.checked = true;
+                    
+                    const price = this.querySelector('.shipping-price').textContent;
+                    shippingCost.textContent = price;
+                    
+                    // Update total
+                    updateTotal();
+                });
+            });
+            
+            // Payment methods
+            const paymentMethods = document.querySelectorAll('.payment-method');
+            const cardDetails = document.getElementById('card-details');
+            
+            paymentMethods.forEach(method => {
+                method.addEventListener('click', function() {
+                    paymentMethods.forEach(m => m.classList.remove('selected'));
+                    this.classList.add('selected');
+                    
+                    const radio = this.querySelector('input[type="radio"]');
+                    radio.checked = true;
+                    
+                    // Show/hide card details
+                    if (radio.value === 'credit-card') {
+                        cardDetails.classList.add('show');
+                    } else {
+                        cardDetails.classList.remove('show');
+                    }
+                });
+            });
+            
+            // Form validation
+            const checkoutForm = document.getElementById('checkout-form');
+            
+            checkoutForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Basic validation
+                const requiredFields = this.querySelectorAll('[required]');
+                let isValid = true;
+                
+                requiredFields.forEach(field => {
+                    if (!field.value.trim()) {
+                        field.style.borderColor = '#d32f2f';
+                        isValid = false;
+                    } else {
+                        field.style.borderColor = '';
+                    }
+                });
+                
+                if (isValid) {
+                    // Show success message and redirect
+                    alert('Pesanan berhasil dibuat! Anda akan diarahkan ke halaman konfirmasi.');
+                    window.location.href = 'order-confirmation.html';
+                } else {
+                    alert('Mohon lengkapi semua field yang wajib diisi.');
+                }
+            });
+            
+            // Promo code
+            const promoBtn = document.querySelector('.promo-btn');
+            
+            promoBtn.addEventListener('click', function() {
+                const promoInput = document.querySelector('.promo-input input');
+                const promoCode = promoInput.value.trim().toLowerCase();
+                
+                if (promoCode === 'welcome10') {
+                    alert('Kode promo berhasil diterapkan! Diskon 10%');
+                    updateTotal(0.1); // 10% discount
+                } else if (promoCode) {
+                    alert('Kode promo tidak valid.');
+                } else {
+                    alert('Masukkan kode promo terlebih dahulu.');
+                }
+            });
+            
+            function updateTotal(discount = 0) {
+                const subtotal = 51498000;
+                const tax = subtotal * 0.1;
+                const shippingText = shippingCost.textContent;
+                let shipping = 0;
+                
+                if (shippingText.includes('50.000')) {
+                    shipping = 50000;
+                } else if (shippingText.includes('100.000')) {
+                    shipping = 100000;
+                }
+                
+                const discountAmount = subtotal * discount;
+                const total = subtotal + tax + shipping - discountAmount;
+                
+                finalTotal.textContent = `Rp ${total.toLocaleString('id-ID')}`;
+                
+                // Update discount display
+                const discountRow = document.querySelector('.total-row:nth-child(4) span:last-child');
+                discountRow.textContent = `-Rp ${discountAmount.toLocaleString('id-ID')}`;
+            }
+            
+            // Card number formatting
+            const cardNumberInput = document.getElementById('cardNumber');
+            
+            cardNumberInput.addEventListener('input', function() {
+                let value = this.value.replace(/\s/g, '').replace(/[^0-9]/gi, '');
+                let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+                
+                this.value = formattedValue;
+            });
+            
+            // Expiry date formatting
+            const expiryInput = document.getElementById('expiryDate');
+            
+            expiryInput.addEventListener('input', function() {
+                let value = this.value.replace(/\D/g, '');
+                if (value.length >= 2) {
+                    value = value.substring(0, 2) + '/' + value.substring(2, 4);
+                }
+                this.value = value;
+            });
+        });
+    </script>
+</body>
+</html>

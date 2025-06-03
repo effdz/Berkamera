@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lacak Pesanan - CameraHub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
+    <style>
+        /* Track Order Styles */
+        .track-header {
+            padding: 5rem 0 3rem;
+            text-align: center;
+            background-color: white;
+        }
+        
+        .track-title {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            color: var(--text-color);
+        }
+        
+        .track-description {
+            max-width: 600px;
+            margin: 0 auto;
+            color: var(--light-text);
+            font-size: 1.2rem;
+        }
+        
+        .track-section {
+            padding: 3rem 0 5rem;
+            background-color: var(--secondary-color);
+        }
+        
+        .track-form {
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            background-color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .track-button {
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .track-button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        .order-result {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: var(--card-shadow);
+            display: none;
+        }
+        
+        .order-result.active {
+            display: block;
+        }
+        
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .order-id {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-color);
+        }
+        
+        .order-status {
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .status-pending {
+            background-color: #fff3e0;
+            color: #f57c00;
+        }
+        
+        .status-processing {
+            background-color: #e3f2fd;
+            color: #1976d2;
+        }
+        
+        .status-shipped {
+            background-color: #f3e5f5;
+            color: #7b1fa2;
+        }
+        
+        .status-completed {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .status-cancelled {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+        
+        .order-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .info-card {
+            background-color: var(--secondary-color);
+            padding: 1.5rem;
+            border-radius: 10px;
+        }
+        
+        .info-title {
+            font-weight: 600;
+            color: var(--light-text);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .info-value {
+            font-weight: 700;
+            color: var(--text-color);
+            font-size: 1.1rem;
+        }
+        
+        .tracking-timeline {
+            margin-bottom: 2rem;
+        }
+        
+        .timeline-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 1.5rem;
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0.75rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: var(--border-color);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-left: 2rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -0.5rem;
+            top: 0.5rem;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+            background-color: var(--border-color);
+            border: 3px solid white;
+            box-shadow: 0 0 0 2px var(--border-color);
+        }
+        
+        .timeline-item.active::before {
+            background-color: var(--primary-color);
+            box-shadow: 0 0 0 2px var(--primary-color);
+        }
+        
+        .timeline-item.completed::before {
+            background-color: #4caf50;
+            box-shadow: 0 0 0 2px #4caf50;
+        }
+        
+        .timeline-content {
+            background-color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .timeline-item.active .timeline-content {
+            border-color: var(--primary-color);
+            background-color: #fef7f0;
+        }
+        
+        .timeline-item.completed .timeline-content {
+            border-color: #4caf50;
+            background-color: #f1f8e9;
+        }
+        
+        .timeline-status {
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .timeline-date {
+            color: var(--light-text);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .timeline-description {
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+        
+        .order-items {
+            margin-bottom: 2rem;
+        }
+        
+        .items-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
+        
+        .item-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+        
+        .item-image {
+            width: 80px;
+            height: 80px;
+            background-color: var(--secondary-color);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .item-details {
+            flex: 1;
+        }
+        
+        .item-name {
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .item-price {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+        
+        .item-quantity {
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+        
+        .error-message {
+            background-color: #ffebee;
+            color: #c62828;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            text-align: center;
+            display: none;
+        }
+        
+        .error-message.active {
+            display: block;
+        }
+        
+        @media (max-width: 768px) {
+            .track-title {
+                font-size: 2.5rem;
+            }
+            
+            .order-header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .order-info {
+                grid-template-columns: 1fr;
+            }
+            
+            .item-card {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Banner -->
+    <div class="top-banner">
+        <div class="container">
+            <p>Diskon spesial untuk pembelian pertama!</p>
+            <a href="catalog.html" class="banner-button">Belanja sekarang</a>
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Camera<span>Hub</span></h1>
+            </div>
+            <nav>
+                <div class="menu-toggle" id="mobile-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="catalog.html">Products</a></li>
+                    <li><a href="articles.html">Articles</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="nav-icons">
+                <a href="wishlist.html" class="icon-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                    <span class="wishlist-count">3</span>
+                </a>
+                <a href="cart.html" class="icon-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                    <span class="cart-count">2</span>
+                </a>
+                <a href="login.html" class="quiz-button">Login</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Track Header -->
+        <section class="track-header">
+            <div class="container">
+                <h1 class="track-title">Lacak Pesanan</h1>
+                <p class="track-description">Masukkan nomor pesanan Anda untuk melacak status pengiriman</p>
+            </div>
+        </section>
+
+        <!-- Track Section -->
+        <section class="track-section">
+            <div class="container">
+                <!-- Track Form -->
+                <div class="track-form">
+                    <form id="track-form">
+                        <div class="form-group">
+                            <label for="order-id" class="form-label">Nomor Pesanan</label>
+                            <input type="text" id="order-id" class="form-input" placeholder="Contoh: ORD-001" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email (Opsional)</label>
+                            <input type="email" id="email" class="form-input" placeholder="email@example.com">
+                        </div>
+                        <button type="submit" class="track-button">Lacak Pesanan</button>
+                    </form>
+                </div>
+
+                <!-- Error Message -->
+                <div class="error-message" id="error-message">
+                    Pesanan tidak ditemukan. Pastikan nomor pesanan sudah benar.
+                </div>
+
+                <!-- Order Result -->
+                <div class="order-result" id="order-result">
+                    <!-- Order Header -->
+                    <div class="order-header">
+                        <div class="order-id" id="result-order-id">#ORD-001</div>
+                        <div class="order-status" id="result-order-status">Dalam Proses</div>
+                    </div>
+
+                    <!-- Order Info -->
+                    <div class="order-info">
+                        <div class="info-card">
+                            <div class="info-title">Tanggal Pesanan</div>
+                            <div class="info-value" id="order-date">15 Januari 2024</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-title">Total Pesanan</div>
+                            <div class="info-value" id="order-total">Rp 28.499.000</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-title">Metode Pembayaran</div>
+                            <div class="info-value" id="payment-method">Transfer Bank</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-title">Estimasi Tiba</div>
+                            <div class="info-value" id="estimated-delivery">20 Januari 2024</div>
+                        </div>
+                    </div>
+
+                    <!-- Tracking Timeline -->
+                    <div class="tracking-timeline">
+                        <h3 class="timeline-title">Status Pengiriman</h3>
+                        <div class="timeline" id="timeline">
+                            <!-- Timeline items will be generated here -->
+                        </div>
+                    </div>
+
+                    <!-- Order Items -->
+                    <div class="order-items">
+                        <h3 class="items-title">Item Pesanan</h3>
+                        <div id="order-items-list">
+                            <!-- Order items will be generated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <h3>Camera<span>Hub</span></h3>
+                        <p>Platform terpercaya untuk semua kebutuhan fotografi Anda.</p>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="catalog.html">Products</a></li>
+                        <li><a href="articles.html">Articles</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Customer Service</h4>
+                    <ul>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="track-order.html">Track Order</a></li>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <div class="contact-info">
+                        <p><strong>Phone:</strong> +62 123 456 7890</p>
+                        <p><strong>Email:</strong> info@camerahub.com</p>
+                        <p><strong>Address:</strong> Jakarta, Indonesia</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 CameraHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Demo orders data
+        const demoOrders = [
+            {
+                id: 'ORD-001',
+                customerEmail: 'john@example.com',
+                date: '2024-01-15',
+                total: 28499000,
+                paymentMethod: 'Transfer Bank',
+                estimatedDelivery: '2024-01-20',
+                status: 'processing',
+                items: [
+                    {
+                        name: 'Sony Alpha a7 III',
+                        price: 28499000,
+                        quantity: 1,
+                        image: '/placeholder.svg?height=80&width=80'
+                    }
+                ],
+                timeline: [
+                    {
+                        status: 'Pesanan Dibuat',
+                        date: '2024-01-15 10:30',
+                        description: 'Pesanan Anda telah berhasil dibuat dan sedang menunggu konfirmasi pembayaran.',
+                        completed: true
+                    },
+                    {
+                        status: 'Pembayaran Dikonfirmasi',
+                        date: '2024-01-15 14:20',
+                        description: 'Pembayaran telah dikonfirmasi dan pesanan sedang diproses.',
+                        completed: true
+                    },
+                    {
+                        status: 'Sedang Diproses',
+                        date: '2024-01-16 09:00',
+                        description: 'Pesanan sedang disiapkan dan dikemas untuk pengiriman.',
+                        active: true
+                    },
+                    {
+                        status: 'Dikirim',
+                        date: '',
+                        description: 'Pesanan telah dikirim dan dalam perjalanan ke alamat tujuan.',
+                        completed: false
+                    },
+                    {
+                        status: 'Terkirim',
+                        date: '',
+                        description: 'Pesanan telah sampai di alamat tujuan.',
+                        completed: false
+                    }
+                ]
+            },
+            {
+                id: 'ORD-002',
+                customerEmail: 'jane@example.com',
+                date: '2024-01-14',
+                total: 52999000,
+                paymentMethod: 'Kartu Kredit',
+                estimatedDelivery: '2024-01-19',
+                status: 'shipped',
+                items: [
+                    {
+                        name: 'Canon EOS R5',
+                        price: 52999000,
+                        quantity: 1,
+                        image: '/placeholder.svg?height=80&width=80'
+                    }
+                ],
+                timeline: [
+                    {
+                        status: 'Pesanan Dibuat',
+                        date: '2024-01-14 14:20',
+                        description: 'Pesanan Anda telah berhasil dibuat dan sedang menunggu konfirmasi pembayaran.',
+                        completed: true
+                    },
+                    {
+                        status: 'Pembayaran Dikonfirmasi',
+                        date: '2024-01-14 14:25',
+                        description: 'Pembayaran telah dikonfirmasi dan pesanan sedang diproses.',
+                        completed: true
+                    },
+                    {
+                        status: 'Sedang Diproses',
+                        date: '2024-01-15 08:00',
+                        description: 'Pesanan sedang disiapkan dan dikemas untuk pengiriman.',
+                        completed: true
+                    },
+                    {
+                        status: 'Dikirim',
+                        date: '2024-01-16 10:30',
+                        description: 'Pesanan telah dikirim dengan nomor resi: JNE123456789',
+                        active: true
+                    },
+                    {
+                        status: 'Terkirim',
+                        date: '',
+                        description: 'Pesanan telah sampai di alamat tujuan.',
+                        completed: false
+                    }
+                ]
+            },
+            {
+                id: 'ORD-003',
+                customerEmail: 'mike@example.com',
+                date: '2024-01-13',
+                total: 24999000,
+                paymentMethod: 'Transfer Bank',
+                estimatedDelivery: '2024-01-18',
+                status: 'completed',
+                items: [
+                    {
+                        name: 'Nikon Z6 II',
+                        price: 24999000,
+                        quantity: 1,
+                        image: '/placeholder.svg?height=80&width=80'
+                    }
+                ],
+                timeline: [
+                    {
+                        status: 'Pesanan Dibuat',
+                        date: '2024-01-13 09:15',
+                        description: 'Pesanan Anda telah berhasil dibuat dan sedang menunggu konfirmasi pembayaran.',
+                        completed: true
+                    },
+                    {
+                        status: 'Pembayaran Dikonfirmasi',
+                        date: '2024-01-13 11:30',
+                        description: 'Pembayaran telah dikonfirmasi dan pesanan sedang diproses.',
+                        completed: true
+                    },
+                    {
+                        status: 'Sedang Diproses',
+                        date: '2024-01-14 08:00',
+                        description: 'Pesanan sedang disiapkan dan dikemas untuk pengiriman.',
+                        completed: true
+                    },
+                    {
+                        status: 'Dikirim',
+                        date: '2024-01-15 09:00',
+                        description: 'Pesanan telah dikirim dengan nomor resi: JNE987654321',
+                        completed: true
+                    },
+                    {
+                        status: 'Terkirim',
+                        date: '2024-01-17 14:30',
+                        description: 'Pesanan telah sampai di alamat tujuan dan diterima oleh penerima.',
+                        completed: true
+                    }
+                ]
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const trackForm = document.getElementById('track-form');
+            const errorMessage = document.getElementById('error-message');
+            const orderResult = document.getElementById('order-result');
+
+            trackForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                trackOrder();
+            });
+
+            // Check URL parameters for direct tracking
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderId = urlParams.get('order');
+            if (orderId) {
+                document.getElementById('order-id').value = orderId;
+                trackOrder();
+            }
+        });
+
+        function trackOrder() {
+            const orderId = document.getElementById('order-id').value.trim();
+            const email = document.getElementById('email').value.trim();
+            
+            if (!orderId) {
+                showError('Mohon masukkan nomor pesanan');
+                return;
+            }
+
+            // Find order in demo data
+            const order = demoOrders.find(o => o.id.toLowerCase() === orderId.toLowerCase());
+            
+            if (!order) {
+                showError('Pesanan tidak ditemukan. Pastikan nomor pesanan sudah benar.');
+                return;
+            }
+
+            // If email is provided, validate it
+            if (email && order.customerEmail !== email) {
+                showError('Email tidak sesuai dengan pesanan ini.');
+                return;
+            }
+
+            hideError();
+            displayOrderResult(order);
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('error-message');
+            errorDiv.textContent = message;
+            errorDiv.classList.add('active');
+            document.getElementById('order-result').classList.remove('active');
+        }
+
+        function hideError() {
+            document.getElementById('error-message').classList.remove('active');
+        }
+
+        function displayOrderResult(order) {
+            // Update order header
+            document.getElementById('result-order-id').textContent = `#${order.id}`;
+            
+            const statusElement = document.getElementById('result-order-status');
+            statusElement.textContent = getStatusText(order.status);
+            statusElement.className = `order-status status-${order.status}`;
+
+            // Update order info
+            document.getElementById('order-date').textContent = formatDate(order.date);
+            document.getElementById('order-total').textContent = `Rp ${order.total.toLocaleString('id-ID')}`;
+            document.getElementById('payment-method').textContent = order.paymentMethod;
+            document.getElementById('estimated-delivery').textContent = formatDate(order.estimatedDelivery);
+
+            // Update timeline
+            displayTimeline(order.timeline);
+
+            // Update order items
+            displayOrderItems(order.items);
+
+            // Show result
+            document.getElementById('order-result').classList.add('active');
+        }
+
+        function displayTimeline(timeline) {
+            const timelineContainer = document.getElementById('timeline');
+            
+            timelineContainer.innerHTML = timeline.map(item => `
+                <div class="timeline-item ${item.completed ? 'completed' : ''} ${item.active ? 'active' : ''}">
+                    <div class="timeline-content">
+                        <div class="timeline-status">${item.status}</div>
+                        ${item.date ? `<div class="timeline-date">${item.date}</div>` : ''}
+                        <div class="timeline-description">${item.description}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function displayOrderItems(items) {
+            const itemsContainer = document.getElementById('order-items-list');
+            
+            itemsContainer.innerHTML = items.map(item => `
+                <div class="item-card">
+                    <div class="item-image">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path>
+                            <circle cx="12" cy="13" r="3"></circle>
+                        </svg>
+                    </div>
+                    <div class="item-details">
+                        <div class="item-name">${item.name}</div>
+                        <div class="item-price">Rp ${item.price.toLocaleString('id-ID')}</div>
+                        <div class="item-quantity">Qty: ${item.quantity}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function getStatusText(status) {
+            const statusMap = {
+                'pending': 'Menunggu Pembayaran',
+                'processing': 'Sedang Diproses',
+                'shipped': 'Dalam Pengiriman',
+                'completed': 'Selesai',
+                'cancelled': 'Dibatalkan'
+            };
+            return statusMap[status] || status;
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('id-ID', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            });
+        }
+
+        // Mobile menu toggle
+        document.getElementById('mobile-menu').addEventListener('click', function() {
+            document.querySelector('.nav-menu').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

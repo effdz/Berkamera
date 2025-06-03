@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perbandingan Produk - CameraHub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
+    <style>
+        /* Compare Page Styles */
+        .compare-header {
+            padding: 5rem 0 3rem;
+            text-align: center;
+            background-color: white;
+        }
+        
+        .compare-title {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            color: var(--text-color);
+        }
+        
+        .compare-description {
+            max-width: 600px;
+            margin: 0 auto;
+            color: var(--light-text);
+            font-size: 1.2rem;
+        }
+        
+        .compare-section {
+            padding: 3rem 0 5rem;
+            background-color: var(--secondary-color);
+        }
+        
+        .compare-container {
+            background-color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: var(--card-shadow);
+            overflow-x: auto;
+        }
+        
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+        
+        .compare-table th {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--light-text);
+            font-weight: 600;
+            min-width: 200px;
+        }
+        
+        .compare-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: middle;
+        }
+        
+        .compare-table tr:last-child td,
+        .compare-table tr:last-child th {
+            border-bottom: none;
+        }
+        
+        .compare-table .feature-name {
+            font-weight: 600;
+            color: var(--text-color);
+        }
+        
+        .compare-product {
+            text-align: center;
+        }
+        
+        .product-image {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 1rem;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .product-name {
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .product-category {
+            color: var(--light-text);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .product-price {
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .product-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .product-btn {
+            padding: 0.5rem;
+            border-radius: 5px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .add-to-cart-btn {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .add-to-cart-btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .remove-btn {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+        }
+        
+        .remove-btn:hover {
+            background-color: #f8d7da;
+            color: #dc3545;
+        }
+        
+        .feature-highlight {
+            background-color: rgba(46, 204, 113, 0.1);
+            color: #2ecc71;
+            font-weight: 600;
+        }
+        
+        .add-product-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 150px;
+            border: 2px dashed var(--border-color);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .add-product-btn:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(231, 76, 60, 0.05);
+        }
+        
+        .add-product-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        .add-product-text {
+            font-weight: 600;
+            color: var(--light-text);
+        }
+        
+        .empty-compare {
+            text-align: center;
+            padding: 5rem 0;
+        }
+        
+        .empty-compare-icon {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            color: var(--light-text);
+        }
+        
+        .empty-compare h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .empty-compare p {
+            color: var(--light-text);
+            margin-bottom: 2rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        @media (max-width: 992px) {
+            .compare-container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Banner -->
+    <div class="top-banner">
+        <div class="container">
+            <p>Diskon spesial untuk pembelian pertama!</p>
+            <a href="catalog.html" class="banner-button">Belanja sekarang</a>
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Camera<span>Hub</span></h1>
+            </div>
+            <nav>
+                <div class="menu-toggle" id="mobile-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="catalog.html">Products</a></li>
+                    <li><a href="articles.html">Articles</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="nav-icons">
+                <a href="wishlist.html" class="icon-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                    <span class="wishlist-count">3</span>
+                </a>
+                <a href="cart.html" class="icon-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                    <span class="cart-count">0</span>
+                </a>
+                <a href="login.html" class="quiz-button">Login</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Compare Header -->
+        <section class="compare-header">
+            <div class="container">
+                <h1 class="compare-title">Perbandingan Produk</h1>
+                <p class="compare-description">Bandingkan spesifikasi produk untuk membantu Anda membuat keputusan yang tepat</p>
+            </div>
+        </section>
+
+        <!-- Compare Section -->
+        <section class="compare-section">
+            <div class="container">
+                <div class="compare-container">
+                    <table class="compare-table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th class="compare-product">
+                                    <div class="product-image">
+                                        <img src="https://images.unsplash.com/photo-1502920917128-1aa500764cbd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Canon EOS 5D Mark IV">
+                                    </div>
+                                    <div class="product-name">Canon EOS 5D Mark IV</div>
+                                    <div class="product-category">DSLR Camera</div>
+                                    <div class="product-price">Rp 35.999.000</div>
+                                    <div class="product-actions">
+                                        <a href="#" class="product-btn add-to-cart-btn">Tambah ke Keranjang</a>
+                                        <a href="#" class="product-btn remove-btn">Hapus</a>
+                                    </div>
+                                </th>
+                                <th class="compare-product">
+                                    <div class="product-image">
+                                        <img src="https://images.unsplash.com/photo-1581591524425-c7e0978865fc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Sony Alpha a7 III">
+                                    </div>
+                                    <div class="product-name">Sony Alpha a7 III</div>
+                                    <div class="product-category">Mirrorless Camera</div>
+                                    <div class="product-price">Rp 28.499.000</div>
+                                    <div class="product-actions">
+                                        <a href="#" class="product-btn add-to-cart-btn">Tambah ke Keranjang</a>
+                                        <a href="#" class="product-btn remove-btn">Hapus</a>
+                                    </div>
+                                </th>
+                                <th class="compare-product">
+                                    <div class="product-image">
+                                        <img src="https://images.unsplash.com/photo-1519183071298-a2962feb14f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Nikon D850 DSLR">
+                                    </div>
+                                    <div class="product-name">Nikon D850 DSLR</div>
+                                    <div class="product-category">DSLR Camera</div>
+                                    <div class="product-price">Rp 32.999.000</div>
+                                    <div class="product-actions">
+                                        <a href="#" class="product-btn add-to-cart-btn">Tambah ke Keranjang</a>
+                                        <a href="#" class="product-btn remove-btn">Hapus</a>
+                                    </div>
+                                </th>
+                                <th class="compare-product">
+                                    <div class="add-product-btn">
+                                        <div class="add-product-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                        </div>
+                                        <div class="add-product-text">Tambah Produk</div>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th class="feature-name">Tipe Sensor</th>
+                                <td>Full-frame CMOS</td>
+                                <td>Full-frame CMOS</td>
+                                <td>Full-frame CMOS</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th class="feature-name">Resolusi</th>
+                                <td>30.4 MP</td>
+                                <td>24.2 MP</td>
+                                <td class="feature-highlight">45.7 MP</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th class="feature-name">ISO Range</th>
+                                <td>100-32000 (expandable to 50-102400)</td>
+                                <td class="feature-highlight">100-51200 (expandable to 50-204800)</td>
+                                <td>64-25600 (expandable to 32-102400)</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th class="feature-name">Continuous Shooting</th>
+                                <td>7 fps</td>
+                                <td class="feature-highlight">10 fps</td>
+                                <td>7 fps</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th class="feature-name">Video Recording</th>
+                                <td>4K @ 30fps</td>
+                                <td class="feature-highlight">4K @ 30fps, Full HD @ 120fps</td>
+                                <td>4K @ 30fps</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th class="feature-name">Autofocus Points</th>
+                                <td>61 points</td>
+                                <td class="feature-highlight">693 phase-detection points</td>
+                                <td>153 points</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th class="feature-name">Viewfinder</th>
+                                <td>Optical</td>
+                                <td>Electronic (2.36M dots)</td>
+                                <td>Optical</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th class="feature-name">LCD Screen</th>
+                                <td>3.2" touchscreen, 1.62M dots</td>
+                                <td>3.0" tilting touchscreen, 922K dots</td>
+                                <td>3.2" tilting touchscreen, 2.36M dots</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th class="feature-name">Berat</th>
+                                <td>890g</td>
+                                <td class="feature-highlight">650g</td>
+                                <td>1005g</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th class="feature-name">Baterai</th>
+                                <td>900 shots</td>
+                                <td>610 shots</td>
+                                <td class="feature-highlight">1840 shots</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th class="feature-name">Konektivitas</th>
+                                <td>Wi-Fi, NFC, GPS</td>
+                                <td>Wi-Fi, NFC, Bluetooth</td>
+                                <td>Wi-Fi, Bluetooth, SnapBridge</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th class="feature-name">Slot Kartu Memori</th>
+                                <td>1x CF, 1x SD</td>
+                                <td>2x SD (1 UHS-II)</td>
+                                <td>1x XQD, 1x SD (UHS-II)</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Empty Compare (hidden by default) -->
+                <div class="empty-compare" style="display: none;">
+                    <div class="empty-compare-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="6" height="18"></rect><rect x="16" y="3" width="6" height="18"></rect><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                    </div>
+                    <h2>Tidak Ada Produk untuk Dibandingkan</h2>
+                    <p>Anda belum menambahkan produk apapun untuk dibandingkan. Pilih minimal 2 produk dari katalog kami untuk melihat perbandingan.</p>
+                    <a href="catalog.html" class="btn btn-primary">Jelajahi Produk</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Camera<span>Hub</span></h3>
+                    <p>Kamera dan aksesoris premium untuk profesional dan penggemar fotografi.</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Link Cepat</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="catalog.html">Produk</a></li>
+                        <li><a href="articles.html">Artikel</a></li>
+                        <li><a href="about.html">Tentang Kami</a></li>
+                        <li><a href="contact.html">Kontak</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Layanan Pelanggan</h3>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Pengiriman & Pengembalian</a></li>
+                        <li><a href="#">Garansi</a></li>
+                        <li><a href="#">Kebijakan Privasi</a></li>
+                        <li><a href="#">Syarat & Ketentuan</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Hubungi Kami</h3>
+                    <p>Jl. Kamera 123<br>Surabaya Timur, Indonesia</p>
+                    <p>Email: info@camerahub.com</p>
+                    <p>Telepon: +62 123 456 7890</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 CameraHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add product button
+            const addProductBtn = document.querySelector('.add-product-btn');
+            
+            addProductBtn.addEventListener('click', function() {
+                // Here you would typically show a modal or redirect to a product selection page
+                // For this demo, we'll just show a notification
+                showNotification('Fitur tambah produk untuk perbandingan akan segera hadir!');
+            });
+            
+            // Remove product buttons
+            const removeButtons = document.querySelectorAll('.remove-btn');
+            
+            removeButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // Here you would typically remove the product from the comparison
+                    // For this demo, we'll just show a notification
+                    const productName = this.closest('.compare-product').querySelector('.product-name').textContent;
+                    showNotification(`${productName} telah dihapus dari perbandingan`);
+                });
+            });
+            
+            // Add to cart buttons
+            const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+            
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // Here you would typically add the product to the cart
+                    // For this demo, we'll just show a notification
+                    const productName = this.closest('.compare-product').querySelector('.product-name').textContent;
+                    showNotification(`${productName} telah ditambahkan ke keranjang`);
+                });
+            });
+        });
+        
+        // Notification function (assuming it's defined in script.js)
+        function showNotification(message) {
+            // Check if notification container exists, if not create it
+            let notificationContainer = document.getElementById('notification-container');
+            
+            if (!notificationContainer) {
+                notificationContainer = document.createElement('div');
+                notificationContainer.id = 'notification-container';
+                notificationContainer.style.position = 'fixed';
+                notificationContainer.style.bottom = '20px';
+                notificationContainer.style.right = '20px';
+                notificationContainer.style.zIndex = '1000';
+                document.body.appendChild(notificationContainer);
+            }
+            
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.style.backgroundColor = 'var(--primary-color)';
+            notification.style.color = 'white';
+            notification.style.padding = '12px 20px';
+            notification.style.borderRadius = '8px';
+            notification.style.marginTop = '10px';
+            notification.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+            notification.style.transition = 'all 0.3s ease';
+            notification.style.opacity = '0';
+            notification.textContent = message;
+            
+            // Add to container
+            notificationContainer.appendChild(notification);
+            
+            // Trigger animation
+            setTimeout(() => {
+                notification.style.opacity = '1';
+            }, 10);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => {
+                    notificationContainer.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

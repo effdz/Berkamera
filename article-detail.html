@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Artikel - CameraHub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
+    <style>
+        /* Article Detail Styles */
+        .article-detail-section {
+            padding: 2rem 0 5rem;
+            background-color: white;
+        }
+        
+        .breadcrumb {
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+        
+        .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        .article-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .article-category {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .article-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--text-color);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        
+        .article-meta {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            color: var(--light-text);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .article-excerpt {
+            font-size: 1.2rem;
+            color: var(--light-text);
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .article-featured-image {
+            width: 100%;
+            max-width: 1000px;
+            height: 500px;
+            margin: 0 auto 3rem;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .article-featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .article-content {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-color);
+        }
+        
+        .article-content h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-color);
+            margin: 2rem 0 1rem;
+        }
+        
+        .article-content h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin: 1.5rem 0 1rem;
+        }
+        
+        .article-content p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .article-content ul,
+        .article-content ol {
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+        }
+        
+        .article-content li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .article-tags {
+            margin: 3rem 0;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .tags-title {
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
+        
+        .tags-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .tag {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .tag:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .article-title {
+                font-size: 2rem;
+            }
+            
+            .article-meta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .article-featured-image {
+                height: 300px;
+            }
+            
+            .article-content {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Banner -->
+    <div class="top-banner">
+        <div class="container">
+            <p>Diskon spesial untuk pembelian pertama!</p>
+            <a href="catalog.html" class="banner-button">Belanja sekarang</a>
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Camera<span>Hub</span></h1>
+            </div>
+            <nav>
+                <div class="menu-toggle" id="mobile-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="catalog.html">Products</a></li>
+                    <li><a href="articles.html">Articles</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="nav-icons">
+                <a href="wishlist.html" class="icon-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                    <span class="wishlist-count">0</span>
+                </a>
+                <a href="cart.html" class="icon-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                    <span class="cart-count">0</span>
+                </a>
+                <a href="login.html" class="quiz-button">Login</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="article-detail-section">
+            <div class="container">
+                <!-- Breadcrumb -->
+                <div class="breadcrumb">
+                    <a href="index.html">Home</a> / <a href="articles.html">Articles</a> / <span id="breadcrumb-article">Article Detail</span>
+                </div>
+
+                <!-- Article Header -->
+                <div class="article-header">
+                    <div class="article-category" id="article-category">Tutorial</div>
+                    <h1 class="article-title" id="article-title">Loading...</h1>
+                    <div class="article-meta">
+                        <div class="meta-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            <span id="article-author">Admin CameraHub</span>
+                        </div>
+                        <div class="meta-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                            <span id="article-date">Loading...</span>
+                        </div>
+                        <div class="meta-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            <span id="article-views">0 views</span>
+                        </div>
+                        <div class="meta-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12,6 12,12 16,14"></polyline></svg>
+                            <span id="reading-time">5 min read</span>
+                        </div>
+                    </div>
+                    <p class="article-excerpt" id="article-excerpt">Loading excerpt...</p>
+                </div>
+
+                <!-- Featured Image -->
+                <div class="article-featured-image" id="featured-image">
+                    <img src="/placeholder.svg?height=500&width=1000&text=Article+Image" alt="Article Image">
+                </div>
+
+                <!-- Article Content -->
+                <div class="article-content" id="article-content">
+                    <p>Loading article content...</p>
+                </div>
+
+                <!-- Article Tags -->
+                <div class="article-tags">
+                    <h4 class="tags-title">Tags:</h4>
+                    <div class="tags-list" id="tags-list">
+                        <!-- Tags will be generated here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <h3>Camera<span>Hub</span></h3>
+                        <p>Platform terpercaya untuk semua kebutuhan fotografi Anda.</p>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="catalog.html">Products</a></li>
+                        <li><a href="articles.html">Articles</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Customer Service</h4>
+                    <ul>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="track-order.html">Track Order</a></li>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <div class="contact-info">
+                        <p><strong>Phone:</strong> +62 123 456 7890</p>
+                        <p><strong>Email:</strong> info@camerahub.com</p>
+                        <p><strong>Address:</strong> Jakarta, Indonesia</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 CameraHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Demo articles data yang sama dengan website utama
+        const demoArticles = {
+            'tips-fotografi-pemula': {
+                id: 'tips-fotografi-pemula',
+                title: '10 Tips Fotografi untuk Pemula',
+                category: 'Tutorial',
+                author: 'Admin CameraHub',
+                date: '2024-01-10',
+                views: 1250,
+                readingTime: '8 min read',
+                excerpt: 'Pelajari dasar-dasar fotografi dengan 10 tips praktis yang mudah diterapkan untuk fotografer pemula. Mulai dari komposisi hingga pengaturan kamera.',
+                content: `
+                    <h2>Memulai Perjalanan Fotografi Anda</h2>
+                    <p>Fotografi adalah seni menangkap momen dan cahaya yang dapat menghasilkan karya visual yang memukau. Bagi pemula, dunia fotografi mungkin terasa overwhelming dengan berbagai teknik, peralatan, dan istilah yang kompleks.</p>
+                    
+                    <h3>1. Pahami Rule of Thirds</h3>
+                    <p>Rule of thirds adalah salah satu komposisi dasar yang paling penting dalam fotografi. Bayangkan frame kamera Anda dibagi menjadi 9 bagian dengan 2 garis horizontal dan 2 garis vertikal.</p>
+                    
+                    <h3>2. Pelajari Exposure Triangle</h3>
+                    <p>Exposure triangle terdiri dari tiga elemen utama: Aperture, Shutter Speed, dan ISO. Memahami ketiga elemen ini akan membantu Anda mengontrol eksposur foto dengan lebih baik.</p>
+                    
+                    <h3>3. Manfaatkan Golden Hour</h3>
+                    <p>Golden hour adalah waktu terbaik untuk fotografi, yaitu satu jam setelah sunrise dan satu jam sebelum sunset. Cahaya pada waktu ini lebih lembut dan hangat.</p>
+                    
+                    <h3>4. Fokus pada Subjek Utama</h3>
+                    <p>Pastikan subjek utama foto Anda jelas dan menjadi pusat perhatian. Gunakan teknik seperti shallow depth of field untuk memisahkan subjek dari background.</p>
+                    
+                    <h3>5. Latihan Konsisten</h3>
+                    <p>Seperti skill lainnya, fotografi membutuhkan latihan yang konsisten. Ambil foto setiap hari dan eksperimen dengan teknik baru.</p>
+                `,
+                tags: ['fotografi', 'pemula', 'tutorial', 'tips', 'komposisi'],
+                image: '/placeholder.svg?height=500&width=1000&text=Tips+Fotografi+Pemula'
+            },
+            'review-canon-r5': {
+                id: 'review-canon-r5',
+                title: 'Review Canon EOS R5: Kamera Mirrorless Terbaik 2024',
+                category: 'Review',
+                author: 'Admin CameraHub',
+                date: '2024-01-08',
+                views: 890,
+                readingTime: '12 min read',
+                excerpt: 'Review mendalam tentang Canon EOS R5, kamera mirrorless flagship yang menawarkan performa luar biasa untuk fotografi dan videografi profesional.',
+                content: `
+                    <h2>Pendahuluan</h2>
+                    <p>Canon EOS R5 telah menjadi salah satu kamera mirrorless paling dinanti sejak pengumumannya. Sebagai flagship dari lini Canon R, kamera ini menjanjikan performa yang luar biasa baik untuk fotografi maupun videografi.</p>
+                    
+                    <h3>Spesifikasi Utama</h3>
+                    <ul>
+                        <li>Sensor: Full-frame CMOS 45MP</li>
+                        <li>Prosesor: DIGIC X</li>
+                        <li>Video: 8K RAW internal, 4K 120p</li>
+                        <li>Autofocus: 1053 titik dengan Dual Pixel CMOS AF II</li>
+                        <li>Stabilisasi: In-body 8-stop</li>
+                        <li>Burst: 20fps (electronic), 12fps (mechanical)</li>
+                    </ul>
+                    
+                    <h3>Performa Autofocus</h3>
+                    <p>Dual Pixel CMOS AF II pada R5 adalah salah satu sistem autofocus terbaik yang pernah ada. Tracking subject sangat akurat, bahkan untuk objek yang bergerak cepat.</p>
+                    
+                    <h3>Kualitas Gambar</h3>
+                    <p>Sensor 45MP menghasilkan detail yang luar biasa dengan dynamic range yang excellent. Performa low-light sangat baik hingga ISO 6400.</p>
+                    
+                    <h3>Kesimpulan</h3>
+                    <p>Canon EOS R5 adalah kamera yang luar biasa untuk fotografer dan videografer profesional yang membutuhkan kualitas terbaik. Highly recommended untuk professional work.</p>
+                `,
+                tags: ['canon', 'eos r5', 'review', 'mirrorless', 'profesional'],
+                image: '/placeholder.svg?height=500&width=1000&text=Canon+EOS+R5+Review'
+            },
+            'memilih-lensa-kamera': {
+                id: 'memilih-lensa-kamera',
+                title: 'Cara Memilih Lensa yang Tepat untuk Kebutuhan Anda',
+                category: 'Gear Guide',
+                author: 'Admin CameraHub',
+                date: '2024-01-12',
+                views: 650,
+                readingTime: '10 min read',
+                excerpt: 'Panduan lengkap memilih lensa kamera yang sesuai dengan gaya fotografi dan budget Anda. Dari wide angle hingga telephoto.',
+                content: `
+                    <h2>Memahami Jenis-jenis Lensa</h2>
+                    <p>Memilih lensa yang tepat adalah salah satu keputusan penting dalam fotografi. Lensa yang berbeda akan memberikan karakteristik dan hasil yang berbeda pula.</p>
+                    
+                    <h3>1. Wide Angle Lens (14-35mm)</h3>
+                    <p>Lensa wide angle ideal untuk landscape photography, architecture photography, interior photography, dan street photography.</p>
+                    
+                    <h3>2. Standard Lens (35-85mm)</h3>
+                    <p>Lensa standard memberikan perspektif yang natural, mirip dengan mata manusia. Sangat versatile untuk berbagai jenis fotografi.</p>
+                    
+                    <h3>3. Telephoto Lens (85mm+)</h3>
+                    <p>Lensa telephoto excellent untuk portrait photography, wildlife photography, sports photography, dan isolasi subjek.</p>
+                    
+                    <h3>Prime vs Zoom Lens</h3>
+                    <p>Prime lens menawarkan kualitas gambar lebih tajam dan aperture lebih lebar, sementara zoom lens lebih versatile dan praktis.</p>
+                    
+                    <h3>Tips Memilih Lensa</h3>
+                    <ol>
+                        <li>Tentukan genre fotografi utama Anda</li>
+                        <li>Pertimbangkan budget yang tersedia</li>
+                        <li>Baca review dan test hasil foto</li>
+                        <li>Coba langsung jika memungkinkan</li>
+                        <li>Pertimbangkan ukuran dan berat</li>
+                    </ol>
+                `,
+                tags: ['lensa', 'gear', 'panduan', 'fotografi', 'equipment'],
+                image: '/placeholder.svg?height=500&width=1000&text=Panduan+Memilih+Lensa'
+            }
+        };
+
+        let currentArticle = null;
+
+        // Get article ID from URL
+        function getArticleIdFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id') || 'tips-fotografi-pemula';
+        }
+
+        // Load article data
+        function loadArticleData() {
+            const articleId = getArticleIdFromUrl();
+            currentArticle = demoArticles[articleId];
+            
+            if (!currentArticle) {
+                // Redirect to articles if article not found
+                window.location.href = 'articles.html';
+                return;
+            }
+
+            // Update page content
+            updateArticleInfo();
+        }
+
+        // Update article information
+        function updateArticleInfo() {
+            document.title = `${currentArticle.title} - CameraHub`;
+            document.getElementById('breadcrumb-article').textContent = currentArticle.title;
+            document.getElementById('article-category').textContent = currentArticle.category;
+            document.getElementById('article-title').textContent = currentArticle.title;
+            document.getElementById('article-author').textContent = currentArticle.author;
+            document.getElementById('article-date').textContent = new Date(currentArticle.date).toLocaleDateString('id-ID', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            document.getElementById('article-views').textContent = `${currentArticle.views} views`;
+            document.getElementById('reading-time').textContent = currentArticle.readingTime;
+            document.getElementById('article-excerpt').textContent = currentArticle.excerpt;
+            document.getElementById('article-content').innerHTML = currentArticle.content;
+
+            // Update featured image
+            const featuredImage = document.getElementById('featured-image');
+            featuredImage.innerHTML = `<img src="${currentArticle.image}" alt="${currentArticle.title}">`;
+
+            // Update tags
+            const tagsList = document.getElementById('tags-list');
+            tagsList.innerHTML = currentArticle.tags.map(tag => 
+                `<a href="articles.html?tag=${encodeURIComponent(tag)}" class="tag">${tag}</a>`
+            ).join('');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadArticleData();
+
+            // Mobile menu toggle
+            const mobileMenu = document.getElementById('mobile-menu');
+            const navMenu = document.querySelector('.nav-menu');
+
+            if (mobileMenu && navMenu) {
+                mobileMenu.addEventListener('click', () => {
+                    navMenu.classList.toggle('active');
+                    mobileMenu.classList.toggle('active');
+                });
+            }
+
+            // Update cart and wishlist counts
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+            
+            const totalCartItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.querySelector('.cart-count').textContent = totalCartItems;
+            document.querySelector('.wishlist-count').textContent = wishlist.length;
+        });
+    </script>
+</body>
+</html>

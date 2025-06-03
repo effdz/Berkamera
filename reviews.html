@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ulasan Produk - CameraHub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
+    <style>
+        /* Reviews Page Styles */
+        .reviews-header {
+            padding: 5rem 0 3rem;
+            text-align: center;
+            background-color: white;
+        }
+        
+        .reviews-title {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            color: var(--text-color);
+        }
+        
+        .reviews-description {
+            max-width: 600px;
+            margin: 0 auto;
+            color: var(--light-text);
+            font-size: 1.2rem;
+        }
+        
+        .reviews-section {
+            padding: 3rem 0 5rem;
+            background-color: var(--secondary-color);
+        }
+        
+        .reviews-container {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 2rem;
+        }
+        
+        .reviews-main {
+            background-color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .product-overview {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .product-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 10px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .product-info {
+            flex: 1;
+        }
+        
+        .product-category {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background-color: var(--secondary-color);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: var(--primary-color);
+        }
+        
+        .product-name {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+        
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .rating-stars {
+            display: flex;
+            color: #f1c40f;
+        }
+        
+        .rating-number {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+        
+        .rating-count {
+            color: var(--light-text);
+        }
+        
+        .product-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .product-btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .btn-view-product {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+        }
+        
+        .btn-view-product:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .btn-add-to-cart {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            border: none;
+        }
+        
+        .btn-add-to-cart:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .rating-breakdown {
+            margin-bottom: 2rem;
+        }
+        
+        .rating-breakdown-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        
+        .rating-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .rating-bar {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .rating-label {
+            width: 30px;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .rating-label svg {
+            color: #f1c40f;
+        }
+        
+        .rating-progress {
+            flex: 1;
+            height: 10px;
+            background-color: var(--secondary-color);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .rating-progress-fill {
+            height: 100%;
+            background-color: var(--primary-color);
+        }
+        
+        .rating-percent {
+            width: 40px;
+            text-align: right;
+            font-weight: 600;
+        }
+        
+        .reviews-list-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        
+        .reviews-filter {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .filter-options {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .filter-option {
+            padding: 0.5rem 1rem;
+            background-color: var(--secondary-color);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .filter-option:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .filter-option.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .sort-select {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .sort-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .reviews-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .review-card {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 2rem;
+        }
+        
+        .review-card:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+        
+        .reviewer-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .reviewer-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+        
+        .reviewer-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .reviewer-name {
+            font-weight: 600;
+        }
+        
+        .reviewer-verified {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: #388e3c;
+            font-size: 0.9rem;
+        }
+        
+        .review-date {
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+        
+        .review-rating {
+            display: flex;
+            gap: 0.3rem;
+            margin-bottom: 1rem;
+            color: #f1c40f;
+        }
+        
+        .review-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .review-text {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .review-images {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .review-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .review-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .review-image:hover img {
+            transform: scale(1.05);
+        }
+        
+        .review-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .review-helpful {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .helpful-text {
+            color: var(--light-text);
+        }
+        
+        .helpful-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background-color: var(--secondary-color);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .helpful-btn:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .helpful-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .review-report {
+            color: var(--light-text);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .review-report:hover {
+            color: #d32f2f;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 3rem;
+        }
+        
+        .pagination-item {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+        }
+        
+        .pagination-item:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .pagination-item.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .reviews-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .sidebar-widget {
+            background-color: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .widget-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .write-review-widget {
+            text-align: center;
+        }
+        
+        .write-review-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .write-review-text {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .write-review-btn {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .write-review-btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .related-products-widget .product-item {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .related-products-widget .product-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .related-product-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        
+        .related-product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .related-product-info {
+            flex: 1;
+        }
+        
+        .related-product-name {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+            font-size: 0.95rem;
+        }
+        
+        .related-product-price {
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .related-product-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+        }
+        
+        .related-product-rating .rating-stars {
+            font-size: 0.8rem;
+        }
+        
+        .review-form-widget {
+            display: none;
+        }
+        
+        .review-form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .review-form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .review-form-input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            transition: var(--transition);
+        }
+        
+        .review-form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .review-form-textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            transition: var(--transition);
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        .review-form-textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .review-form-rating {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .rating-star {
+            cursor: pointer;
+            color: #ddd;
+            transition: var(--transition);
+        }
+        
+        .rating-star.active {
+            color: #f1c40f;
+        }
+        
+        .review-form-images {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .review-form-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .review-form-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .review-form-image-remove {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .review-form-image-remove:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        
+        .review-form-image-add {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            border: 2px dashed var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .review-form-image-add:hover {
+            border-color: var(--primary-color);
+        }
+        
+        .review-form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+        
+        .review-form-btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .btn-cancel {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            border: none;
+        }
+        
+        .btn-cancel:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .btn-submit {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+        }
+        
+        .btn-submit:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        @media (max-width: 992px) {
+            .reviews-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .product-overview {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .product-actions {
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .reviews-filter {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .review-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .review-footer {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Banner -->
+    <div class="top-banner">
+        <div class="container">
+            <p>Diskon spesial untuk pembelian pertama!</p>
+            <a href="catalog.html" class="banner-button">Belanja sekarang</a>
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Camera<span>Hub</span></h1>
+            </div>
+            <nav>
+                <div class="menu-toggle" id="mobile-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="catalog.html">Products</a></li>
+                    <li><a href="articles.html">Articles</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="nav-icons">
+                <a href="wishlist.html" class="icon-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                    <span class="wishlist-count">3</span>
+                </a>
+                <a href="cart.html" class="icon-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                    <span class="cart-count">2</span>
+                </a>
+                <a href="login.html" class="quiz-button">Login</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Reviews Header -->
+        <section class="reviews-header">
+            <div class="container">
+                <h1 class="reviews-title">Ulasan Produk</h1>
+                <p class="reviews-description">Lihat apa yang pelanggan kami katakan tentang produk ini</p>
+            </div>
+        </section>
+
+        <!-- Reviews Section -->
+        <section class="reviews-section">
+            <div class="container">
+                <div class="reviews-container">
+                    <!-- Reviews Main Content -->
+                    <div class="reviews-main">
+                        <!-- Product Overview -->
+                        <div class="product-overview">
+                            <div class="product-image">
+                                <img src="https://images.unsplash.com/photo-1581591524425-c7e0978865fc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Sony Alpha a7 III">
+                            </div>
+                            <div class="product-info">
+                                <span class="product-category">Mirrorless Camera</span>
+                                <h2 class="product-name">Sony Alpha a7 III</h2>
+                                <div class="product-price">Rp 28.499.000</div>
+                                <div class="product-rating">
+                                    <div class="rating-stars">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                    </div>
+                                    <div class="rating-number">4.8</div>
+                                    <div class="rating-count">(128 ulasan)</div>
+                                </div>
+                                <div class="product-actions">
+                                    <a href="product-detail.html" class="product-btn btn-view-product">Lihat Produk</a>
+                                    <button class="product-btn btn-add-to-cart">Tambah ke Keranjang</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Rating Breakdown -->
+                        <div class="rating-breakdown">
+                            <h3 class="rating-breakdown-title">Breakdown Rating</h3>
+                            <div class="rating-bars">
+                                <div class="rating-bar">
+                                    <div class="rating-label">
+                                        5
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                    </div>
+                                    <div class="rating-progress">
+                                        <div class="rating-progress-fill" style="width: 85%;"></div>
+                                    </div>
+                                    <div class="rating-percent">85%</div>
+                                </div>
+                                <div class="rating-bar">
+                                    <div class="rating-label">
+                                        4
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                    </div>
+                                    <div class="rating-progress">
+                                        <div class="rating-progress-fill" style="width: 10%;"></div>
+                                    </div>
+                                    <div class="rating-percent">10%</div>
+                                </div>
+                                <div class="rating-bar">
+                                    <div class="rating-label">
+                                        3
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                    </div>
+                                    <div class="rating-progress">
+                                        <div class="rating-progress-fill" style="width: 3%;"></div>
+                                    </div>
+                                    <div class="rating-percent">3%</div>
+                                </div>
+                                <div class="rating-bar">
+                                    <div class="rating-label">
+                                        2
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                    </div>
+                                    <div class="rating-progress">
+                                        <div class="rating-progress-fill" style="width: 1%;"></div>
+                                    </div>
+                                    <div class="rating-percent">1%</div>
+                                </div>
+                                <div class="rating-bar">
+                                    <div class="rating-label">
+                                        1
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                    </div>
+                                    <div class="rating-progress">
+                                        <div class="rating-progress-fill" style="width: 1%;"></div>
+                                    </div>
+                                    <div class="rating-percent">1%</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Reviews List -->
+                        <div class="reviews-list-section">
+                            <h3 class="reviews-list-title">Ulasan Pelanggan</h3>
+                            
+                            <div class="reviews-filter">
+                                <div class="filter-options">
+                                    <div class="filter-option active">Semua</div>
+                                    <div class="filter-option">5 Bintang</div>
+                                    <div class="filter-option">4 Bintang</div>
+                                    <div class="filter-option">3 Bintang</div>
+                                    <div class="filter-option">2 Bintang</div>
+                                    <div class="filter-option">1 Bintang</div>
+                                    <div class="filter-option">Dengan Foto</div>
+                                </div>
+                                <select class="sort-select">
+                                    <option>Terbaru</option>
+                                    <option>Tertua</option>
+                                    <option>Rating Tertinggi</option>
+                                    <option>Rating Terendah</option>
+                                    <option>Paling Membantu</option>
+                                </select>
+                            </div>
+                            
+                            <div class="reviews-list">
+                                <!-- Review 1 -->
+                                <div class="review-card">
+                                    <div class="review-header">
+                                        <div class="reviewer-info">
+                                            <div class="reviewer-avatar">
+                                                <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="Reviewer">
+                                            </div>
+                                            <div>
+                                                <div class="reviewer-name">Ahmad Rizki</div>
+                                                <div class="reviewer-verified">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                                    Pembelian Terverifikasi
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="review-date">15 Mei 2023</div>
+                                    </div>
+                                    <div class="review-rating">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                    </div>
+                                    <h4 class="review-title">Kamera mirrorless terbaik yang pernah saya gunakan!</h4>
+                                    <div class="review-text">
+                                        Saya sudah menggunakan Sony Alpha a7 III selama 3 bulan dan sangat puas dengan performanya. Kualitas gambar sangat tajam dan detail, bahkan dalam kondisi cahaya rendah. Autofocus sangat cepat dan akurat, sangat membantu untuk memotret subjek bergerak. Baterai juga cukup tahan lama untuk penggunaan seharian.
+                                        <br><br>
+                                        Fitur stabilisasi gambar in-body bekerja dengan sangat baik, memungkinkan saya untuk memotret dengan shutter speed yang lebih lambat tanpa khawatir hasil foto blur. Ergonomi kamera juga nyaman digenggam, meskipun agak kecil untuk tangan saya yang besar.
+                                        <br><br>
+                                        Satu-satunya kekurangan mungkin adalah menu yang agak rumit, butuh waktu untuk membiasakan diri. Tapi secara keseluruhan, ini adalah investasi yang sangat worth it untuk fotografi dan videografi.
+                                    </div>
+                                    <div class="review-images">
+                                        <div class="review-image">
+                                            <img src="https://images.unsplash.com/photo-1581591524425-c7e0978865fc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Review Image">
+                                        </div>
+                                        <div class="review-image">
+                                            <img src="https://images.unsplash.com/photo-1542124292-60272943a355?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Review Image">
+                                        </div>
+                                        <div class="review-image">
+                                            <img src="https://images.unsplash.com/photo-1452587925148-ce544e77e70d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Review Image">
+                                        </div>
+                                    </div>
+                                    <div class="review-footer">
+                                        <div class="review-helpful">
+                                            <div class="helpful-text">Apakah ulasan ini membantu?</div>
+                                            <div class="helpful-btn">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+                                                Ya (24)
+                                            </div>
+                                            <div class="helpful-btn">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path></svg>
+                                                Tidak (2)
+                                            </div>
+                                        </div>
+                                        <div class="review-report">Laporkan</div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Review 2 -->
+                                <div class="review-card">
+                                    <div class="review-header">
+                                        <div class="reviewer-info">
+                                            <div class="reviewer-avatar">
+                                                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="Reviewer">
+                                            </div>
+                                            <div>
+                                                <div class="reviewer-name">Dewi Lestari</div>
+                                                <div class="reviewer-verified">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                                    Pembelian Terverifikasi
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="review-date">10 Mei 2023</div>
+                                    </div>
+                                    <div class="review-rating">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                    </div>
+                                    <h4 class="review-title">Sangat puas dengan kualitas video</h4>
+                                    <div class="review-text">
+                                        Sebagai content creator, saya sangat terkesan dengan kemampuan video dari Sony Alpha a7 III. Kualitas 4K sangat detail dan warna yang dihasilkan sangat akurat. Fitur S-Log sangat membantu untuk color grading di post-production.
+                                        <br><br>
+                                        Autofocus saat merekam video juga sangat mulus dan dapat diandalkan. Saya suka bagaimana kamera ini dapat melacak wajah dan mata dengan sangat akurat, bahkan ketika subjek bergerak.
+                                        <br><br>
+                                        Satu-satunya kekurangan adalah tidak adanya layar yang dapat diputar ke depan, yang akan sangat membantu untuk vlogging. Tapi secara keseluruhan, ini adalah kamera yang luar biasa untuk videografi.
+                                    </div>
+                                    <div class="review-footer">
+                                        <div class="review-helpful">
+                                            <div class="helpful-text">Apakah ulasan ini membantu?</div>
+                                            <div class="helpful-btn">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+                                                Ya (18)
+                                            </div>
+                                            <div class="helpful-btn">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path></svg>
+                                                Tidak (1)
+                                            </div>
+                                        </div>
+                                        <div class="review-report">Laporkan</div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Review 3 -->
+                                <div class="review-card">
+                                    <div class="review-header">
+                                        <div class="reviewer-info">
+                                            <div class="reviewer-avatar">
+                                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="Reviewer">
+                                            </div>
+                                            <div>
+                                                <div class="reviewer-name">Budi Santoso</div>
+                                                <div class="reviewer-verified">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                                    Pembelian Terverifikasi
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="review-date">5 Mei 2023</div>
+                                    </div>
+                                    <div class="review-rating">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                    </div>
+                                    <h4 class="review-title">Performa low-light yang luar biasa</h4>
+                                    <div class="review-text">
+                                        Sebagai fotografer yang sering memotret di kondisi cahaya rendah, Sony Alpha a7 III adalah game changer. Kemampuan ISO tinggi dengan noise yang minimal sangat mengesankan. Saya bisa dengan nyaman memotret hingga ISO 12800 dengan hasil yang masih sangat baik.
+                                        <br><br>
+                                        Dynamic range juga sangat luas, memungkinkan untuk mengangkat shadow tanpa menimbulkan noise yang signifikan. Ini sangat membantu untuk fotografi landscape dan arsitektur.
+                                        <br><br>
+                                        Harga memang cukup mahal, tapi sebanding dengan kualitas dan fitur yang ditawarkan. Sangat direkomendasikan untuk fotografer yang serius.
+                                    </div>
+                                    <div class="review-images">
+                                        <div class="review-image">
+                                            <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Review Image">
+                                        </div>
+                                        <div class="review-image">
+                                            <img src="https://images.unsplash.com/photo-1514565131-fce0801e5785?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Review Image">
+                                        </div>
+                                    </div>
+                                    <div class="review-footer">
+                                        <div class="review-helpful">
+                                            <div class="helpful-text">Apakah ulasan ini membantu?</div>
+                                            <div class="helpful-btn">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+                                                Ya (32)
+                                            </div>
+                                            <div class="helpful-btn">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path></svg>
+                                                Tidak (0)
+                                            </div>
+                                        </div>
+                                        <div class="review-report">Laporkan</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Pagination -->
+                            <div class="pagination">
+                                <a href="#" class="pagination-item active">1</a>
+                                <a href="#" class="pagination-item">2</a>
+                                <a href="#" class="pagination-item">3</a>
+                                <a href="#" class="pagination-item">4</a>
+                                <a href="#" class="pagination-item">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Reviews Sidebar -->
+                    <div class="reviews-sidebar">
+                        <!-- Write Review Widget -->
+                        <div class="sidebar-widget write-review-widget">
+                            <div class="write-review-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                            </div>
+                            <h3 class="widget-title">Tulis Ulasan Anda</h3>
+                            <p class="write-review-text">Bagikan pengalaman Anda dengan produk ini dan bantu pelanggan lain membuat keputusan yang tepat.</p>
+                            <button class="write-review-btn" id="write-review-btn">Tulis Ulasan</button>
+                        </div>
+                        
+                        <!-- Review Form Widget (Hidden by default) -->
+                        <div class="sidebar-widget review-form-widget" id="review-form-widget">
+                            <h3 class="widget-title">Tulis Ulasan</h3>
+                            <form class="review-form">
+                                <div class="review-form-group">
+                                    <label class="review-form-label">Rating</label>
+                                    <div class="review-form-rating">
+                                        <div class="rating-star active">
+                                            <svg xmlns="http://www

@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Katalog Produk - CameraHub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
+    <style>
+        /* Catalog specific styles */
+        .catalog-filters {
+            background: white;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        .filter-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .search-box {
+            position: relative;
+            min-width: 300px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 3rem;
+            border: 2px solid var(--border-color);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+        }
+
+        .filter-select {
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background: white;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .view-toggle {
+            display: flex;
+            background: var(--bg-light);
+            border-radius: 8px;
+            padding: 0.25rem;
+        }
+
+        .view-btn {
+            padding: 0.5rem;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .view-btn.active {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .products-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .results-count {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .sort-select {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: white;
+            font-size: 0.9rem;
+        }
+
+        /* Enhanced product grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .products-grid.list-view {
+            grid-template-columns: 1fr;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-card.list-view {
+            display: flex;
+            align-items: center;
+            padding: 1.5rem;
+        }
+
+        .product-card.list-view .product-image {
+            width: 150px;
+            height: 150px;
+            flex-shrink: 0;
+            margin-right: 2rem;
+        }
+
+        .product-card.list-view .product-info {
+            flex: 1;
+        }
+
+        .product-card.list-view .product-actions {
+            flex-shrink: 0;
+            margin-left: 2rem;
+        }
+
+        .product-image {
+            position: relative;
+            height: 250px;
+            overflow: hidden;
+            background: var(--bg-light);
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .discount-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: var(--accent-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .quick-view-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover .quick-view-btn {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        .product-description {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stars {
+            color: #fbbf24;
+            font-size: 0.9rem;
+        }
+
+        .rating-count {
+            color: var(--text-light);
+            font-size: 0.8rem;
+        }
+
+        .product-price {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .current-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .original-price {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            text-decoration: line-through;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .product-actions .btn {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            font-size: 0.9rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        /* Loading skeleton */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .skeleton-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .skeleton-image {
+            height: 250px;
+            background: #f0f0f0;
+        }
+
+        .skeleton-content {
+            padding: 1.5rem;
+        }
+
+        .skeleton-line {
+            height: 1rem;
+            background: #f0f0f0;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+        }
+
+        .skeleton-line.short {
+            width: 60%;
+        }
+
+        .skeleton-line.medium {
+            width: 80%;
+        }
+
+        /* Quick view modal */
+        .quick-view-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .quick-view-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .quick-view-content {
+            background: white;
+            border-radius: 16px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+
+        .quick-view-modal.active .quick-view-content {
+            transform: scale(1);
+        }
+
+        .quick-view-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .quick-view-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+
+        .quick-view-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .filter-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-group {
+                justify-content: space-between;
+            }
+
+            .search-box {
+                min-width: auto;
+                width: 100%;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 1.5rem;
+            }
+
+            .product-card.list-view {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .product-card.list-view .product-image {
+                width: 100%;
+                height: 200px;
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+
+            .product-card.list-view .product-actions {
+                margin-left: 0;
+                margin-top: 1rem;
+            }
+
+            .quick-view-body {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Banner -->
+    <div class="top-banner">
+        <div class="container">
+            <p>Diskon spesial untuk pembelian pertama!</p>
+            <a href="catalog.html" class="banner-button">Belanja sekarang</a>
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Camera<span>Hub</span></h1>
+            </div>
+            <nav>
+                <div class="menu-toggle" id="mobile-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="catalog.html" class="active">Products</a></li>
+                    <li><a href="articles.html">Articles</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="nav-icons">
+                <a href="wishlist.html" class="icon-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                    <span class="wishlist-count" id="wishlist-count">0</span>
+                </a>
+                <a href="cart.html" class="icon-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                    <span class="cart-count" id="cart-count">0</span>
+                </a>
+                <a href="login.html" class="quiz-button">Login</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Catalog Header -->
+        <section class="catalog-header">
+            <div class="container">
+                <h1 class="catalog-title">Katalog Produk</h1>
+                <p class="catalog-subtitle">Temukan kamera dan aksesoris fotografi terbaik untuk kebutuhan Anda</p>
+            </div>
+        </section>
+
+        <!-- Filters -->
+        <section class="catalog-filters">
+            <div class="container">
+                <div class="filter-container">
+                    <div class="filter-group">
+                        <div class="search-box">
+                            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                            <input type="text" class="search-input" placeholder="Cari produk..." id="search-input">
+                        </div>
+                        <select class="filter-select" id="category-filter">
+                            <option value="">Semua Kategori</option>
+                            <option value="camera">Kamera</option>
+                            <option value="lens">Lensa</option>
+                            <option value="accessory">Aksesoris</option>
+                        </select>
+                        <select class="filter-select" id="brand-filter">
+                            <option value="">Semua Brand</option>
+                            <option value="canon">Canon</option>
+                            <option value="sony">Sony</option>
+                            <option value="nikon">Nikon</option>
+                            <option value="fujifilm">Fujifilm</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <div class="view-toggle">
+                            <button class="view-btn active" id="grid-view" title="Grid View">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                            </button>
+                            <button class="view-btn" id="list-view" title="List View">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Products Section -->
+        <section class="products-section">
+            <div class="container">
+                <div class="products-header">
+                    <div class="results-count" id="results-count">Menampilkan 6 produk</div>
+                    <select class="sort-select" id="sort-select">
+                        <option value="name">Urutkan: Nama A-Z</option>
+                        <option value="price-low">Harga: Rendah ke Tinggi</option>
+                        <option value="price-high">Harga: Tinggi ke Rendah</option>
+                        <option value="rating">Rating Tertinggi</option>
+                        <option value="newest">Terbaru</option>
+                    </select>
+                </div>
+                <div class="products-grid" id="products-grid">
+                    <!-- Loading skeletons -->
+                    <div class="skeleton-card">
+                        <div class="skeleton-image skeleton"></div>
+                        <div class="skeleton-content">
+                            <div class="skeleton-line skeleton"></div>
+                            <div class="skeleton-line medium skeleton"></div>
+                            <div class="skeleton-line short skeleton"></div>
+                        </div>
+                    </div>
+                    <div class="skeleton-card">
+                        <div class="skeleton-image skeleton"></div>
+                        <div class="skeleton-content">
+                            <div class="skeleton-line skeleton"></div>
+                            <div class="skeleton-line medium skeleton"></div>
+                            <div class="skeleton-line short skeleton"></div>
+                        </div>
+                    </div>
+                    <div class="skeleton-card">
+                        <div class="skeleton-image skeleton"></div>
+                        <div class="skeleton-content">
+                            <div class="skeleton-line skeleton"></div>
+                            <div class="skeleton-line medium skeleton"></div>
+                            <div class="skeleton-line short skeleton"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Quick View Modal -->
+    <div class="quick-view-modal" id="quick-view-modal">
+        <div class="quick-view-content">
+            <div class="quick-view-header">
+                <h3>Quick View</h3>
+                <button class="quick-view-close" id="quick-view-close">&times;</button>
+            </div>
+            <div class="quick-view-body" id="quick-view-body">
+                <!-- Quick view content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <h3>Camera<span>Hub</span></h3>
+                        <p>Platform terpercaya untuk semua kebutuhan fotografi Anda.</p>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="catalog.html">Products</a></li>
+                        <li><a href="articles.html">Articles</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Customer Service</h4>
+                    <ul>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="track-order.html">Track Order</a></li>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <div class="contact-info">
+                        <p><strong>Phone:</strong> +62 123 456 7890</p>
+                        <p><strong>Email:</strong> info@camerahub.com</p>
+                        <p><strong>Address:</strong> Jakarta, Indonesia</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 CameraHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Enhanced demo products data
+        const demoProducts = [
+            {
+                id: 'canon-eos-r5',
+                name: 'Canon EOS R5',
+                description: 'Kamera mirrorless flagship dengan kemampuan video 8K dan performa autofocus terdepan untuk fotografer profesional.',
+                rating: 4.9,
+                reviews: 89,
+                price: 52999000,
+                originalPrice: 58999000,
+                discount: 10,
+                image: '/placeholder.svg?height=300&width=300&text=Canon+EOS+R5',
+                category: 'camera',
+                brand: 'canon',
+                isNew: true
+            },
+            {
+                id: 'sony-a7-iii',
+                name: 'Sony Alpha a7 III',
+                description: 'Kamera mirrorless full-frame dengan performa tinggi untuk fotografer profesional dan enthusiast.',
+                rating: 4.8,
+                reviews: 156,
+                price: 28499000,
+                originalPrice: 32999000,
+                discount: 14,
+                image: '/placeholder.svg?height=300&width=300&text=Sony+a7+III',
+                category: 'camera',
+                brand: 'sony'
+            },
+            {
+                id: 'nikon-z6-ii',
+                name: 'Nikon Z6 II',
+                description: 'Kamera mirrorless serbaguna dengan dual card slot dan performa low-light yang excellent.',
+                rating: 4.6,
+                reviews: 124,
+                price: 24999000,
+                originalPrice: 27999000,
+                discount: 11,
+                image: '/placeholder.svg?height=300&width=300&text=Nikon+Z6+II',
+                category: 'camera',
+                brand: 'nikon'
+            },
+            {
+                id: 'fujifilm-xt4',
+                name: 'Fujifilm X-T4',
+                description: 'Kamera mirrorless APS-C dengan stabilisasi in-body dan kualitas warna yang excellent.',
+                rating: 4.7,
+                reviews: 98,
+                price: 21999000,
+                originalPrice: 24999000,
+                discount: 12,
+                image: '/placeholder.svg?height=300&width=300&text=Fujifilm+X-T4',
+                category: 'camera',
+                brand: 'fujifilm',
+                isNew: true
+            },
+            {
+                id: 'canon-rf-24-70',
+                name: 'Canon RF 24-70mm f/2.8L',
+                description: 'Lensa zoom standar profesional dengan kualitas optik terbaik untuk sistem Canon RF.',
+                rating: 4.8,
+                reviews: 67,
+                price: 32999000,
+                originalPrice: 35999000,
+                discount: 8,
+                image: '/placeholder.svg?height=300&width=300&text=Canon+RF+24-70',
+                category: 'lens',
+                brand: 'canon'
+            },
+            {
+                id: 'sony-fe-85mm',
+                name: 'Sony FE 85mm f/1.4 GM',
+                description: 'Lensa portrait premium dengan bokeh yang luar biasa dan ketajaman yang exceptional.',
+                rating: 4.9,
+                reviews: 45,
+                price: 24999000,
+                originalPrice: 27999000,
+                discount: 11,
+                image: '/placeholder.svg?height=300&width=300&text=Sony+FE+85mm',
+                category: 'lens',
+                brand: 'sony'
+            },
+            {
+                id: 'manfrotto-tripod',
+                name: 'Manfrotto Carbon Fiber Tripod',
+                description: 'Tripod carbon fiber ringan dan stabil untuk fotografi landscape dan portrait profesional.',
+                rating: 4.5,
+                reviews: 78,
+                price: 4999000,
+                originalPrice: 5999000,
+                discount: 17,
+                image: '/placeholder.svg?height=300&width=300&text=Manfrotto+Tripod',
+                category: 'accessory',
+                brand: 'manfrotto'
+            },
+            {
+                id: 'godox-flash',
+                name: 'Godox AD600Pro Flash',
+                description: 'Flash studio portable dengan daya 600Ws untuk fotografi studio dan outdoor.',
+                rating: 4.6,
+                reviews: 92,
+                price: 8999000,
+                originalPrice: 9999000,
+                discount: 10,
+                image: '/placeholder.svg?height=300&width=300&text=Godox+Flash',
+                category: 'accessory',
+                brand: 'godox',
+                isNew: true
+            }
+        ];
+
+        let filteredProducts = [...demoProducts];
+        let currentView = 'grid';
+
+        function generateProductCard(product, viewType = 'grid') {
+            const discountPercentage = product.originalPrice ? 
+                Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) : 0;
+
+            return `
+                <div class="product-card ${viewType === 'list' ? 'list-view' : ''}" data-id="${product.id}">
+                    <a href="product-detail.html?id=${product.id}" class="product-link">
+                        <div class="product-image">
+                            <img src="${product.image}" alt="${product.name}">
+                            ${discountPercentage > 0 ? `<div class="discount-badge">-${discountPercentage}%</div>` : ''}
+                            ${product.isNew ? `<div class="discount-badge" style="background: #10b981; left: auto; right: 1rem;">NEW</div>` : ''}
+                            <button class="quick-view-btn" onclick="openQuickView('${product.id}', event)" title="Quick View">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            </button>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">${product.name}</h3>
+                            <p class="product-description">${product.description}</p>
+                            <div class="product-rating">
+                                <div class="stars">
+                                    ${'★'.repeat(Math.floor(product.rating))}${'☆'.repeat(5 - Math.floor(product.rating))}
+                                </div>
+                                <span class="rating-count">(${product.reviews} reviews)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="current-price">Rp ${product.price.toLocaleString('id-ID')}</span>
+                                ${product.originalPrice ? `<span class="original-price">Rp ${product.originalPrice.toLocaleString('id-ID')}</span>` : ''}
+                            </div>
+                        </div>
+                    </a>
+                    <div class="product-actions">
+                        <button class="btn btn-primary add-to-cart-btn" onclick="addToCartFromCatalog('${product.id}', event)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                            Tambah ke Keranjang
+                        </button>
+                        <button class="btn btn-secondary" onclick="addToWishlistFromCatalog('${product.id}', event)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                            Wishlist
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderProducts() {
+            const productGrid = document.getElementById('products-grid');
+            const resultsCount = document.getElementById('results-count');
+            
+            if (filteredProducts.length === 0) {
+                productGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--text-light);">Tidak ada produk yang ditemukan</div>';
+                resultsCount.textContent = 'Tidak ada produk ditemukan';
+                return;
+            }
+
+            productGrid.innerHTML = filteredProducts.map(product => 
+                generateProductCard(product, currentView)
+            ).join('');
+            
+            resultsCount.textContent = `Menampilkan ${filteredProducts.length} produk`;
+        }
+
+        function filterProducts() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const categoryFilter = document.getElementById('category-filter').value;
+            const brandFilter = document.getElementById('brand-filter').value;
+            const sortBy = document.getElementById('sort-select').value;
+
+            filteredProducts = demoProducts.filter(product => {
+                const matchesSearch = product.name.toLowerCase().includes(searchTerm) || 
+                                    product.description.toLowerCase().includes(searchTerm);
+                const matchesCategory = !categoryFilter || product.category === categoryFilter;
+                const matchesBrand = !brandFilter || product.brand === brandFilter;
+                
+                return matchesSearch && matchesCategory && matchesBrand;
+            });
+
+            // Sort products
+            switch (sortBy) {
+                case 'price-low':
+                    filteredProducts.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-high':
+                    filteredProducts.sort((a, b) => b.price - a.price);
+                    break;
+                case 'rating':
+                    filteredProducts.sort((a, b) => b.rating - a.rating);
+                    break;
+                case 'newest':
+                    filteredProducts.sort((a, b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0));
+                    break;
+                default:
+                    filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
+            }
+
+            renderProducts();
+        }
+
+        function openQuickView(productId, event) {
+            event.preventDefault();
+            event.stopPropagation();
+            
+            const product = demoProducts.find(p => p.id === productId);
+            if (!product) return;
+
+            const modal = document.getElementById('quick-view-modal');
+            const body = document.getElementById('quick-view-body');
+            
+            body.innerHTML = `
+                <div class="quick-view-image">
+                    <img src="${product.image}" alt="${product.name}" style="width: 100%; border-radius: 8px;">
+                </div>
+                <div class="quick-view-details">
+                    <h3>${product.name}</h3>
+                    <div class="product-rating" style="margin: 1rem 0;">
+                        <div class="stars">
+                            ${'★'.repeat(Math.floor(product.rating))}${'☆'.repeat(5 - Math.floor(product.rating))}
+                        </div>
+                        <span class="rating-count">(${product.reviews} reviews)</span>
+                    </div>
+                    <p style="color: var(--text-light); margin-bottom: 1.5rem;">${product.description}</p>
+                    <div class="product-price" style="margin-bottom: 2rem;">
+                        <span class="current-price">Rp ${product.price.toLocaleString('id-ID')}</span>
+                        ${product.originalPrice ? `<span class="original-price">Rp ${product.originalPrice.toLocaleString('id-ID')}</span>` : ''}
+                    </div>
+                    <div class="product-actions">
+                        <button class="btn btn-primary" onclick="addToCartFromCatalog('${product.id}', event); closeQuickView();" style="margin-right: 1rem;">
+                            Tambah ke Keranjang
+                        </button>
+                        <a href="product-detail.html?id=${product.id}" class="btn btn-secondary">
+                            Lihat Detail
+                        </a>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.add('active');
+        }
+
+        function closeQuickView() {
+            document.getElementById('quick-view-modal').classList.remove('active');
+        }
+
+        function addToCartFromCatalog(productId, event) {
+            event.preventDefault();
+            event.stopPropagation();
+            
+            const product = demoProducts.find(p => p.id === productId);
+            if (!product) return;
+            
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    quantity: 1
+                });
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            
+            // Show success feedback
+            const button = event.target.closest('.add-to-cart-btn');
+            const originalText = button.innerHTML;
+            button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Ditambahkan!';
+            button.style.backgroundColor = '#4caf50';
+            
+            setTimeout(() => {
+                button.innerHTML = originalText;
+                button.style.backgroundColor = '';
+            }, 2000);
+        }
+
+        function addToWishlistFromCatalog(productId, event) {
+            event.preventDefault();
+            event.stopPropagation();
+            
+            const product = demoProducts.find(p => p.id === productId);
+            if (!product) return;
+            
+            const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+            const existingItem = wishlist.find(item => item.id === productId);
+            
+            if (!existingItem) {
+                wishlist.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image
+                });
+                
+                localStorage.setItem('wishlist', JSON.stringify(wishlist));
+                updateWishlistCount();
+                
+                // Show success feedback
+                const button = event.target.closest('button');
+                const originalText = button.innerHTML;
+                button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Ditambahkan!';
+                button.style.backgroundColor = '#4caf50';
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.style.backgroundColor = '';
+                }, 2000);
+            } else {
+                alert('Produk sudah ada di wishlist!');
+            }
+        }
+
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cart-count').textContent = totalItems;
+        }
+
+        function updateWishlistCount() {
+            const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+            document.getElementById('wishlist-count').textContent = wishlist.length;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Simulate loading
+            setTimeout(() => {
+                renderProducts();
+            }, 1000);
+
+            updateCartCount();
+            updateWishlistCount();
+
+            // Event listeners
+            document.getElementById('search-input').addEventListener('input', filterProducts);
+            document.getElementById('category-filter').addEventListener('change', filterProducts);
+            document.getElementById('brand-filter').addEventListener('change', filterProducts);
+            document.getElementById('sort-select').addEventListener('change', filterProducts);
+
+            // View toggle
+            document.getElementById('grid-view').addEventListener('click', () => {
+                currentView = 'grid';
+                document.getElementById('grid-view').classList.add('active');
+                document.getElementById('list-view').classList.remove('active');
+                document.getElementById('products-grid').classList.remove('list-view');
+                renderProducts();
+            });
+
+            document.getElementById('list-view').addEventListener('click', () => {
+                currentView = 'list';
+                document.getElementById('list-view').classList.add('active');
+                document.getElementById('grid-view').classList.remove('active');
+                document.getElementById('products-grid').classList.add('list-view');
+                renderProducts();
+            });
+
+            // Quick view modal
+            document.getElementById('quick-view-close').addEventListener('click', closeQuickView);
+            document.getElementById('quick-view-modal').addEventListener('click', (e) => {
+                if (e.target === e.currentTarget) closeQuickView();
+            });
+
+            // Mobile menu toggle
+            const mobileMenu = document.getElementById('mobile-menu');
+            const navMenu = document.querySelector('.nav-menu');
+
+            if (mobileMenu && navMenu) {
+                mobileMenu.addEventListener('click', () => {
+                    navMenu.classList.toggle('active');
+                    mobileMenu.classList.toggle('active');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

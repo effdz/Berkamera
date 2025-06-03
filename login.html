@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Register - CameraHub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
+    <style>
+        /* Login Page Styles */
+        .auth-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--secondary-color) 0%, #ffffff 100%);
+            padding: 2rem 0;
+        }
+        
+        .auth-container {
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 100%;
+            max-width: 900px;
+            min-height: 600px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+        
+        .auth-form-section {
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .auth-brand {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .auth-brand h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .auth-brand span {
+            color: var(--primary-color);
+        }
+        
+        .auth-brand p {
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+        
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            background-color: var(--secondary-color);
+            border-radius: 10px;
+            padding: 0.3rem;
+        }
+        
+        .auth-tab {
+            flex: 1;
+            padding: 0.8rem;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+        }
+        
+        .auth-tab.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .auth-form {
+            display: none;
+        }
+        
+        .auth-form.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .form-select {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            transition: var(--transition);
+            font-size: 1rem;
+            background-color: white;
+        }
+        
+        .form-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .form-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-checkbox input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+        }
+        
+        .form-checkbox label {
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+        
+        .auth-button {
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 1rem;
+        }
+        
+        .auth-button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        .auth-button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .forgot-password {
+            text-align: center;
+            margin-top: 1rem;
+        }
+        
+        .forgot-password a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+        
+        .auth-visual {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #c0392b 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .auth-visual::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="1" fill="white" opacity="0.1"/><circle cx="10" cy="60" r="1" fill="white" opacity="0.1"/><circle cx="90" cy="40" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            animation: float 20s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        
+        .visual-icon {
+            width: 120px;
+            height: 120px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .visual-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .visual-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+        
+        .visual-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
+        .error-message {
+            background-color: #ffebee;
+            color: #c62828;
+            padding: 0.8rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            display: none;
+        }
+        
+        .success-message {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            padding: 0.8rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .debug-info {
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: #333;
+        }
+        
+        @media (max-width: 768px) {
+            .auth-container {
+                grid-template-columns: 1fr;
+                margin: 1rem;
+            }
+            
+            .auth-visual {
+                display: none;
+            }
+            
+            .auth-form-section {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <section class="auth-section">
+            <div class="auth-container">
+                <!-- Form Section -->
+                <div class="auth-form-section">
+                    <div class="auth-brand">
+                        <h1>Camera<span>Hub</span></h1>
+                        <p>Selamat datang di platform kamera terbaik</p>
+                    </div>
+                    
+                    <!-- Debug Info -->
+                    <div class="debug-info" id="debug-info">
+                        <strong>Debug Info:</strong><br>
+                        <span id="debug-text">Initializing...</span>
+                    </div>
+                    
+                    <div class="auth-tabs">
+                        <div class="auth-tab active" data-tab="login">Login</div>
+                        <div class="auth-tab" data-tab="register">Register</div>
+                    </div>
+                    
+                    <div class="error-message" id="error-message"></div>
+                    <div class="success-message" id="success-message"></div>
+                    
+                    <!-- Login Form -->
+                    <form class="auth-form active" id="login-form">
+                        <div class="form-group">
+                            <label for="login-email" class="form-label">Email</label>
+                            <input type="email" id="login-email" class="form-input" value="admin@camerahub.com" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="login-password" class="form-label">Password</label>
+                            <input type="password" id="login-password" class="form-input" value="admin123" required>
+                        </div>
+                        
+                        <div class="form-checkbox">
+                            <input type="checkbox" id="remember-me">
+                            <label for="remember-me">Ingat saya</label>
+                        </div>
+                        
+                        <button type="submit" class="auth-button">Login</button>
+                        
+                        <div class="forgot-password">
+                            <a href="#" id="forgot-password-link">Lupa password?</a>
+                        </div>
+                    </form>
+                    
+                    <!-- Register Form -->
+                    <form class="auth-form" id="register-form">
+                        <div class="form-group">
+                            <label for="register-name" class="form-label">Nama Lengkap</label>
+                            <input type="text" id="register-name" class="form-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="register-email" class="form-label">Email</label>
+                            <input type="email" id="register-email" class="form-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="register-phone" class="form-label">Nomor Telepon</label>
+                            <input type="tel" id="register-phone" class="form-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="register-password" class="form-label">Password</label>
+                            <input type="password" id="register-password" class="form-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="register-confirm-password" class="form-label">Konfirmasi Password</label>
+                            <input type="password" id="register-confirm-password" class="form-input" required>
+                        </div>
+                        
+                        <div class="form-checkbox">
+                            <input type="checkbox" id="agree-terms" required>
+                            <label for="agree-terms">Saya setuju dengan <a href="terms.html" target="_blank">Syarat & Ketentuan</a></label>
+                        </div>
+                        
+                        <button type="submit" class="auth-button">Daftar</button>
+                    </form>
+                </div>
+                
+                <!-- Visual Section -->
+                <div class="auth-visual">
+                    <div class="visual-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path>
+                            <circle cx="12" cy="13" r="3"></circle>
+                        </svg>
+                    </div>
+                    <div class="visual-content">
+                        <h2 class="visual-title">Bergabunglah dengan Kami</h2>
+                        <p class="visual-subtitle">Dapatkan akses ke koleksi kamera dan aksesoris fotografi terlengkap dengan harga terbaik</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Debug function
+        function updateDebugInfo(message) {
+            const debugElement = document.getElementById('debug-text');
+            if (debugElement) {
+                debugElement.innerHTML = message;
+            }
+            console.log('DEBUG:', message);
+        }
+
+        // Initialize demo users
+        function initializeDemoUsers() {
+            updateDebugInfo('Initializing demo users...');
+            
+            // Clear existing users first
+            localStorage.removeItem('users');
+            localStorage.removeItem('currentUser');
+            
+            const users = [
+                {
+                    id: 'admin-1',
+                    name: 'Admin CameraHub',
+                    email: 'admin@camerahub.com',
+                    password: 'admin123',
+                    phone: '+62 123 456 7890',
+                    role: 'admin',
+                    createdAt: new Date().toISOString()
+                },
+                {
+                    id: 'user-1',
+                    name: 'John Doe',
+                    email: 'user@example.com',
+                    password: 'user123',
+                    phone: '+62 987 654 3210',
+                    role: 'user',
+                    createdAt: new Date().toISOString()
+                }
+            ];
+            
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            // Verify
+            const stored = JSON.parse(localStorage.getItem('users') || '[]');
+            updateDebugInfo(`Users created: ${stored.length} users<br>Admin email: ${stored[0]?.email}<br>Admin password: ${stored[0]?.password}`);
+            
+            return users;
+        }
+
+        // Initialize on page load
+        const demoUsers = initializeDemoUsers();
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDebugInfo('Page loaded. Ready for login.');
+            
+            // Tab switching
+            const tabs = document.querySelectorAll('.auth-tab');
+            const forms = document.querySelectorAll('.auth-form');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const targetTab = this.dataset.tab;
+                    
+                    // Update active tab
+                    tabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Update active form
+                    forms.forEach(form => {
+                        form.classList.remove('active');
+                        if (form.id === `${targetTab}-form`) {
+                            form.classList.add('active');
+                        }
+                    });
+                    
+                    // Clear messages
+                    clearMessages();
+                });
+            });
+            
+            // Login form submission
+            document.getElementById('login-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                handleLogin();
+            });
+            
+            // Register form submission
+            document.getElementById('register-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                handleRegister();
+            });
+            
+            // Forgot password
+            document.getElementById('forgot-password-link').addEventListener('click', function(e) {
+                e.preventDefault();
+                handleForgotPassword();
+            });
+        });
+        
+        function handleLogin() {
+            const email = document.getElementById('login-email').value.trim();
+            const password = document.getElementById('login-password').value.trim();
+            const rememberMe = document.getElementById('remember-me').checked;
+            
+            updateDebugInfo(`Login attempt:<br>Email: ${email}<br>Password: ${password}`);
+            
+            // Get users from localStorage
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            updateDebugInfo(`Found ${users.length} users in storage`);
+            
+            // Find user with exact match
+            const user = users.find(u => u.email === email && u.password === password);
+            
+            if (user) {
+                updateDebugInfo(`User found: ${user.name} (${user.role})`);
+                
+                // Create session
+                const session = {
+                    userId: user.id,
+                    email: user.email,
+                    name: user.name,
+                    role: user.role,
+                    loginTime: new Date().toISOString(),
+                    rememberMe: rememberMe
+                };
+                
+                // Store session
+                localStorage.setItem('currentUser', JSON.stringify(session));
+                
+                // Verify session was stored
+                const storedSession = localStorage.getItem('currentUser');
+                updateDebugInfo(`Session created and stored: ${storedSession ? 'SUCCESS' : 'FAILED'}`);
+                
+                if (rememberMe) {
+                    localStorage.setItem('rememberedUser', email);
+                }
+                
+                showSuccess('Login berhasil! Mengalihkan...');
+                
+                // Redirect based on role
+                setTimeout(() => {
+                    if (user.role === 'admin') {
+                        updateDebugInfo('Redirecting to admin dashboard...');
+                        window.location.href = 'admin-dashboard.html';
+                    } else {
+                        updateDebugInfo('Redirecting to home page...');
+                        window.location.href = 'index.html';
+                    }
+                }, 2000);
+            } else {
+                updateDebugInfo(`Login failed. Available users:<br>${users.map(u => `${u.email}:${u.password}`).join('<br>')}`);
+                showError('Email atau password salah!');
+            }
+        }
+        
+        function handleRegister() {
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            const phone = document.getElementById('register-phone').value;
+            const password = document.getElementById('register-password').value;
+            const confirmPassword = document.getElementById('register-confirm-password').value;
+            const agreeTerms = document.getElementById('agree-terms').checked;
+            
+            // Validation
+            if (!agreeTerms) {
+                showError('Anda harus menyetujui syarat dan ketentuan');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showError('Password dan konfirmasi password tidak sama');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showError('Password minimal 6 karakter');
+                return;
+            }
+            
+            // Check if email already exists
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const emailExists = users.find(u => u.email === email);
+            
+            if (emailExists) {
+                showError('Email sudah terdaftar');
+                return;
+            }
+            
+            // Create new user
+            const newUser = {
+                id: 'user-' + Date.now(),
+                name: name,
+                email: email,
+                phone: phone,
+                password: password,
+                role: 'user',
+                createdAt: new Date().toISOString()
+            };
+            
+            // Save user
+            users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            showSuccess('Registrasi berhasil! Silakan login.');
+            
+            // Switch to login tab
+            setTimeout(() => {
+                document.querySelector('[data-tab="login"]').click();
+                document.getElementById('login-email').value = email;
+            }, 1500);
+        }
+        
+        function handleForgotPassword() {
+            const email = prompt('Masukkan email Anda:');
+            if (email) {
+                const users = JSON.parse(localStorage.getItem('users') || '[]');
+                const user = users.find(u => u.email === email);
+                
+                if (user) {
+                    alert(`Password untuk ${email} adalah: ${user.password}`);
+                } else {
+                    alert('Email tidak ditemukan');
+                }
+            }
+        }
+        
+        function showError(message) {
+            const errorDiv = document.getElementById('error-message');
+            const successDiv = document.getElementById('success-message');
+            
+            successDiv.style.display = 'none';
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 5000);
+        }
+        
+        function showSuccess(message) {
+            const errorDiv = document.getElementById('error-message');
+            const successDiv = document.getElementById('success-message');
+            
+            errorDiv.style.display = 'none';
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                successDiv.style.display = 'none';
+            }, 5000);
+        }
+        
+        function clearMessages() {
+            document.getElementById('error-message').style.display = 'none';
+            document.getElementById('success-message').style.display = 'none';
+        }
+        
+        // Auto-fill remembered user
+        window.addEventListener('load', function() {
+            const rememberedUser = localStorage.getItem('rememberedUser');
+            if (rememberedUser) {
+                document.getElementById('login-email').value = rememberedUser;
+                document.getElementById('remember-me').checked = true;
+            }
+        });
+    </script>
+</body>
+</html>

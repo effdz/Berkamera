@@ -622,115 +622,91 @@
 
     <script>
         // Enhanced demo products data
-        const demoProducts = [
-            {
-                id: 'canon-eos-r5',
-                name: 'Canon EOS R5',
-                description: 'Kamera mirrorless flagship dengan kemampuan video 8K dan performa autofocus terdepan untuk fotografer profesional.',
-                rating: 4.9,
-                reviews: 89,
-                price: 52999000,
-                originalPrice: 58999000,
-                discount: 10,
-                image: '/placeholder.svg?height=300&width=300&text=Canon+EOS+R5',
-                category: 'camera',
-                brand: 'canon',
-                isNew: true
-            },
-            {
-                id: 'sony-a7-iii',
-                name: 'Sony Alpha a7 III',
-                description: 'Kamera mirrorless full-frame dengan performa tinggi untuk fotografer profesional dan enthusiast.',
-                rating: 4.8,
-                reviews: 156,
-                price: 28499000,
-                originalPrice: 32999000,
-                discount: 14,
-                image: '/placeholder.svg?height=300&width=300&text=Sony+a7+III',
-                category: 'camera',
-                brand: 'sony'
-            },
-            {
-                id: 'nikon-z6-ii',
-                name: 'Nikon Z6 II',
-                description: 'Kamera mirrorless serbaguna dengan dual card slot dan performa low-light yang excellent.',
-                rating: 4.6,
-                reviews: 124,
-                price: 24999000,
-                originalPrice: 27999000,
-                discount: 11,
-                image: '/placeholder.svg?height=300&width=300&text=Nikon+Z6+II',
-                category: 'camera',
-                brand: 'nikon'
-            },
-            {
-                id: 'fujifilm-xt4',
-                name: 'Fujifilm X-T4',
-                description: 'Kamera mirrorless APS-C dengan stabilisasi in-body dan kualitas warna yang excellent.',
-                rating: 4.7,
-                reviews: 98,
-                price: 21999000,
-                originalPrice: 24999000,
-                discount: 12,
-                image: '/placeholder.svg?height=300&width=300&text=Fujifilm+X-T4',
-                category: 'camera',
-                brand: 'fujifilm',
-                isNew: true
-            },
-            {
-                id: 'canon-rf-24-70',
-                name: 'Canon RF 24-70mm f/2.8L',
-                description: 'Lensa zoom standar profesional dengan kualitas optik terbaik untuk sistem Canon RF.',
-                rating: 4.8,
-                reviews: 67,
-                price: 32999000,
-                originalPrice: 35999000,
-                discount: 8,
-                image: '/placeholder.svg?height=300&width=300&text=Canon+RF+24-70',
-                category: 'lens',
-                brand: 'canon'
-            },
-            {
-                id: 'sony-fe-85mm',
-                name: 'Sony FE 85mm f/1.4 GM',
-                description: 'Lensa portrait premium dengan bokeh yang luar biasa dan ketajaman yang exceptional.',
-                rating: 4.9,
-                reviews: 45,
-                price: 24999000,
-                originalPrice: 27999000,
-                discount: 11,
-                image: '/placeholder.svg?height=300&width=300&text=Sony+FE+85mm',
-                category: 'lens',
-                brand: 'sony'
-            },
-            {
-                id: 'manfrotto-tripod',
-                name: 'Manfrotto Carbon Fiber Tripod',
-                description: 'Tripod carbon fiber ringan dan stabil untuk fotografi landscape dan portrait profesional.',
-                rating: 4.5,
-                reviews: 78,
-                price: 4999000,
-                originalPrice: 5999000,
-                discount: 17,
-                image: '/placeholder.svg?height=300&width=300&text=Manfrotto+Tripod',
-                category: 'accessory',
-                brand: 'manfrotto'
-            },
-            {
-                id: 'godox-flash',
-                name: 'Godox AD600Pro Flash',
-                description: 'Flash studio portable dengan daya 600Ws untuk fotografi studio dan outdoor.',
-                rating: 4.6,
-                reviews: 92,
-                price: 8999000,
-                originalPrice: 9999000,
-                discount: 10,
-                image: '/placeholder.svg?height=300&width=300&text=Godox+Flash',
-                category: 'accessory',
-                brand: 'godox',
-                isNew: true
-            }
-        ];
+       const demoProducts = [
+  {
+    id: 'canon-eos-r5',
+    name: 'Canon EOS R5',
+    description: 'Kamera mirrorless flagship dengan kemampuan video 8K dan performa autofocus terdepan untuk fotografer profesional.',
+    rating: 4.9,
+    reviews: 89,
+    price: 52999000,
+    originalPrice: 58999000,
+    discount: 10,
+    image: 'https://cdn.shopify.com/s/files/1/0672/3806/8470/files/id-11134207-7r992-lq1mwn5oo9ae0c.jpg?v=1709890334',
+    category: 'camera',
+    brand: 'canon',
+    isNew: true
+  },
+  {
+    id: 'sony-a7-iii',
+    name: 'Sony Alpha a7 III',
+    description: 'Kamera mirrorless full-frame dengan performa tinggi untuk fotografer profesional dan enthusiast.',
+    rating: 4.8,
+    reviews: 156,
+    price: 28499000,
+    originalPrice: 32999000,
+    discount: 14,
+    image: 'https://main.mobile.doss.co.id/storage/uploads/2021/10/Sony%20Alpha%20a7%20III%20Mirrorless%20Digital%20Camera%20%28Body%20Only%29.webp',
+    category: 'camera',
+    brand: 'sony'
+  },
+  {
+    id: 'nikon-z6-ii',
+    name: 'Nikon Z6 II',
+    description: 'Kamera mirrorless serbaguna dengan dual card slot dan performa low-light yang excellent.',
+    rating: 4.6,
+    reviews: 124,
+    price: 24999000,
+    originalPrice: 27999000,
+    discount: 11,
+    image: 'https://cdn.shopify.com/s/files/1/0672/3806/8470/files/nikon-z6-ii-gehause-nikkor-z-24-120mm-f4-s-1637057375079103045.jpg?v=1716785542',
+    category: 'camera',
+    brand: 'nikon'
+  },
+  {
+    id: 'fujifilm-xt4',
+    name: 'Fujifilm X-T4',
+    description: 'Kamera mirrorless APS-C dengan stabilisasi in-body dan kualitas warna yang excellent.',
+    rating: 4.7,
+    reviews: 98,
+    price: 21999000,
+    originalPrice: 24999000,
+    discount: 12,
+    image: 'https://down-id.img.susercontent.com/file/39cba7098400ca66bf9d64a48575c3e2',
+    category: 'camera',
+    brand: 'fujifilm',
+    isNew: true
+  },
+  {
+    id: 'canon-rf-24-70',
+    name: 'Canon RF 24-70mm f/2.8L',
+    description: 'Lensa zoom standar profesional dengan kualitas optik terbaik untuk sistem Canon RF.',
+    rating: 4.8,
+    reviews: 67,
+    price: 32999000,
+    originalPrice: 35999000,
+    discount: 8,
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJ4XNMG_sRmlJzoAHSu6Pf6f8Iafj465c4kw&s',
+    category: 'lens',
+    brand: 'canon'
+  },
+  {
+    id: 'sony-fe-85mm',
+    name: 'Sony FE 85mm f/1.4 GM',
+    description: 'Lensa portrait premium dengan bokeh yang luar biasa dan ketajaman yang exceptional.',
+    rating: 4.9,
+    reviews: 45,
+    price: 24999000,
+    originalPrice: 27999000,
+    discount: 11,
+    image: 'https://cdn.shopify.com/s/files/1/0672/3806/8470/files/1724849243_img_2324684.jpg?v=1730089779',
+    category: 'lens',
+    brand: 'sony'
+  },
+  
+];
+
+
 
         let filteredProducts = [...demoProducts];
         let currentView = 'grid';

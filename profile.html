@@ -249,10 +249,11 @@
     
     .product-name {
         font-weight: 600;
+        color: var(--text-color);
     }
     
     .product-price {
-        color: var(--text-color);
+        color: var(--light-text);
     }
     
     .transaction-total {
@@ -445,6 +446,7 @@ function loadTransactionHistory() {
                             <div class="transaction-product">
                                 <div class="product-name">${product.name} x${product.quantity}</div>
                                 <div class="product-price">Rp ${(product.price * product.quantity).toLocaleString('id-ID')}</div>
+                                 <img src="${product.image || 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50"%3E%3Crect width="50" height="50" fill="%23f0f0f0"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="12" fill="%23333333"%3EProduct%3C/text%3E%3C/svg%3E'}" alt="${product.name}" style="width: 50px; height: 50px; object-fit: cover; margin-right: 10px;">
                             </div>
                         `).join('')}
                     </div>
@@ -462,7 +464,7 @@ function loadTransactionHistory() {
                 </div>
             </div>
         `;
-    });
+    }).join('');
     
     document.getElementById('transaction-history').innerHTML = html;
 }
@@ -505,7 +507,7 @@ function viewOrderDetails(orderId) {
         <div class="modal-content" style="max-width: 700px;">
             <div class="modal-header">
                 <h3 class="modal-title">Detail Pesanan #${order.id}</h3>
-                <button class="modal-close" onclick="document.getElementById('order-detail-modal').remove()">&times;</button>
+                <button class="modal-close" onclick="this.closest('.modal').remove()">&times;</button>
             </div>
             <div style="padding: 1rem;">
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
@@ -544,46 +546,7 @@ function viewOrderDetails(orderId) {
                     </table>
                 </div>
                 
-                <div class="transaction-timeline">
-                    <h4 class="timeline-title">Status Pesanan</h4>
-                    <div class="timeline-steps">
-                        <div class="timeline-step ${order.status !== 'cancelled' ? 'active' : ''}">
-                            <div class="timeline-step-title">Pesanan Dibuat</div>
-                            <div class="timeline-step-date">${new Date(order.createdAt).toLocaleDateString('id-ID')} ${new Date(order.createdAt).toLocaleTimeString('id-ID')}</div>
-                        </div>
-                        <div class="timeline-step ${['processing', 'shipped', 'completed'].includes(order.status) ? 'active' : ''}">
-                            <div class="timeline-step-title">Diproses</div>
-                            <div class="timeline-step-date">${order.processedDate ? new Date(order.processedDate).toLocaleDateString('id-ID') + ' ' + new Date(order.processedDate).toLocaleTimeString('id-ID') : '-'}</div>
-                        </div>
-                        <div class="timeline-step ${['shipped', 'completed'].includes(order.status) ? 'active' : ''}">
-                            <div class="timeline-step-title">Dikirim</div>
-                            <div class="timeline-step-date">${order.shippedDate ? new Date(order.shippedDate).toLocaleDateString('id-ID') + ' ' + new Date(order.shippedDate).toLocaleTimeString('id-ID') : '-'}</div>
-                        </div>
-                        <div class="timeline-step ${order.status === 'completed' ? 'active' : ''}">
-                            <div class="timeline-step-title">Selesai</div>
-                            <div class="timeline-step-date">${order.completedDate ? new Date(order.completedDate).toLocaleDateString('id-ID') + ' ' + new Date(order.completedDate).toLocaleTimeString('id-ID') : '-'}</div>
-                        </div>
-                    </div>
-                </div>
-                
-                ${order.status === 'completed' && !order.reviewed ? `
-                <div class="review-form">
-                    <h4 class="review-title">Tulis Ulasan</h4>
-                    <div class="star-rating" id="star-rating">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-rating="1"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-rating="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-rating="3"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-rating="4"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-rating="5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
-                    </div>
-                    <div class="form-group">
-                        <textarea id="review-text" class="form-textarea" rows="3" placeholder="Tulis ulasan Anda di sini..."></textarea>
-                    </div>
-                    <button class="btn btn-primary" onclick="submitReview('${order.id}')">Kirim Ulasan</button>
-                </div>
-                ` : ''}
-                
-                <div style="display: flex; justify-content: flex-end; margin-top: 1.5rem;">
+                <div style="text-align: right; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
                     <button class="btn btn-secondary" onclick="document.getElementById('order-detail-modal').remove()">Tutup</button>
                 </div>
             </div>
@@ -595,71 +558,15 @@ function viewOrderDetails(orderId) {
     const modalContainer = document.createElement('div');
     modalContainer.innerHTML = modalHTML;
     document.body.appendChild(modalContainer.firstElementChild);
-    
-    // Add event listeners for star rating
-    if (order.status === 'completed' && !order.reviewed) {
-        const stars = document.querySelectorAll('#star-rating svg');
-        stars.forEach(star => {
-            star.addEventListener('click', function() {
-                const rating = parseInt(this.dataset.rating);
-                stars.forEach(s => {
-                    if (parseInt(s.dataset.rating) <= rating) {
-                        s.classList.add('filled');
-                    } else {
-                        s.classList.remove('filled');
-                    }
-                });
-            });
-        });
-    }
 }
 
 // Write review
 function writeReview(orderId) {
-    viewOrderDetails(orderId);
+    // Redirect to review page with order ID
+    window.location.href = `reviews.html?order=${orderId}`;
 }
 
-// Submit review
-function submitReview(orderId) {
-    const stars = document.querySelectorAll('#star-rating svg.filled');
-    const rating = stars.length;
-    const reviewText = document.getElementById('review-text').value.trim();
-    
-    if (rating === 0) {
-        alert('Silakan berikan rating!');
-        return;
-    }
-    
-    if (!reviewText) {
-        alert('Silakan tulis ulasan Anda!');
-        return;
-    }
-    
-    // Update order with review
-    const orders = JSON.parse(localStorage.getItem('orders') || '[]');
-    const orderIndex = orders.findIndex(o => o.id === orderId);
-    
-    if (orderIndex !== -1) {
-        orders[orderIndex].reviewed = true;
-        orders[orderIndex].review = {
-            rating: rating,
-            text: reviewText,
-            date: new Date().toISOString()
-        };
-        
-        localStorage.setItem('orders', JSON.stringify(orders));
-        
-        // Close modal
-        document.getElementById('order-detail-modal').remove();
-        
-        // Reload transaction history
-        loadTransactionHistory();
-        
-        alert('Terima kasih atas ulasan Anda!');
-    }
-}
-
-// Load transaction history when page loads
+// Initialize transaction history when page loads
 document.addEventListener('DOMContentLoaded', function() {
     loadTransactionHistory();
 });

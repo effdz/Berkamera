@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Berkamera.</title>
+    <title>Admin Dashboard - CameraHub</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
     <style>
@@ -592,7 +592,7 @@
         <!-- Sidebar -->
         <div class="admin-sidebar" id="admin-sidebar">
             <div class="admin-header">
-                <div class="admin-logo">Ber<span>kamera.</span></div>
+                <div class="admin-logo">Camera<span>Hub</span></div>
                 <div class="admin-subtitle">Admin Dashboard</div>
             </div>
             
@@ -786,6 +786,7 @@
                                     <th>Harga</th>
                                     <th>Stok</th>
                                     <th>Status</th>
+                                    <th>Gambar</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -959,6 +960,10 @@
                     <label for="product-description" class="form-label">Deskripsi</label>
                     <textarea id="product-description" class="form-textarea" rows="4"></textarea>
                 </div>
+                 <div class="form-group">
+                    <label for="product-image" class="form-label">URL Gambar</label>
+                    <input type="url" id="product-image" class="form-input" required>
+                </div>
                 <div class="form-group">
                     <label for="product-status" class="form-label">Status</label>
                     <select id="product-status" class="form-select" required>
@@ -1052,7 +1057,7 @@
                         <button type="button" class="editor-btn" onclick="formatText('underline')"><u>U</u></button>
                         <button type="button" class="editor-btn" onclick="formatText('insertOrderedList')">1.</button>
                         <button type="button" class="editor-btn" onclick="formatText('insertUnorderedList')">•</button>
-                        <button type="button" class="editor-btn" onclick="insertLink()">🔗</button>
+                        <button type="button" onclick="insertLink()" class="editor-btn">🔗</button>
                     </div>
                     <div id="article-content" class="content-editor" contenteditable="true" placeholder="Tulis konten artikel di sini..."></div>
                 </div>
@@ -1069,9 +1074,9 @@
                         </select>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="article-image" class="form-label">Featured Image URL</label>
-                    <input type="url" id="article-image" class="form-input" placeholder="https://example.com/image.jpg">
+                 <div class="form-group">
+                    <label for="article-image" class="form-label">URL Gambar</label>
+                    <input type="url" id="article-image" class="form-input" required>
                 </div>
                 <div style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 2rem;">
                     <button type="button" class="btn btn-secondary" onclick="closeArticleModal()">Batal</button>
@@ -1118,124 +1123,81 @@
     }
 
         // Initialize demo data
-        // Perbaikan pada fungsi initializeDemoData untuk memastikan semua data diinisialisasi dengan benar
-function initializeDemoData() {
-    console.log('Initializing demo data...');
-    
-    // Initialize products if not exists
-    if (!localStorage.getItem('products')) {
-        const demoProducts = [
-            {
-                id: 'prod-1',
-                name: 'Sony Alpha a7 III',
-                category: 'mirrorless',
-                price: 28499000,
-                stock: 15,
-                description: 'Kamera mirrorless full-frame dengan performa tinggi',
-                status: 'active',
-                createdAt: new Date().toISOString()
-            },
-            {
-                id: 'prod-2',
-                name: 'Canon EOS R5',
-                category: 'mirrorless',
-                price: 52999000,
-                stock: 8,
-                description: 'Kamera mirrorless profesional dengan video 8K',
-                status: 'active',
-                createdAt: new Date().toISOString()
-            },
-            {
-                id: 'prod-3',
-                name: 'Nikon Z6 II',
-                category: 'mirrorless',
-                price: 24999000,
-                stock: 12,
-                description: 'Kamera mirrorless dengan dual card slot',
-                status: 'active',
-                createdAt: new Date().toISOString()
+        function initializeDemoData() {
+            // Initialize products if not exists
+            if (!localStorage.getItem('products')) {
+                const demoProducts = [
+                    {
+                        id: 'prod-1',
+                        name: 'Sony Alpha a7 III',
+                        category: 'mirrorless',
+                        price: 28499000,
+                        stock: 15,
+                        description: 'Kamera mirrorless full-frame dengan performa tinggi',
+                        status: 'active',
+                        image: 'https://images.unsplash.com/photo-1581591524425-c7e0978865fc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
+                        createdAt: new Date().toISOString()
+                    },
+                    {
+                        id: 'prod-2',
+                        name: 'Canon EOS R5',
+                        category: 'mirrorless',
+                        price: 52999000,
+                        stock: 8,
+                        description: 'Kamera mirrorless profesional dengan video 8K',
+                        status: 'active',
+                        image: 'https://images.unsplash.com/photo-1579338059334-52414994b91d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
+                        createdAt: new Date().toISOString()
+                    },
+                    {
+                        id: 'prod-3',
+                        name: 'Nikon Z6 II',
+                        category: 'mirrorless',
+                        price: 24999000,
+                        stock: 12,
+                        description: 'Kamera mirrorless dengan dual card slot',
+                        status: 'active',
+                        image: 'https://images.unsplash.com/photo-1607464454793-ca491b89c4c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
+                        createdAt: new Date().toISOString()
+                    }
+                ];
+                localStorage.setItem('products', JSON.stringify(demoProducts));
             }
-        ];
-        localStorage.setItem('products', JSON.stringify(demoProducts));
-    }
 
-    // Initialize orders if not exists
-    if (!localStorage.getItem('orders')) {
-        const demoOrders = [
-            {
-                id: 'ORD-001',
-                customerId: 'user-1',
-                customerName: 'John Doe',
-                products: [{ id: 'prod-1', name: 'Sony Alpha a7 III', quantity: 1, price: 28499000 }],
-                total: 28499000,
-                status: 'completed',
-                createdAt: '2024-01-15T10:30:00Z'
-            },
-            {
-                id: 'ORD-002',
-                customerId: 'user-2',
-                customerName: 'Jane Smith',
-                products: [{ id: 'prod-2', name: 'Canon EOS R5', quantity: 1, price: 52999000 }],
-                total: 52999000,
-                status: 'processing',
-                createdAt: '2024-01-14T14:20:00Z'
-            },
-            {
-                id: 'ORD-003',
-                customerId: 'user-3',
-                customerName: 'Mike Johnson',
-                products: [{ id: 'prod-3', name: 'Nikon Z6 II', quantity: 1, price: 24999000 }],
-                total: 24999000,
-                status: 'completed',
-                createdAt: '2024-01-13T09:15:00Z'
+            // Initialize orders if not exists
+            if (!localStorage.getItem('orders')) {
+                const demoOrders = [
+                    {
+                        id: 'ORD-001',
+                        customerId: 'user-1',
+                        customerName: 'John Doe',
+                        products: [{ id: 'prod-1', name: 'Sony Alpha a7 III', quantity: 1, price: 28499000 }],
+                        total: 28499000,
+                        status: 'completed',
+                        createdAt: '2024-01-15T10:30:00Z'
+                    },
+                    {
+                        id: 'ORD-002',
+                        customerId: 'user-2',
+                        customerName: 'Jane Smith',
+                        products: [{ id: 'prod-2', name: 'Canon EOS R5', quantity: 1, price: 52999000 }],
+                        total: 52999000,
+                        status: 'processing',
+                        createdAt: '2024-01-14T14:20:00Z'
+                    },
+                    {
+                        id: 'ORD-003',
+                        customerId: 'user-3',
+                        customerName: 'Mike Johnson',
+                        products: [{ id: 'prod-3', name: 'Nikon Z6 II', quantity: 1, price: 24999000 }],
+                        total: 24999000,
+                        status: 'completed',
+                        createdAt: '2024-01-13T09:15:00Z'
+                    }
+                ];
+                localStorage.setItem('orders', JSON.stringify(demoOrders));
             }
-        ];
-        localStorage.setItem('orders', JSON.stringify(demoOrders));
-    }
-    
-    // Initialize users if not exists
-    if (!localStorage.getItem('users')) {
-        const demoUsers = [
-            {
-                id: 'user-1',
-                name: 'John Doe',
-                email: 'john@example.com',
-                phone: '08123456789',
-                role: 'user',
-                password: 'password123',
-                createdAt: '2024-01-01T08:00:00Z'
-            },
-            {
-                id: 'user-2',
-                name: 'Jane Smith',
-                email: 'jane@example.com',
-                phone: '08234567890',
-                role: 'user',
-                password: 'password123',
-                createdAt: '2024-01-02T10:30:00Z'
-            },
-            {
-                id: 'user-3',
-                name: 'Admin',
-                email: 'admin@example.com',
-                phone: '08345678901',
-                role: 'admin',
-                password: 'admin123',
-                createdAt: '2024-01-03T09:15:00Z'
-            }
-        ];
-        localStorage.setItem('users', JSON.stringify(demoUsers));
-    }
-    
-    // Initialize articles
-    initializeDemoArticles();
-    
-    console.log('Demo data initialized successfully');
-    console.log('Products:', JSON.parse(localStorage.getItem('products') || '[]'));
-    console.log('Orders:', JSON.parse(localStorage.getItem('orders') || '[]'));
-    console.log('Users:', JSON.parse(localStorage.getItem('users') || '[]'));
-    console.log('Articles:', JSON.parse(localStorage.getItem('articles') || '[]'));
-}
+        }
 
         // Navigation
         function initializeNavigation() {
@@ -1275,26 +1237,25 @@ function initializeDemoData() {
         }
 
         // Load section data
-        // Update loadSectionData to include articles
-function loadSectionData(section) {
-    switch(section) {
-        case 'dashboard':
-            loadDashboardData();
-            break;
-        case 'products':
-            loadProductsData();
-            break;
-        case 'orders':
-            loadOrdersData();
-            break;
-        case 'users':
-            loadUsersData();
-            break;
-        case 'articles':
-            loadArticlesData();
-            break;
-    }
-}
+        function loadSectionData(section) {
+            switch(section) {
+                case 'dashboard':
+                    loadDashboardData();
+                    break;
+                case 'products':
+                    loadProductsData();
+                    break;
+                case 'orders':
+                    loadOrdersData();
+                    break;
+                case 'users':
+                    loadUsersData();
+                    break;
+                case 'articles':
+                    loadArticlesData();
+                    break;
+            }
+        }
 
         // Load dashboard data
         function loadDashboardData() {
@@ -1308,99 +1269,67 @@ function loadSectionData(section) {
         }
 
         // Load products data
-        // Perbaikan pada fungsi loadProductsData untuk memastikan data dimuat dengan benar
-function loadProductsData() {
-    console.log('Loading products data...');
-    const products = JSON.parse(localStorage.getItem('products') || '[]');
-    console.log('Products from localStorage:', products);
-    
-    const tbody = document.getElementById('products-table');
-    
-    if (products.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">Tidak ada produk</td></tr>';
-        return;
-    }
-    
-    tbody.innerHTML = products.map(product => `
-        <tr>
-            <td>${product.id}</td>
-            <td>${product.name}</td>
-            <td>${product.category}</td>
-            <td>Rp ${product.price.toLocaleString('id-ID')}</td>
-            <td>${product.stock}</td>
-            <td><span class="status-badge ${product.status === 'active' ? 'status-active' : 'status-inactive'}">${product.status === 'active' ? 'Aktif' : 'Tidak Aktif'}</span></td>
-            <td>
-                <button class="btn btn-secondary" onclick="editProduct('${product.id}')">Edit</button>
-                <button class="btn btn-danger" onclick="deleteProduct('${product.id}')">Hapus</button>
-            </td>
-        </tr>
-    `).join('');
-    
-    console.log('Products data loaded successfully');
-}
+        function loadProductsData() {
+            const products = JSON.parse(localStorage.getItem('products') || '[]');
+            const tbody = document.getElementById('products-table');
+            
+            tbody.innerHTML = products.map(product => `
+                <tr>
+                    <td>${product.id}</td>
+                    <td>${product.name}</td>
+                    <td>${product.category}</td>
+                    <td>Rp ${product.price.toLocaleString('id-ID')}</td>
+                    <td>${product.stock}</td>
+                    <td><span class="status-badge ${product.status === 'active' ? 'status-active' : 'status-inactive'}">${product.status === 'active' ? 'Aktif' : 'Tidak Aktif'}</span></td>
+                     <td><img src="${product.image}" alt="${product.name}" style="width: 50px; height: 50px; object-fit: cover;"></td>
+                    <td>
+                        <button class="btn btn-secondary" onclick="editProduct('${product.id}')">Edit</button>
+                        <button class="btn btn-danger" onclick="deleteProduct('${product.id}')">Hapus</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
 
         // Load orders data
-        // Perbaikan pada fungsi loadOrdersData untuk memastikan data dimuat dengan benar
-function loadOrdersData() {
-    console.log('Loading orders data...');
-    const orders = JSON.parse(localStorage.getItem('orders') || '[]');
-    console.log('Orders from localStorage:', orders);
-    
-    const tbody = document.getElementById('orders-table');
-    
-    if (orders.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">Tidak ada pesanan</td></tr>';
-        return;
-    }
-    
-    tbody.innerHTML = orders.map(order => `
-        <tr>
-            <td>${order.id}</td>
-            <td>${order.customerName}</td>
-            <td>Rp ${order.total.toLocaleString('id-ID')}</td>
-            <td><span class="status-badge ${getOrderStatusClass(order.status)}">${getOrderStatusText(order.status)}</span></td>
-            <td>${new Date(order.createdAt).toLocaleDateString('id-ID')}</td>
-            <td>
-                <button class="btn btn-secondary" onclick="viewOrder('${order.id}')">Detail</button>
-                <button class="btn btn-success" onclick="updateOrderStatus('${order.id}')">Update Status</button>
-            </td>
-        </tr>
-    `).join('');
-    
-    console.log('Orders data loaded successfully');
-}
+        function loadOrdersData() {
+            const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+            const tbody = document.getElementById('orders-table');
+            
+            tbody.innerHTML = orders.map(order => `
+                <tr>
+                    <td>${order.id}</td>
+                    <td>${order.customerName}</td>
+                    <td>Rp ${order.total.toLocaleString('id-ID')}</td>
+                    <td><span class="status-badge ${getOrderStatusClass(order.status)}">${getOrderStatusText(order.status)}</span></td>
+                    <td>${new Date(order.createdAt).toLocaleDateString('id-ID')}</td>
+                    <td>
+                        <button class="btn btn-secondary" onclick="viewOrder('${order.id}')">Detail</button>
+                        <button class="btn btn-success" onclick="updateOrderStatus('${order.id}')">Update Status</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
 
         // Load users data
-        // Perbaikan pada fungsi loadUsersData untuk memastikan data dimuat dengan benar
-function loadUsersData() {
-    console.log('Loading users data...');
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    console.log('Users from localStorage:', users);
-    
-    const tbody = document.getElementById('users-table');
-    
-    if (users.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">Tidak ada pengguna</td></tr>';
-        return;
-    }
-    
-    tbody.innerHTML = users.map(user => `
-        <tr>
-            <td>${user.id}</td>
-            <td>${user.name}</td>
-            <td>${user.email}</td>
-            <td><span class="status-badge ${user.role === 'admin' ? 'status-pending' : 'status-active'}">${user.role}</span></td>
-            <td>${new Date(user.createdAt).toLocaleDateString('id-ID')}</td>
-            <td><span class="status-badge status-active">Aktif</span></td>
-            <td>
-                <button class="btn btn-secondary" onclick="editUser('${user.id}')">Edit</button>
-                <button class="btn btn-danger" onclick="deleteUser('${user.id}')">Hapus</button>
-            </td>
-        </tr>
-    `).join('');
-    
-    console.log('Users data loaded successfully');
-}
+        function loadUsersData() {
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const tbody = document.getElementById('users-table');
+            
+            tbody.innerHTML = users.map(user => `
+                <tr>
+                    <td>${user.id}</td>
+                    <td>${user.name}</td>
+                    <td>${user.email}</td>
+                    <td><span class="status-badge ${user.role === 'admin' ? 'status-pending' : 'status-active'}">${user.role}</span></td>
+                    <td>${new Date(user.createdAt).toLocaleDateString('id-ID')}</td>
+                    <td><span class="status-badge status-active">Aktif</span></td>
+                    <td>
+                        <button class="btn btn-secondary" onclick="editUser('${user.id}')">Edit</button>
+                        <button class="btn btn-danger" onclick="deleteUser('${user.id}')">Hapus</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
 
         // Product management functions
         function openProductModal(productId = null) {
@@ -1421,6 +1350,7 @@ function loadUsersData() {
                     document.getElementById('product-stock').value = product.stock;
                     document.getElementById('product-description').value = product.description;
                     document.getElementById('product-status').value = product.status;
+                     document.getElementById('product-image').value = product.image;
                 }
             } else {
                 title.textContent = 'Tambah Produk';
@@ -1494,535 +1424,31 @@ function loadUsersData() {
         }
 
         // Order management functions
-        // Tambahkan fungsi untuk melihat detail order dengan modal
-function viewOrder(orderId) {
-    console.log('Viewing order details for:', orderId);
-    const orders = JSON.parse(localStorage.getItem('orders') || '[]');
-    const order = orders.find(o => o.id === orderId);
-    
-    if (order) {
-        // Create modal for order details
-        const modalHTML = `
-        <div class="modal active" id="order-detail-modal">
-            <div class="modal-content" style="max-width: 700px;">
-                <div class="modal-header">
-                    <h3 class="modal-title">Detail Pesanan #${order.id}</h3>
-                    <button class="modal-close" onclick="document.getElementById('order-detail-modal').remove()">&times;</button>
-                </div>
-                <div style="padding: 1rem;">
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
-                        <div>
-                            <h4 style="margin-bottom: 0.5rem;">Informasi Pelanggan</h4>
-                            <p><strong>Nama:</strong> ${order.customerName}</p>
-                            <p><strong>ID Pelanggan:</strong> ${order.customerId}</p>
-                            <p><strong>Tanggal Pesanan:</strong> ${new Date(order.createdAt).toLocaleDateString('id-ID')} ${new Date(order.createdAt).toLocaleTimeString('id-ID')}</p>
-                        </div>
-                        <div>
-                            <h4 style="margin-bottom: 0.5rem;">Status Pesanan</h4>
-                            <p><span class="status-badge ${getOrderStatusClass(order.status)}" style="font-size: 1rem;">${getOrderStatusText(order.status)}</span></p>
-                            <p><strong>Total:</strong> Rp ${order.total.toLocaleString('id-ID')}</p>
-                        </div>
-                    </div>
-                    
-                    <h4 style="margin-bottom: 0.5rem;">Produk yang Dibeli</h4>
-                    <div class="table-responsive">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Produk</th>
-                                    <th>Jumlah</th>
-                                    <th>Harga</th>
-                                    <th>Subtotal</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${order.products.map(product => `
-                                    <tr>
-                                        <td>${product.name}</td>
-                                        <td>${product.quantity}</td>
-                                        <td>Rp ${product.price.toLocaleString('id-ID')}</td>
-                                        <td>Rp ${(product.price * product.quantity).toLocaleString('id-ID')}</td>
-                                    </tr>
-                                `).join('')}
-                            </tbody>
-                        </table>
-                    </div>
-                    
-                    <div style="margin-top: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
-                        <div>
-                            <h4 style="margin-bottom: 0.5rem;">Total Pembayaran</h4>
-                            <p style="font-size: 1.2rem; font-weight: 700;">Rp ${order.total.toLocaleString('id-ID')}</p>
-                        </div>
-                        <div>
-                            <button class="btn btn-success" onclick="updateOrderStatus('${order.id}')">Update Status</button>
-                            <button class="btn btn-secondary" onclick="document.getElementById('order-detail-modal').remove()">Tutup</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        `;
-        
-        // Append modal to body
-        const modalContainer = document.createElement('div');
-        modalContainer.innerHTML = modalHTML;
-        document.body.appendChild(modalContainer.firstElementChild);
-    }
-}
-
-// Perbaikan pada fungsi updateOrderStatus
-function updateOrderStatus(orderId) {
-    console.log('Updating order status for:', orderId);
-    
-    // Create modal for status update
-    const modalHTML = `
-    <div class="modal active" id="update-status-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Update Status Pesanan #${orderId}</h3>
-                <button class="modal-close" onclick="document.getElementById('update-status-modal').remove()">&times;</button>
-            </div>
-            <div style="padding: 1rem;">
-                <div class="form-group">
-                    <label for="order-status" class="form-label">Status Baru</label>
-                    <select id="order-status" class="form-select">
-                        <option value="pending">Pending</option>
-                        <option value="processing">Proses</option>
-                        <option value="shipped">Dikirim</option>
-                        <option value="completed">Selesai</option>
-                        <option value="cancelled">Dibatalkan</option>
-                    </select>
-                </div>
-                <div style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 1.5rem;">
-                    <button class="btn btn-secondary" onclick="document.getElementById('update-status-modal').remove()">Batal</button>
-                    <button class="btn btn-primary" onclick="saveOrderStatus('${orderId}')">Simpan</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    `;
-    
-    // Append modal to body
-    const modalContainer = document.createElement('div');
-    modalContainer.innerHTML = modalHTML;
-    document.body.appendChild(modalContainer.firstElementChild);
-    
-    // Set current status
-    const orders = JSON.parse(localStorage.getItem('orders') || '[]');
-    const order = orders.find(o => o.id === orderId);
-    if (order) {
-        document.getElementById('order-status').value = order.status;
-    }
-}
-
-// Fungsi untuk menyimpan status pesanan yang diupdate
-function saveOrderStatus(orderId) {
-    const newStatus = document.getElementById('order-status').value;
-    console.log('Saving new status for order:', orderId, 'Status:', newStatus);
-    
-    const orders = JSON.parse(localStorage.getItem('orders') || '[]');
-    const orderIndex = orders.findIndex(o => o.id === orderId);
-    
-    if (orderIndex !== -1) {
-        orders[orderIndex].status = newStatus;
-        localStorage.setItem('orders', JSON.stringify(orders));
-        
-        // Close modal
-        document.getElementById('update-status-modal').remove();
-        
-        // Close detail modal if exists
-        const detailModal = document.getElementById('order-detail-modal');
-        if (detailModal) {
-            detailModal.remove();
-        }
-        
-        // Reload orders data
-        loadOrdersData();
-        
-        alert('Status pesanan berhasil diupdate!');
-    }
-}
-
-// Tambahkan fungsi untuk menambahkan pesanan baru
-function addNewOrder() {
-    console.log('Adding new order');
-    
-    // Get users for customer selection
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    const customers = users.filter(u => u.role === 'user');
-    
-    // Get products for product selection
-    const products = JSON.parse(localStorage.getItem('products') || '[]');
-    
-    // Create modal for new order
-    const modalHTML = `
-    <div class="modal active" id="new-order-modal">
-        <div class="modal-content" style="max-width: 700px;">
-            <div class="modal-header">
-                <h3 class="modal-title">Tambah Pesanan Baru</h3>
-                <button class="modal-close" onclick="document.getElementById('new-order-modal').remove()">&times;</button>
-            </div>
-            <div style="padding: 1rem;">
-                <form id="new-order-form">
-                    <div class="form-group">
-                        <label for="order-customer" class="form-label">Pelanggan</label>
-                        <select id="order-customer" class="form-select" required>
-                            <option value="">Pilih Pelanggan</option>
-                            ${customers.map(customer => `<option value="${customer.id}">${customer.name} (${customer.email})</option>`).join('')}
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Produk</label>
-                        <div id="order-products">
-                            <div class="order-product" style="display: grid; grid-template-columns: 3fr 1fr 2fr 1fr; gap: 0.5rem; margin-bottom: 0.5rem;">
-                                <select class="form-select product-select" required>
-                                    <option value="">Pilih Produk</option>
-                                    ${products.map(product => `<option value="${product.id}" data-price="${product.price}">${product.name} - Rp ${product.price.toLocaleString('id-ID')}</option>`).join('')}
-                                </select>
-                                <input type="number" class="form-input product-quantity" min="1" value="1" required style="text-align: center;">
-                                <div class="product-subtotal" style="padding: 0.8rem; border: 1px solid var(--border-color); border-radius: 8px; background-color: var(--secondary-color);">Rp 0</div>
-                                <button type="button" class="btn btn-danger remove-product" style="display: none;">&times;</button>
-                            </div>
-                        </div>
-                        <button type="button" class="btn btn-secondary" id="add-product-btn" style="margin-top: 0.5rem;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                            Tambah Produk
-                        </button>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="order-status" class="form-label">Status</label>
-                        <select id="order-status" class="form-select" required>
-                            <option value="pending">Pending</option>
-                            <option value="processing">Proses</option>
-                            <option value="shipped">Dikirim</option>
-                            <option value="completed">Selesai</option>
-                        </select>
-                    </div>
-                    
-                    <div style="margin-top: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
-                        <div>
-                            <h4 style="margin-bottom: 0.5rem;">Total</h4>
-                            <p id="order-total" style="font-size: 1.2rem; font-weight: 700;">Rp 0</p>
-                        </div>
-                        <div>
-                            <button type="button" class="btn btn-secondary" onclick="document.getElementById('new-order-modal').remove()">Batal</button>
-                            <button type="submit" class="btn btn-primary">Simpan</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    `;
-    
-    // Append modal to body
-    const modalContainer = document.createElement('div');
-    modalContainer.innerHTML = modalHTML;
-    document.body.appendChild(modalContainer.firstElementChild);
-    
-    // Add event listeners for product selection and quantity change
-    document.querySelectorAll('.product-select, .product-quantity').forEach(el => {
-        el.addEventListener('change', calculateOrderTotal);
-    });
-    
-    // Add event listener for add product button
-    document.getElementById('add-product-btn').addEventListener('click', addProductRow);
-    
-    // Add event listener for form submission
-    document.getElementById('new-order-form').addEventListener('submit', saveNewOrder);
-}
-
-// Fungsi untuk menambahkan baris produk baru
-function addProductRow() {
-    const products = JSON.parse(localStorage.getItem('products') || '[]');
-    const orderProducts = document.getElementById('order-products');
-    
-    // Show remove buttons for all existing product rows
-    document.querySelectorAll('.remove-product').forEach(btn => {
-        btn.style.display = 'block';
-    });
-    
-    // Create new product row
-    const productRow = document.createElement('div');
-    productRow.className = 'order-product';
-    productRow.style = 'display: grid; grid-template-columns: 3fr 1fr 2fr 1fr; gap: 0.5rem; margin-bottom: 0.5rem;';
-    productRow.innerHTML = `
-        <select class="form-select product-select" required>
-            <option value="">Pilih Produk</option>
-            ${products.map(product => `<option value="${product.id}" data-price="${product.price}">${product.name} - Rp ${product.price.toLocaleString('id-ID')}</option>`).join('')}
-        </select>
-        <input type="number" class="form-input product-quantity" min="1" value="1" required style="text-align: center;">
-        <div class="product-subtotal" style="padding: 0.8rem; border: 1px solid var(--border-color); border-radius: 8px; background-color: var(--secondary-color);">Rp 0</div>
-        <button type="button" class="btn btn-danger remove-product">&times;</button>
-    `;
-    
-    orderProducts.appendChild(productRow);
-    
-    // Add event listeners for new row
-    productRow.querySelector('.product-select').addEventListener('change', calculateOrderTotal);
-    productRow.querySelector('.product-quantity').addEventListener('change', calculateOrderTotal);
-    productRow.querySelector('.remove-product').addEventListener('click', function() {
-        productRow.remove();
-        calculateOrderTotal();
-        
-        // Hide remove button if only one product row left
-        if (document.querySelectorAll('.order-product').length === 1) {
-            document.querySelector('.remove-product').style.display = 'none';
-        }
-    });
-}
-
-// Fungsi untuk menghitung total pesanan
-function calculateOrderTotal() {
-    let total = 0;
-    
-    document.querySelectorAll('.order-product').forEach(row => {
-        const select = row.querySelector('.product-select');
-        const quantity = row.querySelector('.product-quantity');
-        const subtotal = row.querySelector('.product-subtotal');
-        
-        if (select.value) {
-            const price = parseInt(select.options[select.selectedIndex].dataset.price);
-            const qty = parseInt(quantity.value) || 0;
-            const rowTotal = price * qty;
+        function viewOrder(orderId) {
+            const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+            const order = orders.find(o => o.id === orderId);
             
-            subtotal.textContent = `Rp ${rowTotal.toLocaleString('id-ID')}`;
-            total += rowTotal;
-        } else {
-            subtotal.textContent = 'Rp 0';
+            if (order) {
+                alert(`Detail Pesanan ${orderId}:\n\nPelanggan: ${order.customerName}\nTotal: Rp ${order.total.toLocaleString('id-ID')}\nStatus: ${getOrderStatusText(order.status)}\nTanggal: ${new Date(order.createdAt).toLocaleDateString('id-ID')}`);
+            }
         }
-    });
-    
-    document.getElementById('order-total').textContent = `Rp ${total.toLocaleString('id-ID')}`;
-}
 
-// Fungsi untuk menyimpan pesanan baru
-function saveNewOrder(e) {
-    e.preventDefault();
-    console.log('Saving new order');
-    
-    const customerId = document.getElementById('order-customer').value;
-    const status = document.getElementById('order-status').value;
-    
-    // Get customer name
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    const customer = users.find(u => u.id === customerId);
-    
-    if (!customer) {
-        alert('Pelanggan tidak valid!');
-        return;
-    }
-    
-    // Get products
-    const productRows = document.querySelectorAll('.order-product');
-    const orderProducts = [];
-    let total = 0;
-    
-    const products = JSON.parse(localStorage.getItem('products') || '[]');
-    
-    for (const row of productRows) {
-        const select = row.querySelector('.product-select');
-        const quantity = row.querySelector('.product-quantity');
-        
-        if (!select.value) {
-            alert('Silakan pilih semua produk!');
-            return;
+        function updateOrderStatus(orderId) {
+            const newStatus = prompt('Masukkan status baru (pending/processing/shipped/completed/cancelled):');
+            
+            if (newStatus && ['pending', 'processing', 'shipped', 'completed', 'cancelled'].includes(newStatus)) {
+                const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+                const orderIndex = orders.findIndex(o => o.id === orderId);
+                
+                if (orderIndex !== -1) {
+                    orders[orderIndex].status = newStatus;
+                    localStorage.setItem('orders', JSON.stringify(orders));
+                    loadOrdersData();
+                }
+            } else {
+                alert('Status tidak valid!');
+            }
         }
-        
-        const productId = select.value;
-        const qty = parseInt(quantity.value) || 0;
-        
-        if (qty <= 0) {
-            alert('Jumlah produk harus lebih dari 0!');
-            return;
-        }
-        
-        const product = products.find(p => p.id === productId);
-        
-        if (!product) {
-            alert('Produk tidak valid!');
-            return;
-        }
-        
-        orderProducts.push({
-            id: product.id,
-            name: product.name,
-            quantity: qty,
-            price: product.price
-        });
-        
-        total += product.price * qty;
-    }
-    
-    // Create new order
-    const orders = JSON.parse(localStorage.getItem('orders') || '[]');
-    
-    const newOrder = {
-        id: 'ORD-' + (orders.length + 1).toString().padStart(3, '0'),
-        customerId: customer.id,
-        customerName: customer.name,
-        products: orderProducts,
-        total: total,
-        status: status,
-        createdAt: new Date().toISOString()
-    };
-    
-    orders.push(newOrder);
-    localStorage.setItem('orders', JSON.stringify(orders));
-    
-    // Close modal
-    document.getElementById('new-order-modal').remove();
-    
-    // Reload orders data
-    loadOrdersData();
-    
-    alert('Pesanan berhasil ditambahkan!');
-}
-
-// Tambahkan tombol untuk menambah pesanan baru di halaman orders
-document.addEventListener('DOMContentLoaded', function() {
-    const ordersHeader = document.querySelector('#orders-content .table-header');
-    if (ordersHeader) {
-        const addOrderBtn = document.createElement('button');
-        addOrderBtn.className = 'btn btn-primary';
-        addOrderBtn.innerHTML = `
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-            Tambah Pesanan
-        `;
-        addOrderBtn.onclick = addNewOrder;
-        
-        const actionsDiv = ordersHeader.querySelector('.table-actions');
-        actionsDiv.insertBefore(addOrderBtn, actionsDiv.firstChild);
-    }
-});
-
-// Perbaikan pada fungsi product form submission
-document.getElementById('product-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    console.log('Product form submitted');
-    
-    const products = JSON.parse(localStorage.getItem('products') || '[]');
-    const productId = document.getElementById('product-id').value;
-    
-    const productData = {
-        id: productId || 'prod-' + Date.now(),
-        name: document.getElementById('product-name').value,
-        category: document.getElementById('product-category').value,
-        price: parseInt(document.getElementById('product-price').value),
-        stock: parseInt(document.getElementById('product-stock').value),
-        description: document.getElementById('product-description').value,
-        status: document.getElementById('product-status').value,
-        createdAt: productId ? (products.find(p => p.id === productId)?.createdAt || new Date().toISOString()) : new Date().toISOString()
-    };
-    
-    console.log('Product data to save:', productData);
-    
-    if (productId) {
-        const index = products.findIndex(p => p.id === productId);
-        if (index !== -1) {
-            products[index] = productData;
-        }
-    } else {
-        products.push(productData);
-    }
-    
-    localStorage.setItem('products', JSON.stringify(products));
-    console.log('Products after save:', products);
-    
-    closeProductModal();
-    loadProductsData(); // Reload products data
-    alert('Produk berhasil disimpan!');
-});
-
-// Perbaikan pada fungsi article form submission
-document.getElementById('article-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    console.log('Article form submitted');
-    
-    const articles = JSON.parse(localStorage.getItem('articles') || '[]');
-    const articleId = document.getElementById('article-id').value;
-    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
-    
-    const articleData = {
-        id: articleId || 'art-' + Date.now(),
-        title: document.getElementById('article-title').value,
-        category: document.getElementById('article-category').value,
-        author: currentUser.name || 'Admin',
-        status: document.getElementById('article-status').value,
-        excerpt: document.getElementById('article-excerpt').value,
-        content: document.getElementById('article-content').innerHTML,
-        tags: document.getElementById('article-tags').value,
-        image: document.getElementById('article-image').value || 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="300" height="150" viewBox="0 0 300 150"%3E%3Crect width="300" height="150" fill="%23cccccc"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="18" fill="%23333333"%3EPlaceholder Image%3C/text%3E%3C/svg%3E',
-        views: articleId ? (articles.find(a => a.id === articleId)?.views || 0) : 0,
-        createdAt: articleId ? (articles.find(a => a.id === articleId)?.createdAt || new Date().toISOString()) : new Date().toISOString(),
-        updatedAt: new Date().toISOString()
-    };
-    
-    console.log('Article data to save:', articleData);
-    
-    if (articleId) {
-        const index = articles.findIndex(a => a.id === articleId);
-        if (index !== -1) {
-            articles[index] = articleData;
-        }
-    } else {
-        articles.push(articleData);
-    }
-    
-    localStorage.setItem('articles', JSON.stringify(articles));
-    console.log('Articles after save:', articles);
-    
-    closeArticleModal();
-    loadArticlesData(); // Reload articles data
-    alert('Artikel berhasil disimpan!');
-});
-
-// Perbaikan pada fungsi user form submission
-document.getElementById('user-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    console.log('User form submitted');
-    
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    const userId = document.getElementById('user-id').value;
-    const email = document.getElementById('user-email').value;
-    
-    // Check if email already exists (for new users or different email)
-    const emailExists = users.find(u => u.email === email && u.id !== userId);
-    if (emailExists) {
-        alert('Email sudah terdaftar!');
-        return;
-    }
-    
-    const userData = {
-        id: userId || 'user-' + Date.now(),
-        name: document.getElementById('user-name').value,
-        email: email,
-        phone: document.getElementById('user-phone').value,
-        role: document.getElementById('user-role').value,
-        password: document.getElementById('user-password').value,
-        createdAt: userId ? (users.find(u => u.id === userId)?.createdAt || new Date().toISOString()) : new Date().toISOString()
-    };
-    
-    console.log('User data to save:', userData);
-    
-    if (userId) {
-        const index = users.findIndex(u => u.id === userId);
-        if (index !== -1) {
-            users[index] = userData;
-        }
-    } else {
-        users.push(userData);
-    }
-    
-    localStorage.setItem('users', JSON.stringify(users));
-    console.log('Users after save:', users);
-    
-    closeUserModal();
-    loadUsersData(); // Reload users data
-    alert('Pengguna berhasil disimpan!');
-});
 
         // Helper functions
         function getOrderStatusClass(status) {
@@ -2046,6 +1472,77 @@ document.getElementById('user-form').addEventListener('submit', function(e) {
         }
 
         // Form submissions
+        document.getElementById('product-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const products = JSON.parse(localStorage.getItem('products') || '[]');
+            const productId = document.getElementById('product-id').value;
+            
+            const productData = {
+                id: productId || 'prod-' + Date.now(),
+                name: document.getElementById('product-name').value,
+                category: document.getElementById('product-category').value,
+                price: parseInt(document.getElementById('product-price').value),
+                stock: parseInt(document.getElementById('product-stock').value),
+                description: document.getElementById('product-description').value,
+                status: document.getElementById('product-status').value,
+                image: document.getElementById('product-image').value || '/placeholder.svg?height=300&width=500',
+                createdAt: productId ? products.find(p => p.id === productId)?.createdAt : new Date().toISOString()
+            };
+            
+            if (productId) {
+                const index = products.findIndex(p => p.id === productId);
+                if (index !== -1) {
+                    products[index] = productData;
+                }
+            } else {
+                products.push(productData);
+            }
+            
+            localStorage.setItem('products', JSON.stringify(products));
+            closeProductModal();
+            loadProductsData();
+            alert('Produk berhasil disimpan!');
+        });
+
+        document.getElementById('user-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const userId = document.getElementById('user-id').value;
+            const email = document.getElementById('user-email').value;
+            
+            // Check if email already exists (for new users or different email)
+            const emailExists = users.find(u => u.email === email && u.id !== userId);
+            if (emailExists) {
+                alert('Email sudah terdaftar!');
+                return;
+            }
+            
+            const userData = {
+                id: userId || 'user-' + Date.now(),
+                name: document.getElementById('user-name').value,
+                email: email,
+                phone: document.getElementById('user-phone').value,
+                role: document.getElementById('user-role').value,
+                password: document.getElementById('user-password').value,
+                createdAt: userId ? users.find(u => u.id === userId)?.createdAt : new Date().toISOString()
+            };
+            
+            if (userId) {
+                const index = users.findIndex(u => u.id === userId);
+                if (index !== -1) {
+                    users[index] = userData;
+                }
+            } else {
+                users.push(userData);
+            }
+            
+            localStorage.setItem('users', JSON.stringify(users));
+            closeUserModal();
+            loadUsersData();
+            alert('Pengguna berhasil disimpan!');
+        });
 
         // Logout function
         function logout() {
@@ -2063,7 +1560,7 @@ function initializeDemoArticles() {
                 id: 'art-1',
                 title: '10 Tips Fotografi untuk Pemula',
                 category: 'tutorial',
-                author: 'Admin Berkamera.',
+                author: 'Admin CameraHub',
                 status: 'published',
                 excerpt: 'Pelajari dasar-dasar fotografi dengan 10 tips praktis yang mudah diterapkan untuk fotografer pemula.',
                 content: '<h2>Pengenalan Fotografi</h2><p>Fotografi adalah seni menangkap momen dan cahaya. Berikut adalah 10 tips yang akan membantu Anda memulai perjalanan fotografi...</p><h3>1. Pahami Rule of Thirds</h3><p>Rule of thirds adalah salah satu komposisi dasar dalam fotografi...</p>',
@@ -2077,7 +1574,7 @@ function initializeDemoArticles() {
                 id: 'art-2',
                 title: 'Review Canon EOS R5: Kamera Mirrorless Terbaik 2024',
                 category: 'review',
-                author: 'Admin Berkamera.',
+                author: 'Admin CameraHub',
                 status: 'published',
                 excerpt: 'Review mendalam tentang Canon EOS R5, kamera mirrorless flagship yang menawarkan performa luar biasa.',
                 content: '<h2>Spesifikasi Canon EOS R5</h2><p>Canon EOS R5 hadir dengan sensor full-frame 45MP yang mampu merekam video 8K...</p><h3>Kelebihan</h3><ul><li>Kualitas gambar excellent</li><li>Video 8K</li><li>Autofocus yang cepat</li></ul>',
@@ -2091,7 +1588,7 @@ function initializeDemoArticles() {
                 id: 'art-3',
                 title: 'Cara Memilih Lensa yang Tepat untuk Kebutuhan Anda',
                 category: 'gear',
-                author: 'Admin Berkamera.',
+                author: 'Admin CameraHub',
                 status: 'draft',
                 excerpt: 'Panduan lengkap memilih lensa kamera yang sesuai dengan gaya fotografi dan budget Anda.',
                 content: '<h2>Jenis-jenis Lensa</h2><p>Ada berbagai jenis lensa yang tersedia di pasaran...</p>',
@@ -2106,18 +1603,10 @@ function initializeDemoArticles() {
     }
 }
 
-// Perbaikan pada fungsi loadArticlesData untuk memastikan data dimuat dengan benar
+// Load articles data
 function loadArticlesData() {
-    console.log('Loading articles data...');
     const articles = JSON.parse(localStorage.getItem('articles') || '[]');
-    console.log('Articles from localStorage:', articles);
-    
     const tbody = document.getElementById('articles-table');
-    
-    if (articles.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="8" style="text-align: center;">Tidak ada artikel</td></tr>';
-        return;
-    }
     
     tbody.innerHTML = articles.map(article => `
         <tr>
@@ -2134,8 +1623,6 @@ function loadArticlesData() {
             </td>
         </tr>
     `).join('');
-    
-    console.log('Articles data loaded successfully');
 }
 
 // Filter articles

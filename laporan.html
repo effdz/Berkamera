@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan Berkamera</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+
+        h1, h2, h3 {
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        h2 {
+            margin-top: 30px;
+        }
+
+        h3 {
+            margin-top: 20px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 10px 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #777;
+        }
+
+        .toc {
+            margin-bottom: 30px;
+        }
+
+        .toc ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .toc li {
+            margin-bottom: 5px;
+        }
+
+        .toc a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        .lampiran {
+            margin-top: 30px;
+        }
+
+        .lampiran ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .lampiran li {
+            margin-bottom: 5px;
+        }
+
+        .lampiran a {
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>LAPORAN AKHIR WORKSHOP DESAIN UI</h1>
+        <h2>"BERKAMERA - PLATFORM E-COMMERCE KAMERA DAN AKSESORIS FOTOGRAFI"</h2>
+        <p style="text-align: center;">[Nama Mahasiswa]<br>[NIM Mahasiswa]<br>FAKULTAS VOKASI<br>UNIVERSITAS AIRLANGGA<br>2024</p>
+
+        <div class="toc">
+            <h2>DAFTAR ISI</h2>
+            <ul>
+                <li><a href="#bab1">BAB 1. PENDAHULUAN</a></li>
+                <li><a href="#bab1.1">1.1. Deskripsi Topik</a></li>
+                <li><a href="#bab1.2">1.2. User Story</a></li>
+                <li><a href="#bab1.3">1.3. Use Case</a></li>
+                <li><a href="#bab1.4">1.4. Use Case Specification</a></li>
+                <li><a href="#bab2">BAB 2. DESAIN SISTEM</a></li>
+                <li><a href="#bab2.1">2.1. Wireframe</a></li>
+                <li><a href="#bab2.2">2.2. Front End</a></li>
+                <li><a href="#bab2.2.1">2.2.1. Landing Page</a></li>
+                <li><a href="#bab2.2.2">2.2.2. Arsip Artikel</a></li>
+                <li><a href="#bab2.2.3">2.2.3. Detail Artikel</a></li>
+                <li><a href="#bab2.2.4">2.2.4. Katalog Produk</a></li>
+                <li><a href="#bab2.2.5">2.2.5. Detail Produk</a></li>
+                <li><a href="#bab2.2.6">2.2.6. Keranjang</a></li>
+                <li><a href="#bab2.2.7">2.2.7. Pembayaran</a></li>
+                <li><a href="#bab2.2.8">2.2.8. History Transaksi</a></li>
+                <li><a href="#bab2.2.9">2.2.9. Dashboard Admin</a></li>
+                <li><a href="#bab2.2.10">2.2.10. Kelola Artikel</a></li>
+                <li><a href="#bab2.2.11">2.2.11. Kelola Produk</a></li>
+                <li><a href="#bab2.2.12">2.2.12. Kelola Pengguna</a></li>
+                <li><a href="#bab2.2.13">2.2.13. Kelola Transaksi</a></li>
+                <li><a href="#bab2.2.14">2.2.14. Login</a></li>
+                 <li><a href="#bab2.2.15">2.2.15. Wishlist</a></li>
+                  <li><a href="#bab2.2.16">2.2.16. Compare</a></li>
+                   <li><a href="#bab2.2.17">2.2.17. Contact</a></li>
+                    <li><a href="#bab2.2.18">2.2.18. FAQ</a></li>
+                     <li><a href="#bab2.2.19">2.2.19. Profile</a></li>
+                      <li><a href="#bab2.2.20">2.2.20. Search</a></li>
+                       <li><a href="#bab2.2.21">2.2.21. Terms</a></li>
+                        <li><a href="#bab2.2.22">2.2.22. Track Order</a></li>
+                         <li><a href="#bab2.2.23">2.2.23. Reviews</a></li>
+                <li><a href="#bab2.3">2.3. Pengujian Sistem</a></li>
+                <li><a href="#lampiran">LAMPIRAN</a></li>
+            </ul>
+        </div>
+
+        <h2 id="bab1">BAB 1. PENDAHULUAN</h2>
+        <p>Proyek ini merupakan implementasi website e-commerce yang berfokus pada penjualan kamera dan aksesoris fotografi. Website "Berkamera" dirancang untuk memenuhi kebutuhan fotografer profesional maupun pemula dalam mencari peralatan fotografi berkualitas tinggi. Platform ini menggabungkan fitur e-commerce modern dengan konten edukatif berupa artikel dan tutorial fotografi.</p>
+
+        <h3 id="bab1.1">1.1. Deskripsi Topik</h3>
+        <p><b>Berkamera</b> adalah platform e-commerce yang mengkhususkan diri dalam penjualan kamera, lensa, dan aksesoris fotografi. Proyek ini mencakup pengembangan website lengkap dengan fitur-fitur berikut:</p>
+        <p><b>Scope Project:</b></p>
+        <ul>
+            <li><b>Frontend User Interface:</b> Desain responsif untuk desktop dan mobile</li>
+            <li><b>E-commerce Functionality:</b> Katalog produk, keranjang belanja, sistem checkout</li>
+            <li><b>Content Management:</b> Sistem artikel dan blog fotografi</li>
+            <li><b>User Management:</b> Registrasi, login, dan profil pengguna</li>
+            <li><b>Admin Panel:</b> Dashboard admin untuk mengelola produk, pesanan, dan konten</li>
+            <li><b>Payment Integration:</b> Simulasi sistem pembayaran multi-metode</li>
+            <li><b>Order Management:</b> Tracking pesanan dan riwayat transaksi</li>
+        </ul>
+        <p><b>Teknologi yang Digunakan:</b></p>
+        <ul>
+            <li>HTML5, CSS3, JavaScript (Vanilla)</li>
+            <li>Local Storage untuk data persistence</li>
+            <li>Responsive Design dengan CSS Grid dan Flexbox</li>
+            <li>Font Inter dari Google Fonts</li>
+            <li>SVG Icons untuk interface elements</li>
+        </ul>
+
+        <h3 id="bab1.2">1.2. User Story</h3>
+        <p><b>Sebagai Customer:</b></p>
+        <ul>
+            <li>Saya ingin dapat melihat katalog produk kamera dan aksesoris dengan informasi detail</li>
+            <li>Saya ingin dapat menambahkan produk ke keranjang belanja dan wishlist</li>
+            <li>Saya ingin dapat melakukan checkout dengan berbagai metode pembayaran</li>
+            <li>Saya ingin dapat membaca artikel dan tutorial fotografi</li>
+            <li>Saya ingin dapat melacak status pesanan saya</li>
+            <li>Saya ingin dapat mengelola profil dan riwayat pembelian</li>
+        </ul>
+        <p><b>Sebagai Admin:</b></p>
+        <ul>
+            <li>Saya ingin dapat mengelola katalog produk (tambah, edit, hapus)</li>
+            <li>Saya ingin dapat mengelola pesanan dan status pengiriman</li>
+            <li>Saya ingin dapat mengelola konten artikel dan blog</li>
+            <li>Saya ingin dapat melihat statistik penjualan dan dashboard analytics</li>
+            <li>Saya ingin dapat mengelola data pengguna</li>
+        </ul>
+
+        <h3 id="bab1.3">1.3. Use Case</h3>
+        <p><b>Primary Use Cases:</b></p>
+        <ol>
+            <li><b>Browse Products</b> - User dapat menjelajahi katalog produk</li>
+            <li><b>Product Search & Filter</b> - User dapat mencari dan memfilter produk</li>
+            <li><b>Add to Cart</b> - User dapat menambahkan produk ke keranjang</li>
+            <li><b>Checkout Process</b> - User dapat melakukan pembelian</li>
+            <li><b>User Authentication</b> - User dapat login/register</li>
+            <li><b>Read Articles</b> - User dapat membaca konten edukatif</li>
+            <li><b>Admin Management</b> - Admin dapat mengelola sistem</li>
+        </ol>
+        <p><b>Secondary Use Cases:</b></p>
+        <ol>
+            <li><b>Wishlist Management</b> - User dapat menyimpan produk favorit</li>
+            <li><b>Order Tracking</b> - User dapat melacak pesanan</li>
+            <li><b>Product Comparison</b> - User dapat membandingkan produk</li>
+            <li><b>Newsletter Subscription</b> - User dapat berlangganan newsletter</li>
+        </ol>
+
+        <h3 id="bab1.4">1.4. Use Case Specification</h3>
+        <p><b>Use Case: Checkout Process</b></p>
+        <ul>
+            <li><b>Actor:</b> Registered Customer</li>
+            <li><b>Precondition:</b> User sudah login dan memiliki item di keranjang</li>
+            <li><b>Main Flow:</b>
+                <ol>
+                    <li>User mengakses halaman keranjang</li>
+                    <li>User review item dan quantity</li>
+                    <li>User klik "Lanjut ke Pembayaran"</li>
+                    <li>System redirect ke halaman checkout</li>
+                    <li>User mengisi informasi pengiriman</li>
+                    <li>User memilih metode pengiriman</li>
+                    <li>User memilih metode pembayaran</li>
+                    <li>User konfirmasi pesanan</li>
+                    <li>System proses pembayaran</li>
+                    <li>System generate order confirmation</li>
+                </ol>
+            </li>
+            <li><b>Postcondition:</b> Pesanan berhasil dibuat dan user menerima konfirmasi</li>
+        </ul>
+        <p><b>Use Case: Admin Product Management</b></p>
+        <ul>
+            <li><b>Actor:</b> Administrator</li>
+            <li><b>Precondition:</b> Admin sudah login dengan role admin</li>
+            <li><b>Main Flow:</b>
+                <ol>
+                    <li>Admin mengakses dashboard admin</li>
+                    <li>Admin pilih menu "Manajemen Produk"</li>
+                    <li>Admin dapat melihat daftar produk</li>
+                    <li>Admin dapat tambah produk baru</li>
+                    <li>Admin dapat edit informasi produk</li>
+                    <li>Admin dapat hapus produk</li>
+                    <li>System update database produk</li>
+                </ol>
+            </li>
+            <li><b>Postcondition:</b> Data produk berhasil diperbarui</li>
+        </ul>
+
+        <h2 id="bab2">BAB 2. DESAIN SISTEM</h2>
+        <p>Sistem Berkamera dirancang dengan arsitektur frontend yang modular dan responsif. Implementasi menggunakan pendekatan component-based dengan JavaScript modules untuk mengelola fungsionalitas yang berbeda seperti cart management, user authentication, dan payment processing.</p>
+
+        <h3 id="bab2.1">2.1. Wireframe</h3>
+        <p>Wireframe sistem dirancang dengan pendekatan mobile-first design, memastikan pengalaman pengguna yang optimal di semua perangkat. Struktur layout menggunakan CSS Grid dan Flexbox untuk menciptakan interface yang responsif dan modern.</p>
+        <p><b>Key Design Principles:</b></p>
+        <ul>
+            <li><b>Consistency:</b> Penggunaan design system yang konsisten</li>
+            <li><b>Accessibility:</b> Implementasi ARIA labels dan semantic HTML</li>
+            <li><b>Performance:</b> Optimasi loading dan rendering</li>
+            <li><b>User Experience:</b> Intuitive navigation dan clear call-to-actions</li>
+        </ul>
+
+        <h3 id="bab2.2">2.2. Front End</h3>
+
+        <h4 id="bab2.2.1">2.2.1. Landing Page (index.html)</h4>
+        <p><b>Deskripsi:</b> Halaman utama yang menampilkan hero section, produk unggulan, artikel terbaru, dan fitur-fitur website.</p>
+        <p><b>Fitur Utama:</b></p>
+        <ul>
+            <li>Hero section dengan statistik "52% fotografer profesional memilih kamera kami"</li>
+            <li>Grid produk unggulan dengan badge (Baru, Populer, Diskon)</li>
+            <li>Section artikel terbaru dengan preview</li>
+            <li>Feature highlights (pengiriman gratis, garansi, pembayaran aman)</li>
+            <li>Newsletter subscription</li>
+        </ul>
+        <p><b>Implementasi Teknis:</b></p>
+        <ul>
+            <li>Responsive grid layout menggunakan CSS Grid</li>
+            <li>Hover effects dan smooth transitions</li>
+            <li>Dynamic content loading dari localStorage</li>
+            <li>Mobile-optimized navigation dengan hamburger menu</li>
+        </ul>
+        <p><img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Landing Page"></p>
+
+        <h4 id="bab2.2.2">2.2.2. Arsip Artikel (articles.html)</h4>
+        <p><b>Deskripsi:</b> Halaman yang menampilkan daftar artikel fotografi dengan fitur pencarian dan filter.</p>
+        <p><b>Fitur Utama:</b></p>
+        <ul>
+            <li>Search functionality dengan real-time filtering</li>
+            <li>Category tabs (Tutorial, Review, Gear Guide, Post-Processing)</li>
+            <li>Sort options (Terbaru, Terpopuler, Judul A-Z)</li>
+            <li>Featured article section</li>
+            <li>Bookmark functionality untuk artikel favorit</li>
+        </ul>
+        <p><b>Implementasi Teknis:</b></p>
+        <ul>
+            <li>JavaScript filtering dan sorting algorithms</li>
+            <li>Local storage untuk bookmark management</li>
+            <li>Responsive card layout dengan loading skeletons</li>
+            <li>SEO-friendly URL structure</li>
+        </ul>
+        <p><img src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Arsip Artikel"></p>
+
+        <h4 id="bab2.2.3">2.2.3. Detail Artikel (article-detail.html)</h4>
+        <p><b>Deskripsi:</b> Halaman detail artikel dengan konten lengkap dan metadata.</p>
+        <p><b>Fitur Utama:</b></p>
+        <ul>
+            <li>Full article content dengan rich text formatting</li>
+            <li>Author information dan publication date</li>
+            <li>Reading time estimation</li>
+            <li>Social sharing buttons</li>
+            <li>Related articles suggestions</li>
+            <li>Tag system untuk navigasi konten</li>
+        </ul>
+        <p><b>Implementasi Teknis:</b></p>
+        <ul>
+            <li>Dynamic content loading berdasarkan URL parameters</li>
+            <li>Responsive typography dengan optimal reading experience</li>
+            <li>Progressive enhancement untuk interaktivitas</li>
+            <li>Structured data markup untuk SEO</li>
+        </ul>
+        <p><img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Detail Artikel"></p>
+
+        <h4 id="bab2.2.4">2.2.4. Katalog Produk (catalog.html)</h4>
+        <p><b>Deskripsi:</b> Halaman katalog dengan grid produk, filter, dan sorting options.</p>
+        <p><b>Fitur Utama:</b></p>
+        <ul>
+            <li>Advanced filtering (kategori, brand, harga)</li>
+            <li>Real-time search dengan autocomplete</li>
+            <li>Grid/List view toggle</li>
+            <li>Sort by price, rating, name, newest</li>
+            <li>Quick view modal untuk preview produk</li>
+            <li>Add to cart dan wishlist dari katalog</li>
+        </ul>
+        <p><b>Implementasi Teknis:</b></p>
+        <ul>
+            <li>Efficient filtering algorithms dengan debouncing</li>
+            <li>Virtual scrolling untuk performance optimization</li>
+            <li>State management untuk filter preferences</li>
+            <li>Responsive product cards dengan hover effects</li>
+        </ul>
+        <p><img src="https://images.unsplash.com/photo-1579338059334-52414994b91d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Katalog Produk"></p>
+
+        <h4 id="bab2.2.5">2.2.5. Detail Produk (product-detail.html)</h4>
+        <p><b>Deskripsi:</b> Halaman detail produk dengan informasi lengkap dan opsi pembelian.</p>
+        <p><b>Fitur Utama:</b></p>
+        <ul>
+            <li>Image gallery dengan thumbnail navigation</li>
+            <li>Detailed product specifications</li>
+            <li>Customer reviews dan rating system</li>
+            <li>Quantity selector dengan stock validation</li>
+            <li>Add to cart dan wishlist functionality</li>
+            <li>Related products suggestions</li>
+        </ul>
+        <p><b>Implementasi Teknis:</b></p>
+        <ul>
+            <li>Image lazy loading dan optimization</li>
+            <li>Dynamic pricing calculation</li>
+            <li>Stock management dengan real-time updates</li>
+            <li>Form validation untuk quantity selection</li>
+        </ul>
+        <p><img src="https://images.unsplash.com/photo-1584006682522-dc17d6c0d9ac?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Detail Produk"></p>
+
+        <h4 id="bab2.2.6">2.2.6. Keranjang (cart.html)</h4>
+        <p><b>Deskripsi:</b> Halaman keranjang belanja dengan item management dan summary.</p>
+        <p><b>Fitur Utama:</b></p>
+        <ul>
+            <li>Item quantity adjustment dengan +/- controls</li>
+            <li>Remove item functionality</li>
+            <li>Price calculation dengan tax dan shipping</li>
+            <li>Promo code application</li>
+            <li>Save for later (move to wishlist)</li>
+            <li>Checkout navigation dengan data persistence</li>
+        </ul>
+        <p><b>Implementasi Teknis:</b></p>
+        <ul>
+            <li>Real-time price calculation</li>
+            <li>Local storage persistence</li>
+            <li>Form validation untuk quantity limits</li>
+            <li>Responsive table design untuk mobile</li>
+        </ul>
+        <p><img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Keranjang"></p>
+
+        <h4 id="bab2.2.7">2.2.7. Pembayaran (checkout.html)</h4>
+        <p><b>Deskripsi:</b> Halaman checkout dengan form pengiriman dan pembayaran.</p>
+        <p><b>Fitur Utama:</b></p>
+        <ul>
+            <li>Multi-step checkout process</li>
+            <li>Shipping address form dengan validation</li>
+            <li>Multiple shipping options (Regular, Express, Same Day)</li>
+            <li>Payment method selection (Credit Card, Bank Transfer, E-Wallet, COD)</li>
+            <li>Order summary dengan final pricing</li>
+            <li>Payment processing simulation</li>
+        </ul>
+        <p><b>Implementasi Teknis:</b></p>
+        <ul>
+            <li>Form validation dengan real-time feedback</li>
+            <li>Payment method conditional rendering</li>
+            <li>Secure data handling simulation</li>
+            <li>Order confirmation dengan tracking number generation</li>
+        </ul>
+        <p><img src="https://images.unsplash.com/photo-1502920917128-1aa500764cbd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Pembayaran"></p>
+
+        <h4 id="bab2.2.8">2.2.8. History Transaksi (profile.html)</h4>
+        <p><b>Deskripsi:</b> Halaman riwayat transaksi pengguna.</p>
+        <p><b>Fitur Utama:</b></p>
+        <ul>
+            <li>Daftar transaksi dengan detail</li>
+            <li>Status pesanan</li>
+            <li>Opsi untuk melihat detail pesanan</li>
+        </ul>
+        <p><b>Implementasi Teknis:</b></p>
+        <ul>
+            <li>Data diambil dari local storage</li>
+            <li>Menampilkan detail transaksi</li>
+        </ul>
+        <p><img src="https://images.unsplash.com/photo-1581591524425-c7e0978865fc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="History Transaksi"></p>
+
+        <h4 id="bab2.2.9">2.2.9. Dashboard Admin (admin-dashboard.html)</h4>
+        <p><b>Deskripsi:</b> Panel admin untuk mengelola seluruh aspek website.</p>
+        <p><b>Fitur Utama:</b></p>
+        <ul>
+            <li>Dashboard overview dengan statistik</li>
+            <li>Product management (CRUD operations)</li>
+            <li>Order management dengan status updates</li>
+            <li>User management</li>
+            <li>Article management dengan rich text editor</li>
+            <li>Analytics dan reporting</li>
+        </ul>
+        <p><b>Implementasi Teknis:</b></p>
+        <ul>
+            <li>Role-based access control</li>
+            <li>CRUD operations dengan local storage</li>
+            <li>Rich text editor untuk artikel</li>
+            <li>Data visualization untuk statistik</li>
+            <li>Responsive admin interface</li>
+        </ul>
+        <p><img src="https://images.unsplash.com/photo-1579338059334-52414994b91d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Dashboard Admin"></p>
+
+        <h4 id="bab2.2.10">2.2.10. Kelola Artikel (admin-dashboard.html)</h4>
+        <p><b>Deskripsi:</b> Bagian dari dashboard admin untuk mengelola artikel.</p>
+        <p><b>Fitur Utama:</b></p>
+        <ul>
+            <li>Menambah, mengedit, dan menghapus artikel</li>
+            <li>Mengatur status artikel (draft/published)</li>
+        </ul>
+        <p><b>Implementasi Teknis:</b></p>
+        <ul>
+            <li>CRUD operations dengan local storage</li>
+            <li>Rich text editor untuk artikel</li>
+        </ul>
+        <p><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Kelola Artikel"></p>
+
+        <h4 id="bab2.2.11">2.2.11. Kelola Produk (admin-dashboard.html)</h4>
+        <p><b>Deskripsi:</b> Bagian dari dashboard admin untuk mengelola produk.</p>
+        <p><b>Fitur Utama:</b></p>
+        <ul>
+            <li>Menambah, mengedit, dan menghapus produk</li>
+            <li>Mengatur informasi produk (nama, harga, deskripsi, dll.)</li>
+        </ul>
+        <p><b>Implementasi Teknis:</b></p>
+        <ul>
+            <li>CRUD operations dengan local storage</li>
+        </ul>
+        <p><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Kelola Produk"></p>
+
+        <h4 id="bab2.2.12">2.2.12. Kelola Pengguna (admin-dashboard.html)</h4>
+        <p><b>Deskripsi:</b> Bagian dari dashboard admin untuk mengelola pengguna.</p>
+        <p><b>Fitur Utama:</b></p>
+        <ul>
+            <li>Menambah, mengedit, dan menghapus pengguna</li>
+            <li>Mengatur role pengguna (admin/user)</li>
+        </ul>
+        <p><b>Implementasi Teknis:</b></p>
+        <ul>
+            <li>CRUD operations dengan local storage</li>
+        </ul>
+        <p><img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Kelola Pengguna"></p>
+
+        <h4 id="bab2.2.13">2.2.13. Kelola Transaksi (admin-dashboard.html)</h4>
+        <p><b>Deskripsi:</b> Bagian dari dashboard admin untuk mengelola transaksi.</p>
+        <p><b>Fitur Utama:</b></p>
+        <ul>
+            <li>Melihat daftar transaksi</li>
+            <li>Mengubah status transaksi</li>
+        </ul>
+        <p><b>Implementasi Teknis:</b></p>
+        <ul>
+            <li>CRUD operations dengan local storage</li>
+        </ul>
+        <p><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Kelola Transaksi"></p>
+
+        <h4 id="bab2.2.14">2.2.14. Login (login.html)</h4>
+        <p><b>Deskripsi:</b> Halaman untuk pengguna masuk ke akun mereka.</p>
+        <p><b>Fitur Utama:</b></p>
+        <ul>
+            <li>Form login dengan email dan password</li>
+            <li>Opsi "Remember Me"</li>
+            <li>Link "Lupa Password"</li>
+        </ul>
+        <p><b>Implementasi Teknis:</b></p>
+        <ul>
+            <li>Client-side authentication simulation</li>
+            <li>Session management dengan localStorage</li>
+        </ul>
+        <p><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Login"></p>
+
+        <h4 id="bab2.2.15">2.2.15. Wishlist (wishlist.html)</h4>
+        <p><b>Deskripsi:</b> Halaman untuk menampilkan daftar produk yang disimpan pengguna.</p>
+        <p><b>Fitur Utama:</b></p>
+        <ul>
+            <li>Menampilkan daftar produk yang disimpan</li>
+            <li>Opsi untuk menghapus produk dari wishlist</li>
+        </ul>
+        <p><b>Implementasi Teknis:</b></p>
+        <ul>
+            <li>Data diambil dari local storage</li>
+        </ul>
+        <p><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Wishlist"></p>
+
+        <h4 id="bab2.2.16">2.2.16. Compare (compare.html)</h4>
+        <p><b>Deskripsi:</b> Halaman untuk membandingkan spesifikasi produk.</p>
+        <p><b>Fitur Utama:</b></p>
+        <ul>
+            <li>Menampilkan tabel perbandingan produk</li>
+            <li>Menyoroti fitur unggulan</li>
+        </ul>
+        <p><b>Implementasi Teknis:</b></p>
+        <ul>
+            <li>Data diambil dari local storage</li>
+        </ul>
+        <p><img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Compare"></p>
+
+        <h4 id="bab2.2.17">2.2.17. Contact (contact.html)</h4>
+        <p><b>Deskripsi:</b> Halaman untuk menghubungi admin website.</p>
+        <p><b>Fitur Utama:</b></p>
+        <ul>
+            <li>Form kontak</li>
+            <li>Informasi kontak (email, telepon, alamat)</li>
+        </ul>
+        <p><b>Implementasi Teknis:</b></p>
+        <ul>
+            <li>Form dengan validasi</li>
+        </ul>
+        <p><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Contact"></p>
+
+        <h4 id="bab2.2.18">2.2.18. FAQ (faq.html)</h4>
+        <p><b>Deskripsi:</b> Halaman untuk menampilkan pertanyaan yang sering diajukan.</p>
+        <p><b>Fitur Utama:</b></p>
+        <ul>
+            <li>Daftar pertanyaan dan jawaban</li>
+            <li>Filter berdasarkan kategori</li>
+        </ul>
+        <p><b>Implementasi Teknis:</b></p>
+        <ul>
+            <li>Filter dengan JavaScript</li>
+        </ul>
+        <p><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="FAQ"></p>
+
+        <h4 id="bab2.2.19">2.2.19. Profile (profile.html)</h4>
+        <p><b>Deskripsi:</b> Halaman untuk menampilkan informasi profil pengguna.</p>
+        <p><b>Fitur Utama:</b></p>
+        <ul>
+            <li>Menampilkan informasi profil (nama, email)</li>
+            <li>Menampilkan riwayat transaksi</li>
+        </ul>
+        <p><b>Implementasi Teknis:</b></p>
+        <ul>
+            <li>Data diambil dari local storage</li>
+        </ul>
+        <p><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Profile"></p>
+
+        <h4 id="bab2.2.20">2.2.20. Search (search.html)</h4>
+        <p><b>Deskripsi:</b> Halaman untuk menampilkan hasil pencarian.</p>
+        <p><b>Fitur Utama:</b></p>
+        <ul>
+            <li>Menampilkan hasil pencarian</li>
+            <li>Filter berdasarkan kategori dan merek</li>
+        </ul>
+        <p><b>Implementasi Teknis:</b></p>
+        <ul>
+            <li>Filter dengan JavaScript</li>
+        </ul>
+        <p><img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Search"></p>
+
+        <h4 id="bab2.2.21">2.2.21. Terms (terms.html)</h4>
+        <p><b>Deskripsi:</b> Halaman untuk menampilkan syarat dan ketentuan penggunaan website.</p>
+        <p><b>Fitur Utama:</b></p>
+        <ul>
+            <li>Menampilkan syarat dan ketentuan</li>
+        </ul>
+        <p><b>Implementasi Teknis:</b></p>
+        <ul>
+            <li>Menampilkan konten statis</li>
+        </ul>
+        <p><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Terms"></p>
+
+        <h4 id="bab2.2.22">2.2.22. Track Order (track-order.html)</h4>
+        <p><b>Deskripsi:</b> Halaman untuk melacak status pesanan.</p>
+        <p><b>Fitur Utama:</b></p>
+        <ul>
+            <li>Form untuk memasukkan nomor pesanan</li>
+            <li>Menampilkan status pengiriman</li>
+        </ul>
+        <p><b>Implementasi Teknis:</b></p>
+        <ul>
+            <li>Data diambil dari local storage</li>
+        </ul>
+        <p><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Track Order"></p>
+
+        <h4 id="bab2.2.23">2.2.23. Reviews (reviews.html)</h4>
+        <p><b>Deskripsi:</b> Halaman untuk menampilkan ulasan produk.</p>
+        <p><b>Fitur Utama:</b></p>
+        <ul>
+            <li>Menampilkan ulasan produk</li>
+            <li>Filter berdasarkan rating</li>
+        </ul>
+        <p><b>Implementasi Teknis:</b></p>
+        <ul>
+            <li>Data diambil dari local storage</li>
+        </ul>
+        <p><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Reviews"></p>
+
+        <h3 id="bab2.3">2.3. Pengujian Sistem</h3>
+        <p><b>Testing Methodology:</b></p>
+        <ol>
+            <li><b>Functional Testing:</b>
+                <ul>
+                    <li>User registration dan login flow</li>
+                    <li>Product browsing dan search functionality</li>
+                    <li>Cart operations (add, remove, update quantity)</li>
+                    <li>Checkout process end-to-end</li>
+                    <li>Admin panel CRUD operations</li>
+                </ul>
+            </li>
+            <li><b>Usability Testing:</b>
+                <ul>
+                    <li>Navigation intuitiveness</li>
+                    <li>Mobile responsiveness</li>
+                    <li>Loading performance</li>
+                    <li>Error handling dan user feedback</li>
+                </ul>
+            </li>
+            <li><b>Compatibility Testing:</b>
+                <ul>
+                    <li>Cross-browser compatibility (Chrome, Firefox, Safari, Edge)</li>
+                    <li>Mobile device testing (iOS, Android)</li>
+                    <li>Screen resolution testing</li>
+                    <li>Touch interface optimization</li>
+                </ul>
+            </li>
+            <li><b>Performance Testing:</b>
+                <ul>
+                    <li>Page load speed optimization</li>
+                    <li>Image loading performance</li>
+                    <li>JavaScript execution efficiency</li>
+                    <li>Local storage performance</li>
+                </ul>
+            </li>
+        </ol>
+        <p><b>Test Results:</b></p>
+        <ul>
+            <li>✅ All core e-commerce functionality working properly</li>
+            <li>✅ Responsive design tested across multiple devices</li>
+            <li>✅ Admin panel fully functional with proper access control</li>
+            <li>✅ Data persistence working correctly with localStorage</li>
+            <li>✅ Form validations and error handling implemented</li>
+        </ul>
+
+        <h2 id="lampiran">LAMPIRAN</h2>
+        <div class="lampiran">
+            <ul>
+                <li><b>Link Project Repository:</b> <a href="#">[GitHub Repository URL]</a></li>
+                <li><b>Link Demo Live:</b> <a href="#">[Live Demo URL]</a></li>
+                <li><b>Link Video Demonstration:</b> <a href="#">[Video Demo URL]</a></li>
+                <li><b>Link Logbook:</b> <a href="#">[Logbook Documentation URL]</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer">
+        <p>&copy; 2024 Berkamera. All rights reserved.</p>
+    </div>
+</body>
+</html
